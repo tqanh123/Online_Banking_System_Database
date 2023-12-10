@@ -1,5 +1,9 @@
 --CREATE database [Online_Banking]
-
+Create Table Bank (
+    Code INT PRIMARY KEY,
+    Name VARCHAR,
+    Address Carchar,
+);
 CREATE TABLE Customer (
     Account_Number INT IDENTITY(1,1) PRIMARY KEY,
     Name VARCHAR(255),
