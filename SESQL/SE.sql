@@ -1,8 +1,8 @@
 --CREATE database [Online_Banking]
 Create Table Bank (
     Code INT PRIMARY KEY,
-    Name VARCHAR,
-    Address Carchar,
+    Name VARCHAR(255),
+    Address Varchar(255),
 );
 
 Create Table Admin (
@@ -37,6 +37,7 @@ CREATE TABLE Account (
     Balance DECIMAL(10, 2),
     Opening_Date DATE,
     Customer_ID INT,
+    Status VARCHAR(255),
     FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID),
 ); 
 
@@ -48,6 +49,7 @@ CREATE TABLE Credit (
     Credit_Total DECIMAL(10, 2),
     Credit_Desc VARCHAR(255),
     Account_Number INT,
+    Status VARCHAR(255),
     FOREIGN KEY (Account_Number) REFERENCES Customer(Account_Number),
     FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID)
 );
@@ -58,6 +60,7 @@ CREATE TABLE Card (
     Card_Type VARCHAR(50),
     Address VARCHAR(255),
     Account_Number INT,
+    Status VARCHAR(255),
     FOREIGN KEY (Account_Number) REFERENCES Customer(Account_Number),
     FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID)
 );
@@ -85,18 +88,19 @@ CREATE TABLE Deposit (
     Account_Number INT,
     Deposit_Amount DECIMAL(10, 2),
     Interest_Rate DECIMAL(5, 2),
-    Term INT
+    Term INT,
     FOREIGN KEY (Account_Number) REFERENCES Customer(Account_Number)
 );
 
 CREATE TABLE Loan (
-    Loan_ID INT IDENTITY(1,1)  PRIMARY KEY,
+    Loan_ID INT IDENTITY(1,1) PRIMARY KEY,
     Admin_ID INT,
     Loan_Type VARCHAR(50),
     Loan_Amount DECIMAL(10, 2),
     Interest_Rate DECIMAL(5, 2),
     Term INT,
     Account_Number INT,
+    Status VARCHAR(255),
     FOREIGN KEY (Account_Number) REFERENCES Customer(Account_Number),
     FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID),
 );
