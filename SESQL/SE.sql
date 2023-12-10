@@ -4,6 +4,14 @@ Create Table Bank (
     Name VARCHAR,
     Address Carchar,
 );
+
+Create Table Admin (
+    Admin_ID INT IDENTITY (1,1) PRIMARY KEY,
+    Name Varchar(255),
+    Branch_no INT,
+    FOREIGN KEY (Branch_no) REFERENCES Branch(Branch_no)
+);
+
 CREATE TABLE Customer (
     Account_Number INT IDENTITY(1,1) PRIMARY KEY,
     Name VARCHAR(255),
@@ -17,15 +25,18 @@ CREATE TABLE Customer (
 
 CREATE TABLE Account (
     Account_Number INT ,
+    Admin_ID INT,
     Account_Type VARCHAR(50),
     Balance DECIMAL(10, 2),
     Opening_Date DATE,
     Customer_ID INT,
-    FOREIGN KEY (Account_Number) REFERENCES Customer(Account_Number)
+    FOREIGN KEY (Account_Number) REFERENCES Customer(Account_Number),
+    FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID),
 ); 
 
 CREATE TABLE Credit (
     Credit_ID INT IDENTITY(1,1) PRIMARY KEY,
+    Admin_ID INT,
     Credit_Type VARCHAR(50),
     Credit_Amount DECIMAL(10, 2),
     Credit_Total DECIMAL(10, 2),
