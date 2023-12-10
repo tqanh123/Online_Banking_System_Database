@@ -13,7 +13,10 @@ Create Table Admin (
 );
 
 CREATE TABLE Customer (
-    Account_Number INT IDENTITY(1,1) PRIMARY KEY,
+    Customer_ID INT IDENTITY(1,1) PRIMARY KEY,
+    Card_ID INT,
+    Loan_ID INT,
+    Credit_ID
     Name VARCHAR(255),
     Branch_Name VARCHAR(255),
     Address VARCHAR(255),
@@ -24,14 +27,13 @@ CREATE TABLE Customer (
 );
 
 CREATE TABLE Account (
-    Account_Number INT ,
+    Account_Number INT PRIMARY KEY ,
     Admin_ID INT,
     Account_Type VARCHAR(50),
     Balance DECIMAL(10, 2),
     Opening_Date DATE,
     Customer_ID INT,
-    FOREIGN KEY (Account_Number) REFERENCES Customer(Account_Number),
-    FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID)
+    FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID),
 ); 
 
 CREATE TABLE Credit (
@@ -56,22 +58,13 @@ CREATE TABLE Card (
     FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID)
 );
 
-CREATE TABLE Debit (
-    Debit_ID INT IDENTITY(1,1) PRIMARY KEY,
-    Debit_Type VARCHAR(50),
-    Total_Amount DECIMAL(10, 2),
-    Debit_Total DECIMAL(10, 2),
-    Debit_Desc VARCHAR(255),
-    Account_Number INT,
-    FOREIGN KEY (Account_Number) REFERENCES Customer(Account_Number)
-);
-
 CREATE TABLE Branch (
-    Branch_Code INT PRIMARY KEY,
+    Branch_no INT PRIMARY KEY,
+    Code INT PRIMARY KEY,
     Branch_City VARCHAR(50),
     Branch_Name VARCHAR(255),
     Account_Number INT,
-    FOREIGN KEY (Account_Number) REFERENCES Customer(Account_Number)
+    FOREIGN KEY (Code) REFERENCES Bank(Code),  
 );
 
 CREATE TABLE [Transaction] (
@@ -81,7 +74,6 @@ CREATE TABLE [Transaction] (
     Amount DECIMAL(10, 2),
     Transaction_Type VARCHAR(50),
     FOREIGN KEY (Account_Number) REFERENCES Customer(Account_Number),
-    FOREIGN KEY (Card_Number) REFERENCES Card(Card_Number)
 );
 
 CREATE TABLE Deposit (
