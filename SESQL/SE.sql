@@ -31,7 +31,7 @@ CREATE TABLE Account (
     Opening_Date DATE,
     Customer_ID INT,
     FOREIGN KEY (Account_Number) REFERENCES Customer(Account_Number),
-    FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID),
+    FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID)
 ); 
 
 CREATE TABLE Credit (
@@ -42,15 +42,18 @@ CREATE TABLE Credit (
     Credit_Total DECIMAL(10, 2),
     Credit_Desc VARCHAR(255),
     Account_Number INT,
-    FOREIGN KEY (Account_Number) REFERENCES Customer(Account_Number)
+    FOREIGN KEY (Account_Number) REFERENCES Customer(Account_Number),
+    FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID)
 );
 
 CREATE TABLE Card (
     Card_Number VARCHAR(16) PRIMARY KEY,
+    Admin_ID INT,
     Card_Type VARCHAR(50),
     Address VARCHAR(255),
     Account_Number INT,
-    FOREIGN KEY (Account_Number) REFERENCES Customer(Account_Number)
+    FOREIGN KEY (Account_Number) REFERENCES Customer(Account_Number),
+    FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID)
 );
 
 CREATE TABLE Debit (
@@ -92,11 +95,13 @@ CREATE TABLE Deposit (
 
 CREATE TABLE Loan (
     Loan_ID INT IDENTITY(1,1)  PRIMARY KEY,
+    Admin_ID INT,
     Loan_Type VARCHAR(50),
     Loan_Amount DECIMAL(10, 2),
     Interest_Rate DECIMAL(5, 2),
     Term INT,
     Account_Number INT,
-    FOREIGN KEY (Account_Number) REFERENCES Customer(Account_Number)
+    FOREIGN KEY (Account_Number) REFERENCES Customer(Account_Number),
+    FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID),
 );
 
