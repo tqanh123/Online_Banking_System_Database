@@ -23,11 +23,15 @@ CREATE TABLE Customer (
     Date_of_Birth DATE,
     Gender VARCHAR(10),
     Phone VARCHAR(15),
-    Email VARCHAR(255)
+    Email VARCHAR(255),
+    FOREIGN KEY (Card_ID) REFERENCES Card(Card_ID),
+    FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID),
+    FOREIGN KEY (Credit_ID) REFERENCES Credit(Credit_ID),
+    FOREIGN KEY (Account_ID) REFERENCES Account(Account_ID),
 );
 
 CREATE TABLE Account (
-    Account_Number INT PRIMARY KEY ,
+    Account_ID INT PRIMARY KEY ,
     Admin_ID INT,
     Account_Type VARCHAR(50),
     Balance DECIMAL(10, 2),
