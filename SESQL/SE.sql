@@ -33,7 +33,6 @@ CREATE TABLE Card (
     Card_ID INT IDENTITY (1,1) PRIMARY KEY,
     Admin_ID INT,
     Card_Type VARCHAR(50),
-    Address VARCHAR(255),
     Status VARCHAR(255),
     FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID)
 );
