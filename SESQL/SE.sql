@@ -9,7 +9,6 @@ CREATE TABLE Branch (
     Code INT,
     Branch_City VARCHAR(50),
     Branch_Name VARCHAR(255),
-    Account_Number INT,
     FOREIGN KEY (Code) REFERENCES Bank(Code),  
 );
 
