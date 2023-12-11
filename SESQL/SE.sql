@@ -1,8 +1,16 @@
---CREATE database [Online_Banking]
 Create Table Bank (
     Code INT PRIMARY KEY,
     Name VARCHAR(255),
     Address Varchar(255),
+);
+
+CREATE TABLE Branch (
+    Branch_no INT PRIMARY KEY,
+    Code INT,
+    Branch_City VARCHAR(50),
+    Branch_Name VARCHAR(255),
+    Account_Number INT,
+    FOREIGN KEY (Code) REFERENCES Bank(Code),  
 );
 
 Create Table Admin (
@@ -12,27 +20,30 @@ Create Table Admin (
     FOREIGN KEY (Branch_no) REFERENCES Branch(Branch_no)
 );
 
-CREATE TABLE Customer (
-    Customer_ID INT IDENTITY(1,1) PRIMARY KEY,
-    Card_ID INT,
-    Loan_ID INT,
-    Credit_ID INT,
-    Account_ID INT,
-    Name VARCHAR(255),
-    Branch_Name VARCHAR(255),
+CREATE TABLE Loan (
+    Loan_ID INT IDENTITY (1,1) PRIMARY KEY,
+    Admin_ID INT,
+    Loan_Type VARCHAR(50),
+    Loan_Amount DECIMAL(10, 2),
+    Interest_Rate DECIMAL(5, 2),
+    Term INT,
+    Account_Number INT,
+    Status VARCHAR(255),
+    FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID)
+);
+
+CREATE TABLE Card (
+    Card_ID INT IDENTITY (1,1) PRIMARY KEY,
+    Admin_ID INT,
+    Card_Type VARCHAR(50),
     Address VARCHAR(255),
-    Date_of_Birth DATE,
-    Gender VARCHAR(10),
-    Phone VARCHAR(15),
-    Email VARCHAR(255),
-    FOREIGN KEY (Card_ID) REFERENCES Card(Card_ID),
-    FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID),
-    FOREIGN KEY (Credit_ID) REFERENCES Credit(Credit_ID),
-    FOREIGN KEY (Account_ID) REFERENCES Account(Account_ID),
+    Account_Number INT,
+    Status VARCHAR(255),
+    FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID)
 );
 
 CREATE TABLE Account (
-    Account_ID INT PRIMARY KEY,
+    Account_ID INT IDENTITY (1,1) PRIMARY KEY,
     Admin_ID INT,
     Account_Type VARCHAR(50),
     Balance DECIMAL(10, 2),
@@ -54,24 +65,26 @@ CREATE TABLE Credit (
     FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID)
 );
 
-CREATE TABLE Card (
-    Card_Number VARCHAR(16) PRIMARY KEY,
-    Admin_ID INT,
-    Card_Type VARCHAR(50),
+
+CREATE TABLE Customer (
+    Customer_ID INT IDENTITY(1,1) PRIMARY KEY,
+    Card_ID INT,
+    Loan_ID INT,
+    Credit_ID INT,
+    Account_ID INT,
+    Name VARCHAR(255),
+    Branch_Name VARCHAR(255),
     Address VARCHAR(255),
-    Account_Number INT,
-    Status VARCHAR(255),
-    FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID)
+    Date_of_Birth DATE,
+    Gender VARCHAR(10),
+    Phone VARCHAR(15),
+    Email VARCHAR(255),
+    FOREIGN KEY (Card_ID) REFERENCES Card(Card_ID),
+    FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID),
+    FOREIGN KEY (Credit_ID) REFERENCES Credit(Credit_ID),
+    FOREIGN KEY (Account_ID) REFERENCES Account(Account_ID),
 );
 
-CREATE TABLE Branch (
-    Branch_no INT PRIMARY KEY,
-    Code INT,
-    Branch_City VARCHAR(50),
-    Branch_Name VARCHAR(255),
-    Account_Number INT,
-    FOREIGN KEY (Code) REFERENCES Bank(Code),  
-);
 
 CREATE TABLE [Transaction] (
     Transaction_ID INT IDENTITY(1,1) PRIMARY KEY,
@@ -84,22 +97,9 @@ CREATE TABLE [Transaction] (
 
 CREATE TABLE Deposit (
     Deposit_ID INT IDENTITY(1,1) PRIMARY KEY,
-    Account_Number INT,
+    Customer_ID INT,
     Deposit_Amount DECIMAL(10, 2),
     Interest_Rate DECIMAL(5, 2),
     Term INT,
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID)
 );
-
-CREATE TABLE Loan (
-    Loan_ID INT IDENTITY(1,1) PRIMARY KEY,
-    Admin_ID INT,
-    Loan_Type VARCHAR(50),
-    Loan_Amount DECIMAL(10, 2),
-    Interest_Rate DECIMAL(5, 2),
-    Term INT,
-    Account_Number INT,
-    Status VARCHAR(255),
-    FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID)
-);
-
