@@ -16,7 +16,7 @@ CREATE TABLE Customer (
     Customer_ID INT IDENTITY(1,1) PRIMARY KEY,
     Card_ID INT,
     Loan_ID INT,
-    Credit_ID,
+    Credit_ID INT,
     Account_ID INT,
     Name VARCHAR(255),
     Branch_Name VARCHAR(255),
