@@ -1,21 +1,15 @@
 Create Table Bank (
-    Code INT PRIMARY KEY,
+    Branch_ID INT PRIMARY KEY,
     Address Varchar(255),
-);
-
-CREATE TABLE Branch (
-    Branch_no INT PRIMARY KEY,
-    Code INT,
     Branch_City VARCHAR(50),
     Branch_Name VARCHAR(255),
-    FOREIGN KEY (Code) REFERENCES Bank(Code),  
 );
 
 Create Table Admin (
     Admin_ID INT IDENTITY (1,1) PRIMARY KEY,
+    Branch_ID INT,
     Name Varchar(255),
-    Branch_no INT,
-    FOREIGN KEY (Branch_no) REFERENCES Branch(Branch_no)
+    FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID)
 );
 
 CREATE TABLE Loan (
