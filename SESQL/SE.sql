@@ -12,6 +12,16 @@ Create Table Admin (
     FOREIGN KEY (Branch_ID) REFERENCES Bank(Branch_ID)
 );
 
+CREATE TABLE Customer (
+    Customer_ID INT IDENTITY(1,1) PRIMARY KEY,
+    Name VARCHAR(255),
+    Address VARCHAR(255),
+    Date_of_Birth DATE,
+    Gender VARCHAR(10),
+    Phone VARCHAR(15),
+    Email VARCHAR(255),
+);
+
 CREATE TABLE Loan (
     Loan_ID INT IDENTITY (1,1) PRIMARY KEY,
     Customer_ID INT,
@@ -59,18 +69,6 @@ CREATE TABLE Credit (
     FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID),
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID)
 );
-
-
-CREATE TABLE Customer (
-    Customer_ID INT IDENTITY(1,1) PRIMARY KEY,
-    Name VARCHAR(255),
-    Address VARCHAR(255),
-    Date_of_Birth DATE,
-    Gender VARCHAR(10),
-    Phone VARCHAR(15),
-    Email VARCHAR(255),
-);
-
 
 CREATE TABLE [Transaction] (
     Transaction_ID INT IDENTITY(1,1) PRIMARY KEY,
