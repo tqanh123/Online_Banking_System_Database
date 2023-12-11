@@ -1,6 +1,5 @@
 Create Table Bank (
     Code INT PRIMARY KEY,
-    Name VARCHAR(255),
     Address Varchar(255),
 );
 
