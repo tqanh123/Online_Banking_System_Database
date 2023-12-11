@@ -9,7 +9,7 @@ Create Table Admin (
     Admin_ID INT IDENTITY (1,1) PRIMARY KEY,
     Branch_ID INT,
     Name Varchar(255),
-    FOREIGN KEY (Branch_ID) REFERENCES Branch(Branch_ID)
+    FOREIGN KEY (Branch_ID) REFERENCES Bank(Branch_ID)
 );
 
 CREATE TABLE Loan (
