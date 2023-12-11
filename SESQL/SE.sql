@@ -25,7 +25,6 @@ CREATE TABLE Loan (
     Loan_Amount DECIMAL(10, 2),
     Interest_Rate DECIMAL(5, 2),
     Term INT,
-    Account_Number INT,
     Status VARCHAR(255),
     FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID)
 );
@@ -35,7 +34,6 @@ CREATE TABLE Card (
     Admin_ID INT,
     Card_Type VARCHAR(50),
     Address VARCHAR(255),
-    Account_Number INT,
     Status VARCHAR(255),
     FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID)
 );
@@ -58,7 +56,6 @@ CREATE TABLE Credit (
     Credit_Amount DECIMAL(10, 2),
     Credit_Total DECIMAL(10, 2),
     Credit_Desc VARCHAR(255),
-    Account_Number INT,
     Status VARCHAR(255),
     FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID)
 );
@@ -87,7 +84,6 @@ CREATE TABLE Customer (
 CREATE TABLE [Transaction] (
     Transaction_ID INT IDENTITY(1,1) PRIMARY KEY,
     Customer_ID INT,
-    Card_Number VARCHAR(16),
     Amount DECIMAL(10, 2),
     Transaction_Type VARCHAR(50),
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID),
