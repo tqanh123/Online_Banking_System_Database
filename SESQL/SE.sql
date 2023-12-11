@@ -1,5 +1,5 @@
 Create Table Bank (
-    Branch_ID INT PRIMARY KEY,
+    Branch_ID INT IDENTITY (1,1) PRIMARY KEY,
     Address Varchar(255),
     Branch_City VARCHAR(50),
     Branch_Name VARCHAR(255),
