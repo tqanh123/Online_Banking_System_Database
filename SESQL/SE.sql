@@ -5,6 +5,14 @@ Create Table Bank (
     Branch_Name VARCHAR(255),
 );
 
+CREATE TABLE Account (
+    Account_ID INT IDENTITY (1,1) PRIMARY KEY,
+    Account_Type VARCHAR(50),
+    Balance DECIMAL(10, 2),
+    Opening_Date DATE,
+    Status VARCHAR(255),
+); 
+
 Create Table Admin (
     Admin_ID INT IDENTITY (1,1) PRIMARY KEY,
     Account_ID INT,
@@ -46,14 +54,6 @@ CREATE TABLE Card (
     Status VARCHAR(255),
     FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID),
 );
-
-CREATE TABLE Account (
-    Account_ID INT IDENTITY (1,1) PRIMARY KEY,
-    Account_Type VARCHAR(50),
-    Balance DECIMAL(10, 2),
-    Opening_Date DATE,
-    Status VARCHAR(255),
-); 
 
 CREATE TABLE Credit (
     Credit_ID INT IDENTITY(1,1) PRIMARY KEY,
