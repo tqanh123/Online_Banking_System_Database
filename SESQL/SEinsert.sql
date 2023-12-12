@@ -38,13 +38,13 @@ VALUES
 (4, 4, 'Debit Card', 'Pending'),
 (5, 5, 'Credit Card', 'Approved');
 
-INSERT INTO Account (Admin_ID, Account_Type, Balance, Opening_Date, Customer_ID, Status) 
+INSERT INTO Account (Account_Type, Balance, Opening_Date, Status) 
 Values
-(1, 'Savings', 5000.00, '2022-01-01', 1, 'Approved'),
-(2, 'Checking', 10000.00, '2022-02-15', 2, 'Pending'),
-(3, 'Savings', 7500.00, '2022-03-10', 3, 'Approved'),
-(4, 'Checking', 12000.00, '2022-04-22', 4, 'Rejected'),
-(5, 'Savings', 9000.00, '2022-05-05', 5, 'Approved'); 
+('Savings', 5000.00, '2022-01-01', 'Approved'),
+('Checking', 10000.00, '2022-02-15', 'Pending'),
+('Savings', 7500.00, '2022-03-10', 'Approved'),
+('Checking', 12000.00, '2022-04-22', 'Rejected'),
+('Savings', 9000.00, '2022-05-05', 'Approved'); 
 
 INSERT INTO Credit (Admin_ID, Customer_ID, Credit_Type, Credit_Amount, Credit_Total, Credit_Desc, Status) 
 VALUES 
