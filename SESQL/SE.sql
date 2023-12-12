@@ -7,21 +7,23 @@ Create Table Bank (
 
 Create Table Admin (
     Admin_ID INT IDENTITY (1,1) PRIMARY KEY,
+    Account_ID INT,
     Branch_ID INT,
     Name Varchar(255),
     FOREIGN KEY (Branch_ID) REFERENCES Bank(Branch_ID),
-    FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID),
+    FOREIGN KEY (Account_ID) REFERENCES Account(Account_ID),
 );
 
 CREATE TABLE Customer (
     Customer_ID INT IDENTITY(1,1) PRIMARY KEY,
+    Account_ID INT,
     Name VARCHAR(255),
     Address VARCHAR(255),
     Date_of_Birth DATE,
     Gender VARCHAR(10),
     Phone VARCHAR(15),
     Email VARCHAR(255),
-    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID),
+    FOREIGN KEY (Account_ID) REFERENCES Account(Account_ID),
 );
 
 CREATE TABLE Loan (
@@ -49,13 +51,10 @@ CREATE TABLE Card (
 
 CREATE TABLE Account (
     Account_ID INT IDENTITY (1,1) PRIMARY KEY,
-    Admin_ID INT,
     Account_Type VARCHAR(50),
     Balance DECIMAL(10, 2),
     Opening_Date DATE,
-    Customer_ID INT,
     Status VARCHAR(255),
-    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID)
 ); 
 
 CREATE TABLE Credit (
