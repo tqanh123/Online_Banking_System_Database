@@ -36,7 +36,6 @@ CREATE TABLE Loan (
     Term INT,
     Status VARCHAR(255),
     FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID),
-    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID)
 );
 
 CREATE TABLE Card (
@@ -46,7 +45,6 @@ CREATE TABLE Card (
     Card_Type VARCHAR(50),
     Status VARCHAR(255),
     FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID),
-    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID) 
 );
 
 CREATE TABLE Account (
@@ -67,7 +65,6 @@ CREATE TABLE Credit (
     Credit_Desc VARCHAR(255),
     Status VARCHAR(255),
     FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID),
-    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID)
 );
 
 CREATE TABLE [Transaction] (
@@ -86,3 +83,28 @@ CREATE TABLE Deposit (
     Term INT,
     FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID)
 );
+
+CREATE TABLE CustomerLoan (
+    Customer_ID INT,
+    Loan_ID INT,
+    PRIMARY KEY (Customer_ID, Loan_ID),
+    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID),
+    FOREIGN KEY (Loan_ID) REFERENCES Loan(Loan_ID)
+);
+
+CREATE TABLE CustomerCard (
+    Customer_ID INT,
+    Card_ID INT,
+    PRIMARY KEY (Customer_ID, Card_ID),
+    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID),
+    FOREIGN KEY (Card_ID) REFERENCES Card(Card_ID)
+);
+
+CREATE TABLE CustomerCredit (
+    Customer_ID INT,
+    Credit_ID INT,
+    PRIMARY KEY (Customer_ID, Credit_ID),
+    FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID),
+    FOREIGN KEY (Credit_ID) REFERENCES Credit(Credit_ID)
+);
+
