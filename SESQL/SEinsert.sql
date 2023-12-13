@@ -6,21 +6,29 @@ VALUES
 ('101 Maple Lane', 'Tam Ky', 'Branch D'),
 ('202 Cedar Boulevard', 'Thu Duc', 'Branch E');
 
-INSERT INTO Admin (Branch_ID, Name)
- VALUES 
-(1, 'Admin 1'),
-(2, 'Admin 2'),
-(3, 'Admin 3'),
-(4, 'Admin 4'),
-(5, 'Admin 5'); 
+INSERT INTO Account (Account_Type, Balance, Opening_Date, Status) 
+Values
+('Savings', 5000.00, '2022-01-01', 'Approved'),
+('Checking', 10000.00, '2022-02-15', 'Pending'),
+('Savings', 7500.00, '2022-03-10', 'Approved'),
+('Checking', 12000.00, '2022-04-22', 'Rejected'),
+('Savings', 9000.00, '2022-05-05', 'Approved'); 
 
-INSERT INTO Customer (Name, Address, Date_of_Birth, Gender, Phone, Email) 
+INSERT INTO Admin (Account_ID, Branch_ID, Name)
+ VALUES 
+(6, 1, 'Admin 1'),
+(7, 2, 'Admin 2'),
+(8, 3, 'Admin 3'),
+(9, 4, 'Admin 4'),
+(10, 5, 'Admin 5'); 
+
+INSERT INTO Customer (Account_ID, Name, Address, Date_of_Birth, Gender, Phone, Email) 
 VALUES 
-('Trinh Quang Anh', '123 Oak Street', '1990-05-15', 'Male', '1234567890', 'quanganh@gmail.com'),
-('Nguyen Thanh Khiem', '456 Pine Avenue', '1985-08-22', 'Male', '9876543210', 'thanhkhiem@gmail.com'),
-('Nguyen Huu Khanh', '789 Maple Road', '1978-12-10', 'Female', '5551234567', 'huukhanh@gmail.com'),
-('Hoang Cong Anh Khoa', '101 Cedar Lane', '1995-03-27', 'Female', '3339998888', 'anhkhoa@gmail.com'),
-('Ta Thanh Vu', '202 Birch Boulevard', '1980-11-05', 'Male', '7778889999', 'thanhvu@gmail.com');
+(1, 'Trinh Quang Anh', '123 Oak Street', '1990-05-15', 'Male', '1234567890', 'quanganh@gmail.com'),
+(2, 'Nguyen Thanh Khiem', '456 Pine Avenue', '1985-08-22', 'Male', '9876543210', 'thanhkhiem@gmail.com'),
+(3, 'Nguyen Huu Khanh', '789 Maple Road', '1978-12-10', 'Female', '5551234567', 'huukhanh@gmail.com'),
+(4, 'Hoang Cong Anh Khoa', '101 Cedar Lane', '1995-03-27', 'Female', '3339998888', 'anhkhoa@gmail.com'),
+(5, 'Ta Thanh Vu', '202 Birch Boulevard', '1980-11-05', 'Male', '7778889999', 'thanhvu@gmail.com');
 
 INSERT INTO Loan (Customer_ID, Admin_ID, Loan_Type, Loan_Amount, Interest_Rate, Term, Status)
 VALUES 
@@ -37,14 +45,6 @@ VALUES
 (3, 3, 'Credit Card', 'Rejected'),
 (4, 4, 'Debit Card', 'Pending'),
 (5, 5, 'Credit Card', 'Approved');
-
-INSERT INTO Account (Admin_ID, Account_Type, Balance, Opening_Date, Customer_ID, Status) 
-Values
-(1, 'Savings', 5000.00, '2022-01-01', 1, 'Approved'),
-(2, 'Checking', 10000.00, '2022-02-15', 2, 'Pending'),
-(3, 'Savings', 7500.00, '2022-03-10', 3, 'Approved'),
-(4, 'Checking', 12000.00, '2022-04-22', 4, 'Rejected'),
-(5, 'Savings', 9000.00, '2022-05-05', 5, 'Approved'); 
 
 INSERT INTO Credit (Admin_ID, Customer_ID, Credit_Type, Credit_Amount, Credit_Total, Credit_Desc, Status) 
 VALUES 
