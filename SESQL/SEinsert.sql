@@ -1,4 +1,5 @@
-INSERT INTO Acc_types (Account_Number, Name, Description, Rate) VALUES
+INSERT INTO Acc_types (Account_Number, Name, Description, Rate) 
+VALUES
 (123456789, 'Savings Account', 'Savings account for personal use', 0.02),
 (987654321, 'Current Account', 'Current account for everyday transactions', 0.01),
 (555555555, 'Fixed Deposit Account', 'Fixed-term deposit with competitive interest rates', 0.05),
