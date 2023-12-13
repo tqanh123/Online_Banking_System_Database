@@ -36,7 +36,6 @@ CREATE TABLE Customer (
 
 CREATE TABLE Loan (
     Loan_ID INT AUTO_INCREMENT PRIMARY KEY,
-    Customer_ID INT,
     Admin_ID INT,
     Loan_Type VARCHAR(50),
     Loan_Amount DECIMAL(10, 2),
@@ -49,7 +48,6 @@ CREATE TABLE Loan (
 CREATE TABLE Card (
     Card_ID INT AUTO_INCREMENT PRIMARY KEY,
     Admin_ID INT,
-    Customer_ID INT,
     Card_Type VARCHAR(50),
     Status VARCHAR(255),
     FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID),
@@ -58,7 +56,6 @@ CREATE TABLE Card (
 CREATE TABLE Credit (
     Credit_ID INT AUTO_INCREMENT PRIMARY KEY,
     Admin_ID INT,
-    Customer_ID INT,
     Credit_Type VARCHAR(50),
     Credit_Amount DECIMAL(10, 2),
     Credit_Total DECIMAL(10, 2),
