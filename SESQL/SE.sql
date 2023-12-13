@@ -1,10 +1,3 @@
-Create Table Bank (
-    Branch_ID INT AUTO_INCREMENT PRIMARY KEY,
-    Address Varchar(255) NOT NULL,
-    Branch_City VARCHAR(255) NOT NULL,
-    Branch_Name VARCHAR(255) NOT NULL
-);
-
 CREATE TABLE Acc_types (
   Acctype_ID INT AUTO_INCREMENT PRIMARY KEY,
   Account_Number INT NOT NULL,
@@ -32,7 +25,6 @@ Create Table Admins (
   Email VARCHAR(255) NOT NULL,
   Phone INT NOT NULL,
   Profile_Pic VARCHAR(255) NOT NULL
-  FOREIGN KEY (Branch_ID) REFERENCES Bank(Branch_ID),
 );
 
 CREATE TABLE BankAccounts (
