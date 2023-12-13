@@ -31,7 +31,6 @@ Create Table Admins (
 CREATE TABLE BankAccounts (
   Account_Number INT AUTO_INCREMENT PRIMARY KEY,
   Customer_ID INT NOT NULL,
-  Admin_ID INT NOT NULL,
   Acc_Name VARCHAR(255) NOT NULL,
   Acc_Status VARCHAR(255) NOT NULL,
   Acc_Amount VARCHAR(255) NOT NULL,
@@ -39,7 +38,6 @@ CREATE TABLE BankAccounts (
   Customer_ID INT NOT NULL,
   Created_At timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
   FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
-  FOREIGN KEY (Admin_ID) REFERENCES Admins(Admin_ID)
 )
 
 CREATE TABLE Notifications (
