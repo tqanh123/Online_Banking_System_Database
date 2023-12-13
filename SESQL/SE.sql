@@ -21,7 +21,6 @@ CREATE TABLE Customers (
 
 Create Table Admins (
   Admin_ID INT AUTO_INCREMENT PRIMARY KEY,
-  Branch_ID INT NOT NULL,
   Name VARCHAR(255) NOT NULL,
   Email VARCHAR(255) NOT NULL,
   Phone INT NOT NULL,
