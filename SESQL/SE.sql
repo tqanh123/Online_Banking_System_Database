@@ -12,7 +12,8 @@ CREATE TABLE Acc_types (
   Description long text NOT NULL,
   Rate DECIMAL(10, 2) NOT NULL,
   FOREIGN KEY (Account_Number) REFERENCES BankAccounts(Account_Number)
-)
+);
+
 CREATE TABLE Customers (
   Customer_ID INT AUTO_INCREMENT PRIMARY KEY,
   Cus_Name VARCHAR(255) NOT NULL,
@@ -22,8 +23,8 @@ CREATE TABLE Customers (
   Gender VARCHAR(10) NOT NULL,
   Address VARCHAR(255) NOT NULL,
   Email VARCHAR(255) NOT NULL,
-  Profile_pic VARCHAR(255) NOT NULL,
-)  
+  Profile_pic VARCHAR(255) NOT NULL
+);
 
 Create Table Admins (
   Admin_ID INT AUTO_INCREMENT PRIMARY KEY,
@@ -31,8 +32,8 @@ Create Table Admins (
   Name VARCHAR(255) NOT NULL,
   Email VARCHAR(255) NOT NULL,
   Phone INT NOT NULL,
-  Profile_Pic VARCHAR(255) NOT NULL
-  FOREIGN KEY (Branch_ID) REFERENCES Bank(Branch_ID),
+  Profile_Pic VARCHAR(255) NOT NULL,
+  FOREIGN KEY (Branch_ID) REFERENCES Bank(Branch_ID)
 );
 
 CREATE TABLE BankAccounts (
@@ -45,7 +46,7 @@ CREATE TABLE BankAccounts (
   Password VARCHAR(255) NOT NULL,  
   Customer_ID INT NOT NULL,
   Created_At timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
-  FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
+  FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID),
   FOREIGN KEY (Admin_ID) REFERENCES Admins(Admin_ID)
 )
 
@@ -60,7 +61,7 @@ CREATE TABLE Card (
     Admin_ID INT,
     Card_Type VARCHAR(50),
     Status VARCHAR(255),
-    FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID),
+    FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID)
 );
 
 CREATE TABLE `Transaction` (
@@ -86,6 +87,3 @@ CREATE TABLE CustomersNotifications (
     FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID),
     FOREIGN KEY (Notification_ID) REFERENCES Notifications(Notification_ID)
 );
-
-
-

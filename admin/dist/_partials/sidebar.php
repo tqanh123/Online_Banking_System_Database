@@ -78,7 +78,7 @@
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-user-tie"></i>
                 <p>
-                   Staff
+                   Admin
                   <i class="fas fa-angle-left right"></i>
                 </p>
               </a>
@@ -86,13 +86,13 @@
                 <li class="nav-item">
                   <a href="add_admin.php" class="nav-link">
                     <i class="fas fa-user-plus nav-icon"></i>
-                    <p>Add Staff</p>
+                    <p>Add Admin</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a href="manage_admin.php" class="nav-link">
                     <i class="fas fa-user-cog nav-icon"></i>
-                    <p>Manage Staff</p>
+                    <p>Manage Admin</p>
                   </a>
                 </li>
               </ul>

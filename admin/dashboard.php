@@ -380,7 +380,7 @@ $admin_id = $_SESSION['admin_id'];
   <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
   <script src="plugins/raphael/raphael.min.js"></script>
   <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
-  <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+  <script src="plugins/jquery-mapael/ /usa_states.min.js"></script>
   <!-- ChartJS -->
   <script src="plugins/chart.js/Chart.min.js"></script>
 
