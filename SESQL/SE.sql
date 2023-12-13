@@ -13,21 +13,6 @@ CREATE TABLE Acc_types (
   Rate DECIMAL(10, 2) NOT NULL,
   FOREIGN KEY (Account_Number) REFERENCES BankAccounts(Account_Number)
 )
-
-CREATE TABLE BankAccounts (
-  Account_Number INT AUTO_INCREMENT PRIMARY KEY,
-  Customer_ID INT NOT NULL,
-  Admin_ID INT NOT NULL,
-  Acc_Name VARCHAR(255) NOT NULL,
-  Acc_Status VARCHAR(255) NOT NULL,
-  Acc_Amount VARCHAR(255) NOT NULL,
-  Password VARCHAR(255) NOT NULL,  
-  Customer_ID INT NOT NULL,
-  Created_At timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
-  FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
-  FOREIGN KEY (Admin_ID) REFERENCES Admins(Admin_ID)
-)
-
 CREATE TABLE Customers (
   Customer_ID INT AUTO_INCREMENT PRIMARY KEY,
   Cus_Name VARCHAR(255) NOT NULL,
@@ -50,9 +35,23 @@ Create Table Admins (
   FOREIGN KEY (Branch_ID) REFERENCES Bank(Branch_ID),
 );
 
+CREATE TABLE BankAccounts (
+  Account_Number INT AUTO_INCREMENT PRIMARY KEY,
+  Customer_ID INT NOT NULL,
+  Admin_ID INT NOT NULL,
+  Acc_Name VARCHAR(255) NOT NULL,
+  Acc_Status VARCHAR(255) NOT NULL,
+  Acc_Amount VARCHAR(255) NOT NULL,
+  Password VARCHAR(255) NOT NULL,  
+  Customer_ID INT NOT NULL,
+  Created_At timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
+  FOREIGN KEY (Admin_ID) REFERENCES Admins(Admin_ID)
+)
+
 CREATE TABLE Notifications (
-  Notification_id INT AUTO_INCREMENT NOT NULL,
-  Notification_details TEXT NOT NULL,
+  Notification_ID INT AUTO_INCREMENT NOT NULL,
+  Notification_Details TEXT NOT NULL,
   Created_At timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6)
 )
 
@@ -70,6 +69,22 @@ CREATE TABLE `Transaction` (
     Amount DECIMAL(10, 2) NOT NULL,
     Transaction_Type VARCHAR(50) NOT NULL,
     FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
+);
+
+CREATE TABLE CustomersCard (
+    Customer_ID INT NOT NULL,
+    Card_ID INT NOT NULL,
+    PRIMARY KEY (Customer_ID, Card_ID),
+    FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID),
+    FOREIGN KEY (Card_ID) REFERENCES Card(Card_ID)
+);
+
+CREATE TABLE CustomersNotifications (
+    Customer_ID INT NOT NULL,
+    Notification_ID INT NOT NULL,
+    PRIMARY KEY (Customer_ID, Notification_ID),
+    FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID),
+    FOREIGN KEY (Notification_ID) REFERENCES Notifications(Notification_ID)
 );
 
 
