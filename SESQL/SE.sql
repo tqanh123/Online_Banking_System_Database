@@ -34,14 +34,14 @@ CREATE TABLE BankAccounts (
   Acc_Amount VARCHAR(255) NOT NULL,
   Password VARCHAR(255) NOT NULL,  
   Customer_ID INT NOT NULL,
-  Created_At timestamp(6),
+  Created_At timestamp,
   FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
 )
 
 CREATE TABLE Notifications (
   Notification_ID INT AUTO_INCREMENT NOT NULL,
   Notification_Details TEXT NOT NULL,
-  Created_At timestamp(6)
+  Created_At timestamp
 )
 
 CREATE TABLE Card (
