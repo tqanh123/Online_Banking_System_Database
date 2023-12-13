@@ -30,7 +30,6 @@ Create Table Admins (
 CREATE TABLE BankAccounts (
   Account_Number INT AUTO_INCREMENT PRIMARY KEY,
   Customer_ID INT NOT NULL,
-  Acc_Name VARCHAR(255) NOT NULL,
   Acc_Status VARCHAR(255) NOT NULL,
   Acc_Amount VARCHAR(255) NOT NULL,
   Password VARCHAR(255) NOT NULL,  
