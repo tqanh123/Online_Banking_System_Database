@@ -1,0 +1,74 @@
+.logo{
+    width: 5%;
+    height: 5%;
+}
+
+body{
+    background: url(\image\Background\background.png);
+    width: 100%;
+    height: 100%;
+    font-family: sans-serif;
+}
+
+.signup{
+    width: 360px;
+    height: 800px;
+    margin: auto;
+    background: aquamarine;
+    border-radius: 20px;
+}
+
+.login{
+    width: 360px;
+    height: 320px;
+    margin: auto;
+    background: aquamarine;
+    border-radius: 20px;
+}
+h1{
+    text-align: center;
+    color:blueviolet;
+}
+h4{
+    text-align: center;
+    padding-top: 15px;
+}
+form{
+    width: 300px;
+    margin-left: 20px;
+    border-radius: 20px;
+
+}
+form label{
+    display: flex;
+    margin-top: 20px;
+    font-size: 18px;
+    border-radius: 20px;
+}
+form input{
+    width: 100%;
+    padding: 7px;
+    border: none;
+    border: 1px solid gray;
+    border-radius: 6px;
+    outline: none;
+}
+input[type="submit"]{
+    width: 320px;
+    height: 35px;
+    margin-top: 20px;
+    border: none;
+    background-color:brown;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+input[type="submit"]:hover{
+    color: white;
+    background: rgb(13, 211, 247);
+}
+p{
+    text-align: center;
+    padding-top: 20px;
+    font-size: 15px;
+}
