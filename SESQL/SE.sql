@@ -1,17 +1,41 @@
 Create Table Bank (
-    Branch_ID INT AUTO_INCREMENT PRIMARY KEY,
-    Address Varchar(255),
-    Branch_City VARCHAR(50),
-    Branch_Name VARCHAR(255)
+    Branch_ID INT(20) AUTO_INCREMENT PRIMARY KEY,
+    Address Varchar(255) NOT NULL,
+    Branch_City VARCHAR(50) NOT NULL,
+    Branch_Name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE Account (
-    Account_ID INT IDENTITY (1,1) PRIMARY KEY,
-    Account_Type VARCHAR(50),
-    Balance DECIMAL(10, 2),
-    Opening_Date DATE,
-    Status VARCHAR(255),
-); 
+CREATE TABLE Acc_types (
+  Acctype_ID INT(20) AUTO_INCREMENT PRIMARY KEY,
+  Account_Number INT(20) NOT NULL,
+  Name VARCHAR(50) NOT NULL,
+  Description long text NOT NULL,
+  Rate Decimal(10, 2) NOT NULL,
+  FOREIGN KEY (Account_Number) REFERENCES BankAccounts(Account_Number)
+)
+
+CREATE TABLE BankAccounts (
+  Account_Number INT(20) AUTO_INCREMENT PRIMARY KEY,
+  Acc_Name VARCHAR(50) NOT NULL,
+  Acc_Status VARCHAR(200) NOT NULL,
+  Acc_Amount VARCHAR(200) NOT NULL,
+  Customer_ID INT(20) NOT NULL,
+  Created_At timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
+)
+
+CREATE TABLE Customers (
+  Customer_ID INT(2O) AUTO_INCREMENT PRIMARY KEY,
+  Cus_Name VARCHAR(200) NOT NULL,
+  National VARCHAR(200) NOT NULL,
+  Phone INT(15) NOT NULL,
+  Date_of_Birth DATE NOT NULL,
+  Gender VARCHAR(10) NOT NULL,
+  Address VARCHAR(200) NOT NULL,
+  Email VARCHAR(200) NOT NULL,
+  Password VARCHAR(200) NOT NULL,
+  Profile_pic VARCHAR(200) NOT NULL,
+)  
 
 Create Table Admin (
     Admin_ID INT IDENTITY (1,1) PRIMARY KEY,
@@ -19,18 +43,6 @@ Create Table Admin (
     Branch_ID INT,
     Name Varchar(255),
     FOREIGN KEY (Branch_ID) REFERENCES Bank(Branch_ID),
-    FOREIGN KEY (Account_ID) REFERENCES Account(Account_ID),
-);
-
-CREATE TABLE Customer (
-    Customer_ID INT IDENTITY(1,1) PRIMARY KEY,
-    Account_ID INT,
-    Name VARCHAR(255),
-    Address VARCHAR(255),
-    Date_of_Birth DATE,
-    Gender VARCHAR(10),
-    Phone VARCHAR(15),
-    Email VARCHAR(255),
     FOREIGN KEY (Account_ID) REFERENCES Account(Account_ID),
 );
 
