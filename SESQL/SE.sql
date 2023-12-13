@@ -6,6 +6,7 @@ CREATE TABLE Acc_types (
   Rate DECIMAL(10, 2) NOT NULL,
   FOREIGN KEY (Account_Number) REFERENCES BankAccounts(Account_Number)
 )
+  
 CREATE TABLE Customers (
   Customer_ID INT AUTO_INCREMENT PRIMARY KEY,
   Cus_Name VARCHAR(255) NOT NULL,
@@ -49,10 +50,8 @@ CREATE TABLE Notifications (
 
 CREATE TABLE Card (
     Card_ID INT AUTO_INCREMENT PRIMARY KEY,
-    Admin_ID INT,
     Card_Type VARCHAR(50),
     Status VARCHAR(255),
-    FOREIGN KEY (Admin_ID) REFERENCES Admin(Admin_ID),
 );
 
 CREATE TABLE `Transaction` (
