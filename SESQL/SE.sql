@@ -1,12 +1,3 @@
-CREATE TABLE Acc_types (
-  Acctype_ID INT AUTO_INCREMENT PRIMARY KEY,
-  Account_Number INT NOT NULL,
-  Name VARCHAR(255) NOT NULL,
-  Description long text NOT NULL,
-  Rate DECIMAL(10, 2) NOT NULL,
-  FOREIGN KEY (Account_Number) REFERENCES BankAccounts(Account_Number)
-)
-  
 CREATE TABLE Customers (
   Customer_ID INT AUTO_INCREMENT PRIMARY KEY,
   Cus_Name VARCHAR(255) NOT NULL,
@@ -21,7 +12,6 @@ CREATE TABLE Customers (
 
 Create Table Admins (
   Admin_ID INT AUTO_INCREMENT PRIMARY KEY,
-  Branch_ID INT NOT NULL,
   Name VARCHAR(255) NOT NULL,
   Email VARCHAR(255) NOT NULL,
   Phone INT NOT NULL,
@@ -35,16 +25,25 @@ CREATE TABLE BankAccounts (
   Acc_Status VARCHAR(255) NOT NULL,
   Acc_Amount VARCHAR(255) NOT NULL,
   Password VARCHAR(255) NOT NULL,  
-  Customer_ID INT NOT NULL,
   Created_At timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
   FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
-)
+);
+
+CREATE TABLE Acc_types (
+  Acctype_ID INT AUTO_INCREMENT PRIMARY KEY,
+  Account_Number INT NOT NULL,
+  Name VARCHAR(255) NOT NULL,
+  Description text NOT NULL,
+  Rate DECIMAL(10, 2) NOT NULL,
+  FOREIGN KEY (Account_Number) REFERENCES BankAccounts(Account_Number)
+);
+  
 
 CREATE TABLE Notifications (
-  Notification_ID INT AUTO_INCREMENT NOT NULL,
+  Notification_ID INT AUTO_INCREMENT PRIMARY KEY,
   Notification_Details TEXT NOT NULL,
   Created_At timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6)
-)
+);
 
 CREATE TABLE Card (
     Card_ID INT AUTO_INCREMENT PRIMARY KEY,

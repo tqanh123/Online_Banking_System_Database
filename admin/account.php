@@ -75,19 +75,14 @@ if (isset($_POST['change_password'])) {
                         <img class='img-fluid'
                         src='dist/img/user_icon.png'
                         alt='User profile picture'>
-
                         ";
                 } else {
                     $profile_picture = "
-
                         <img class=' img-fluid'
                         src='dist/img/$row->profile_pic'
                         alt='User profile picture'>
-
                         ";
                 }
-
-
             ?>
                 <section class="content-header">
                     <div class="container-fluid">

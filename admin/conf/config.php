@@ -2,5 +2,5 @@
     $host="localhost";
     $dbuser="root";
     $dbpass="";
-    $db="ibanking";
+    $db="online_banking";
     $mysqli=new mysqli($host,$dbuser, $dbpass, $db);
