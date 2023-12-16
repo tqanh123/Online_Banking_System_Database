@@ -5,17 +5,17 @@
     -->
   <?php
   $admin_id = $_SESSION['admin_id'];
-  $ret = "SELECT * FROM  `admins`  WHERE admin_id = ? ";
-  $stmt = $mysqli->prepare($ret);
-  $stmt->bind_param('i', $admin_id);
-  $stmt->execute(); //ok
-  $res = $stmt->get_result();
-  while ($row = $res->fetch_object()) {
+  $ret = "SELECT Name, Profile_pic FROM  `Admins`  WHERE Admin_ID = $admin_id ";
+  $res = mysqli_query($mysqli, $ret);
+  $row = mysqli_fetch_assoc($res);
+    $img = $row["Profile_pic"];
     //set automatically logged in user default image if they have not updated their pics
-    if ($row->profile_pic == '') {
-      $profile_picture = "<img src='dist/img/user_icon.png' class='img-circle elevation-2' alt='User Image'>";
+    if ($img == "") {
+      $profile_picture = "<img src='dist/img/user_icon.png' class='img-circle elevation-2' alt='User Image'>
+      ";
     } else {
-      $profile_picture = "<img src='dist/img/$row->profile_pic' class='img-circle elevation-2' alt='User Image'>";
+      $profile_picture = "<img src='dist/img/$img' class='img-circle elevation-2' alt='User Image'>
+      ";
     }
 
     /* Persisit System Settings On Brand */
@@ -35,7 +35,7 @@
             <?php echo $profile_picture; ?>
           </div>
           <div class="info">
-            <a href="#" class="d-block"><?php echo $row->name; ?></a>
+            <a href="#" class="d-block"><?php echo $row['Name']; ?></a>
           </div>
         </div>
 
@@ -295,6 +295,3 @@
       </div>
       <!-- /.sidebar -->
 </aside>
-<?php
-
-  } ?>

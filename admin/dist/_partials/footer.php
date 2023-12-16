@@ -1,11 +1,11 @@
-<?php
+<!-- <?php
 /* Persisit System Settings On Brand */
-$ret = "SELECT * FROM `iB_SystemSettings` ";
-$stmt = $mysqli->prepare($ret);
-$stmt->execute(); //ok
-$res = $stmt->get_result();
-while ($sys = $res->fetch_object()) {
-?>
+// $ret = "SELECT * FROM `iB_SystemSettings` ";
+// $stmt = $mysqli->prepare($ret);
+// $stmt->execute(); //ok
+// $res = $stmt->get_result();
+// while ($sys = $res->fetch_object()) {
+?> -->
   <footer class="main-footer">
     <strong>&copy; 2020-<?php echo date('Y'); ?> - Crafted with 💘 by Martin Mbithi.</strong>
     All rights reserved.
@@ -13,4 +13,4 @@ while ($sys = $res->fetch_object()) {
       <b>Version</b> 2.0.0
     </div>
   </footer>
-<?php } ?>
+<!-- <?php // } ?> -->

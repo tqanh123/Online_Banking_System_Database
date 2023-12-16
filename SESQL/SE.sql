@@ -1,6 +1,7 @@
 CREATE TABLE Customers (
   Customer_ID INT AUTO_INCREMENT PRIMARY KEY,
   Cus_Name VARCHAR(255) NOT NULL,
+  Password VARCHAR(255) NOT NULL,  
   National VARCHAR(255) NOT NULL,
   Phone INT NOT NULL,
   Date_of_Birth DATE NOT NULL,
@@ -15,17 +16,16 @@ Create Table Admins (
   Name VARCHAR(255) NOT NULL,
   Email VARCHAR(255) NOT NULL,
   Phone INT NOT NULL,
+  Password VARCHAR(255) NOT NULL, 
   Profile_Pic VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE BankAccounts (
   Account_Number INT AUTO_INCREMENT PRIMARY KEY,
   Customer_ID INT NOT NULL,
-  Acc_Name VARCHAR(255) NOT NULL,
   Acc_Status VARCHAR(255) NOT NULL,
   Acc_Amount VARCHAR(255) NOT NULL,
-  Password VARCHAR(255) NOT NULL,  
-  Created_At timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+  Created_At timestamp,
   FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
 );
 
@@ -42,10 +42,10 @@ CREATE TABLE Acc_types (
 CREATE TABLE Notifications (
   Notification_ID INT AUTO_INCREMENT PRIMARY KEY,
   Notification_Details TEXT NOT NULL,
-  Created_At timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6)
-);
+  Created_At timestamp
+)
 
-CREATE TABLE Card (
+CREATE TABLE `Card` (
     Card_ID INT AUTO_INCREMENT PRIMARY KEY,
     Card_Type VARCHAR(50),
     Status VARCHAR(255)

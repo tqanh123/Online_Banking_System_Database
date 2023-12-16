@@ -27,20 +27,20 @@ $admin_id = $_SESSION['admin_id'];
 //     */
 
 // //return total number of ibank users
-// $result = "SELECT count(*) FROM iB_users";
-// $stmt = $mysqli->prepare($result);
-// $stmt->execute();
-// $stmt->bind_result($iBusers);
-// $stmt->fetch();
-// $stmt->close();
+$result = "SELECT count(*) FROM customers";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($iBusers);
+$stmt->fetch();
+$stmt->close();
 
 // //return total number of iBank Staffs
-// $result = "SELECT count(*) FROM iB_staff";
-// $stmt = $mysqli->prepare($result);
-// $stmt->execute();
-// $stmt->bind_result($iBStaffs);
-// $stmt->fetch();
-// $stmt->close();
+$result = "SELECT count(*) FROM Admins";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($iBAdmin);
+$stmt->fetch();
+$stmt->close();
 
 // //return total number of iBank Account Types
 // $result = "SELECT count(*) FROM iB_Acc_types";
@@ -115,7 +115,7 @@ $admin_id = $_SESSION['admin_id'];
 
   <div class="wrapper">
     <!-- Navbar -->
-    <!-- <?php //include("dist/_partials/nav.php"); ?> -->
+    <?php include("dist/_partials/nav.php"); ?>
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
@@ -154,7 +154,7 @@ $admin_id = $_SESSION['admin_id'];
                 <div class="info-box-content">
                   <span class="info-box-text">users</span>
                   <span class="info-box-number">
-                    <!-- <?php echo $iBusers; ?> -->
+                    <?php echo $iBusers; ?>
                   </span>
                 </div>
               </div>
@@ -162,18 +162,18 @@ $admin_id = $_SESSION['admin_id'];
             <!-- ./ iBank users -->
 
             <!--iBank Staffs-->
-            <!-- <div class="col-12 col-sm-6 col-md-3">
+            <div class="col-12 col-sm-6 col-md-3">
               <div class="info-box mb-3">
                 <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-user-tie"></i></span>
 
                 <div class="info-box-content">
-                  <span class="info-box-text">Staffs</span>
+                  <span class="info-box-text">Admin</span>
                   <span class="info-box-number">
-                    <?php echo $iBStaffs; ?>
+                    <?php echo $iBAdmin; ?>
                   </span>
                 </div>
               </div>
-            </div> -->
+            </div>
             <!-- ./ iBank Staffs-->
 
             <!-- fix for small devices only -->

@@ -4,37 +4,47 @@ include('conf/config.php');
 include('conf/checklogin.php');
 check_login();
 $admin_id = $_SESSION['admin_id'];
-//update logged in user account
-if (isset($_POST['update_account'])) {
+
+if (isset($_POST['update_client_account'])) {
+    //update client
     $name = $_POST['name'];
-    $admin_id = $_SESSION['admin_id'];
+    $national_id = $_POST['national_id'];
+    $Customer_ID = $_GET['client_number'];
+    $phone = $_POST['phone'];
     $email = $_POST['email'];
-    //insert unto certain table in database
-    $query = "UPDATE `admins`  SET name=?, email=? WHERE  admin_id=?";
+    //$password = sha1(md5($_POST['password']));
+    $address  = $_POST['address'];
+
+    $profile_pic  = $_FILES["profile_pic"]["name"];
+    move_uploaded_file($_FILES["profile_pic"]["tmp_name"], "dist/img/" . $_FILES["profile_pic"]["name"]);
+
+    //Insert Captured information to a database table
+    $query = "UPDATE `Customers` SET Cus_Name=?, national=?, phone=?, email=?, address=?, profile_pic=? WHERE customer_id = ?";
     $stmt = $mysqli->prepare($query);
     //bind paramaters
-    $rc = $stmt->bind_param('ssi', $name, $email, $admin_id);
+    $rc = $stmt->bind_param('ssssssi', $name, $national_id, $phone, $email,  $address, $profile_pic, $Customer_ID);
     $stmt->execute();
+
     //declare a varible which will be passed to alert function
     if ($stmt) {
-        $success = "Account Updated";
+        $success = "User Account Updated";
     } else {
         $err = "Please Try Again Or Try Later";
     }
 }
 //change password
-if (isset($_POST['change_password'])) {
+if (isset($_POST['change_client_password'])) {
     $password = sha1(md5($_POST['password']));
-    $admin_id = $_SESSION['admin_id'];
+    $Customer_ID = $_GET['client_number'];
     //insert unto certain table in database
-    $query = "UPDATE `admins`  SET password=? WHERE  admin_id=?";
+    $query = "UPDATE Customers SET password=? WHERE customer_id=?";
     $stmt = $mysqli->prepare($query);
     //bind paramaters
-    $rc = $stmt->bind_param('si', $password, $admin_id);
+    $rc = $stmt->bind_param('si', $password, $Customer_ID);
     $stmt->execute();
     //declare a varible which will be passed to alert function
     if ($stmt) {
-        $success = "Password Updated";
+        $success = "User Password Updated";
     } else {
         $err = "Please Try Again Or Try Later";
     }
@@ -42,7 +52,6 @@ if (isset($_POST['change_password'])) {
 
 
 ?>
-<!-- Log on to codeastro.com for more projects! -->
 <!DOCTYPE html>
 <html>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
@@ -51,7 +60,7 @@ if (isset($_POST['change_password'])) {
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
     <div class="wrapper">
         <!-- Navbar -->
-        <!-- <?php // include("dist/_partials/nav.php"); ?> -->
+        <?php include("dist/_partials/nav.php"); ?>
         <!-- /.navbar -->
 
         <!-- Main Sidebar Container -->
@@ -61,47 +70,41 @@ if (isset($_POST['change_password'])) {
         <div class="content-wrapper">
             <!-- Content Header with logged in user details (Page header) -->
             <?php
-            $admin_id = $_SESSION['admin_id'];
-            $ret = "SELECT profile_pic, name, email FROM  `admins`  WHERE admin_id = ? ";
+            $Customer_ID = $_GET['client_number'];
+            $ret = "SELECT profile_pic, cus_name, national, phone, email, address FROM  Customers  WHERE Customer_id = ? ";
             $stmt = $mysqli->prepare($ret);
-            $stmt->bind_param('i', $admin_id);
+            $stmt->bind_param('i', $Customer_ID);
             $stmt->execute(); //ok
             $res = $stmt->get_result();
             while ($row = $res->fetch_object()) {
                 //set automatically logged in user default image if they have not updated their pics
                 if ($row->profile_pic == '') {
-                    $profile_picture = "
-
-                        <img class='img-fluid'
-                        src='dist/img/user_icon.png'
-                        alt='User profile picture'>
-                        ";
+                    $profile_picture = " <img class='img-fluid' src='dist/img/user_icon.png' alt='User profile picture'> ";
                 } else {
-                    $profile_picture = "
-                        <img class=' img-fluid'
-                        src='dist/img/$row->profile_pic'
-                        alt='User profile picture'>
-                        ";
+                    $profile_picture = " <img class=' img-fluid' src='dist/img/$row->profile_pic' alt='User profile picture'>";
                 }
+
+
             ?>
                 <section class="content-header">
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1><?php echo $row->name; ?> Profile</h1>
+                                <h1><?php echo $row->cus_name; ?> Profile</h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-                                    <li class="breadcrumb-item"><a href="account.php">Profile</a></li>
-                                    <li class="breadcrumb-item active"><?php echo $row->name; ?></li>
+                                    <li class="breadcrumb-item"><a href="manage_users.php">iBanking User</a></li>
+                                    <li class="breadcrumb-item"><a href="manage_users.php">Manage</a></li>
+                                    <li class="breadcrumb-item active"><?php echo $row->cus_name; ?></li>
                                 </ol>
                             </div>
                         </div>
                     </div><!-- /.container-fluid -->
                 </section>
 
-                <!-- Main content --><!-- Log on to codeastro.com for more projects! -->
+                <!-- Main content -->
                 <section class="content">
                     <div class="container-fluid">
                         <div class="row">
@@ -114,26 +117,69 @@ if (isset($_POST['change_password'])) {
                                             <?php echo $profile_picture; ?>
                                         </div>
 
-                                        <h3 class="profile-username text-center"><?php echo $row->name; ?></h3>
+                                        <h3 class="profile-username text-center"><?php echo $row->cus_name; ?></h3>
 
-                                        <p class="text-muted text-center">@Admin iBanking </p>
+                                        <p class="text-muted text-center">Client @iBanking </p>
 
                                         <ul class="list-group list-group-unbordered mb-3">
+                                            <li class="list-group-item">
+                                                <b>ID No.: </b> <a class="float-right"><?php echo $row->national; ?></a>
+                                            </li>
                                             <li class="list-group-item">
                                                 <b>Email: </b> <a class="float-right"><?php echo $row->email; ?></a>
                                             </li>
                                             <li class="list-group-item">
-                                                <b>Number: </b> <a class="float-right"><?php echo $admin_id ?></a>
+                                                <b>Phone: </b> <a class="float-right"><?php echo $row->phone; ?></a>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <b>Address: </b> <a class="float-right"><?php echo $row->address; ?></a>
                                             </li>
 
                                         </ul>
 
-                                    </div><!-- Log on to codeastro.com for more projects! -->
+                                    </div>
                                     <!-- /.card-body -->
                                 </div>
                                 <!-- /.card -->
 
-                              
+                                <!-- About Me Box 
+                    <div class="card card-purple">
+                    <div class="card-header">
+                        <h3 class="card-title">About Me</h3>
+                    </div>
+                    <div class="card-body">
+                        <strong><i class="fas fa-book mr-1"></i> Education</strong>
+
+                        <p class="text-muted">
+                        B.S. in Computer Science from the University of Tennessee at Knoxville
+                        </p>
+
+                        <hr>
+
+                        <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+
+                        <p class="text-muted">Malibu, California</p>
+
+                        <hr>
+
+                        <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+
+                        <p class="text-muted">
+                        <span class="tag tag-danger">UI Design</span>
+                        <span class="tag tag-success">Coding</span>
+                        <span class="tag tag-info">Javascript</span>
+                        <span class="tag tag-warning">PHP</span>
+                        <span class="tag tag-primary">Node.js</span>
+                        </p>
+
+                        <hr>
+
+                        <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+
+                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+                    </div>
+                    </div>
+                    <!-- /.card -->
                             </div>
 
                             <!-- /.col -->
@@ -149,11 +195,11 @@ if (isset($_POST['change_password'])) {
                                         <div class="tab-content">
                                             <!-- / Update Profile -->
                                             <div class="tab-pane active" id="update_Profile">
-                                                <form method="post" class="form-horizontal">
+                                                <form method="post" enctype="multipart/form-data" class="form-horizontal">
                                                     <div class="form-group row">
                                                         <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" name="name" required class="form-control" value="<?php echo $row->name; ?>" id="inputName">
+                                                            <input type="text" name="name" required class="form-control" value="<?php echo $row->cus_name; ?>" id="inputName">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
@@ -163,14 +209,35 @@ if (isset($_POST['change_password'])) {
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
-                                                        <label for="inputName2" class="col-sm-2 col-form-label">Number</label>
+                                                        <label for="inputName2" class="col-sm-2 col-form-label">Contact</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" required readonly name="number" value="<?php echo $admin_id ?>" id="inputName2">
+                                                            <input type="text" class="form-control" required name="phone" value="<?php echo $row->phone; ?>" id="inputName2">
                                                         </div>
-                                                    </div><!-- Log on to codeastro.com for more projects! -->
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="inputName2" class="col-sm-2 col-form-label">National</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" required readonly name="national_id" value="<?php echo $row->national; ?>" id="inputName2">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="inputName2" class="col-sm-2 col-form-label">Address</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" required name="address" value="<?php echo $row->address; ?>" id="inputName2">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="inputName2" class="col-sm-2 col-form-label">Profile Picture</label>
+                                                        <div class="input-group col-sm-10">
+                                                            <div class="custom-file">
+                                                                <input type="file" name="profile_pic" class=" form-control custom-file-input" id="exampleInputFile">
+                                                                <label class="custom-file-label  col-form-label" for="exampleInputFile">Choose file</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="form-group row">
                                                         <div class="offset-sm-2 col-sm-10">
-                                                            <button name="update_account" type="submit" class="btn btn-outline-success">Update Account</button>
+                                                            <button name="update_client_account" type="submit" class="btn btn-outline-success">Update Account</button>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -199,7 +266,7 @@ if (isset($_POST['change_password'])) {
                                                     </div>
                                                     <div class="form-group row">
                                                         <div class="offset-sm-2 col-sm-10">
-                                                            <button type="submit" name="change_password" class="btn btn-outline-success">Change Password</button>
+                                                            <button type="submit" name="change_client_password" class="btn btn-outline-success">Change Password</button>
                                                         </div>
                                                     </div>
 
@@ -220,7 +287,7 @@ if (isset($_POST['change_password'])) {
                 <!-- /.content -->
 
             <?php } ?>
-        </div><!-- Log on to codeastro.com for more projects! -->
+        </div>
         <!-- /.content-wrapper -->
         <?php include("dist/_partials/footer.php"); ?>
 

@@ -25,8 +25,8 @@
       <a class="nav-link" data-toggle="dropdown" href="#">
         <i class="far fa-bell"></i>
         <?php
-        //code for summing up notifications
-        $result = "SELECT count(*) FROM iB_notifications";
+        //code for summing up notifications 
+        $result = "SELECT count(*) FROM Notifications";
         $stmt = $mysqli->prepare($result);
         $stmt->execute();
         $stmt->bind_result($ntf);
@@ -40,7 +40,7 @@
         <a href="#" class="dropdown-item">
           <!-- Message Start -->
           <?php
-          $ret = "SELECT * FROM  iB_notifications  ";
+          $ret = "SELECT * FROM  Notifications";
           $stmt = $mysqli->prepare($ret);
           $stmt->execute(); //ok
           $res = $stmt->get_result();

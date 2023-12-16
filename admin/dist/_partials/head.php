@@ -1,16 +1,8 @@
-<?php
-/* Persisit System Settings On Brand */
-$ret = "SELECT * FROM `iB_SystemSettings` ";
-$stmt = $mysqli->prepare($ret);
-$stmt->execute(); //ok
-$res = $stmt->get_result();
-while ($sys = $res->fetch_object()) {
-?>
 
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title><?php echo $sys->sys_name; ?> - <?php echo $sys->sys_tagline; ?></title>
+        <title>Online Banking - Financial success at every service we offer.</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- overlayScrollbars -->
@@ -30,7 +22,7 @@ while ($sys = $res->fetch_object()) {
         <!--load swal js -->
         <script src="dist/js/swal.js"></script>
         <!-- Favicon -->
-        <link rel="icon" type="image/png" sizes="16x16" href="dist/img/<?php echo $sys->sys_logo; ?>">
+        <link rel="icon" type="image/png" sizes="16x16" href="dist/img/ibankinglg.png">
         <!-- Data Tables CSS -->
         <link rel="stylesheet" type="text/css" href="plugins/datatable/custom_dt_html5.css">
 
@@ -116,4 +108,3 @@ while ($sys = $res->fetch_object()) {
         </script>
         
     </head>
-<?php } ?>
