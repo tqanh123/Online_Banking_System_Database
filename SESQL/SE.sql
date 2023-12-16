@@ -15,6 +15,7 @@ Create Table Admins (
   Admin_ID INT AUTO_INCREMENT PRIMARY KEY,
   Name VARCHAR(255) NOT NULL,
   Email VARCHAR(255) NOT NULL,
+  Password VARCHAR(255) NOT NULL,  
   Phone INT NOT NULL,
   Password VARCHAR(255) NOT NULL, 
   Profile_Pic VARCHAR(255) NOT NULL
@@ -45,11 +46,6 @@ CREATE TABLE Notifications (
   Created_At timestamp
 )
 
-CREATE TABLE `Card` (
-    Card_ID INT AUTO_INCREMENT PRIMARY KEY,
-    Card_Type VARCHAR(50),
-    Status VARCHAR(255)
-);
 
 CREATE TABLE `Transaction` (
     Transaction_ID INT AUTO_INCREMENT PRIMARY KEY,
@@ -57,14 +53,6 @@ CREATE TABLE `Transaction` (
     Amount DECIMAL(10, 2) NOT NULL,
     Transaction_Type VARCHAR(50) NOT NULL,
     FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
-);
-
-CREATE TABLE CustomersCard (
-    Customer_ID INT NOT NULL,
-    Card_ID INT NOT NULL,
-    PRIMARY KEY (Customer_ID, Card_ID),
-    FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID),
-    FOREIGN KEY (Card_ID) REFERENCES Card(Card_ID)
 );
 
 CREATE TABLE CustomersNotifications (
