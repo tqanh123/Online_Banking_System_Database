@@ -17,7 +17,6 @@ Create Table Admins (
   Email VARCHAR(255) NOT NULL,
   Password VARCHAR(255) NOT NULL,  
   Phone INT NOT NULL,
-  Password VARCHAR(255) NOT NULL, 
   Profile_Pic VARCHAR(255) NOT NULL
 );
 
@@ -44,8 +43,7 @@ CREATE TABLE Notifications (
   Notification_ID INT AUTO_INCREMENT PRIMARY KEY,
   Notification_Details TEXT NOT NULL,
   Created_At timestamp
-)
-
+);
 
 CREATE TABLE `Transactions` (
     Transaction_ID INT AUTO_INCREMENT PRIMARY KEY,
