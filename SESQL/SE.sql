@@ -23,22 +23,22 @@ Create Table Admins (
 
 CREATE TABLE BankAccounts (
   Account_Number INT AUTO_INCREMENT PRIMARY KEY,
+  Acc_Name VARCHAR(255) NOT NULL,
   Customer_ID INT NOT NULL,
   Acc_Status VARCHAR(255) NOT NULL,
   Acc_Amount VARCHAR(255) NOT NULL,
   Created_At timestamp,
+  Acctype_ID INT,
+  FOREIGN KEY (Acctype_ID) REFERENCES Acc_types(Acctype_ID),
   FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
 );
 
 CREATE TABLE Acc_types (
   Acctype_ID INT AUTO_INCREMENT PRIMARY KEY,
-  Account_Number INT NOT NULL,
   Name VARCHAR(255) NOT NULL,
   Description text NOT NULL,
-  Rate DECIMAL(10, 2) NOT NULL,
-  FOREIGN KEY (Account_Number) REFERENCES BankAccounts(Account_Number)
+  Rate DECIMAL(10, 2) NOT NULL
 );
-  
 
 CREATE TABLE Notifications (
   Notification_ID INT AUTO_INCREMENT PRIMARY KEY,

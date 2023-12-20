@@ -42,67 +42,67 @@ $stmt->bind_result($iBAdmin);
 $stmt->fetch();
 $stmt->close();
 
-// //return total number of iBank Account Types
-// $result = "SELECT count(*) FROM iB_Acc_types";
-// $stmt = $mysqli->prepare($result);
-// $stmt->execute();
-// $stmt->bind_result($iB_AccsType);
-// $stmt->fetch();
-// $stmt->close();
+//return total number of iBank Account Types
+$result = "SELECT count(*) FROM Acc_types";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($iB_AccsType);
+$stmt->fetch();
+$stmt->close();
 
 // //return total number of iBank Accounts
-// $result = "SELECT count(*) FROM iB_bankAccounts";
-// $stmt = $mysqli->prepare($result);
-// $stmt->execute();
-// $stmt->bind_result($iB_Accs);
-// $stmt->fetch();
-// $stmt->close();
+$result = "SELECT count(*) FROM bankAccounts";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($iB_Accs);
+$stmt->fetch();
+$stmt->close();
 
 // //return total number of iBank Deposits
-// $result = "SELECT SUM(transaction_amt) FROM iB_Transactions WHERE  tr_type = 'Deposit' ";
-// $stmt = $mysqli->prepare($result);
-// $stmt->execute();
-// $stmt->bind_result($iB_deposits);
-// $stmt->fetch();
-// $stmt->close();
+$result = "SELECT SUM(Amount) FROM `Transaction` WHERE transaction_type = 'Deposit' ";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($iB_deposits);
+$stmt->fetch();
+$stmt->close();
 
 // //return total number of iBank Withdrawals
-// $result = "SELECT SUM(transaction_amt) FROM iB_Transactions WHERE  tr_type = 'Withdrawal' ";
-// $stmt = $mysqli->prepare($result);
-// $stmt->execute();
-// $stmt->bind_result($iB_withdrawal);
-// $stmt->fetch();
-// $stmt->close();
+$result = "SELECT SUM(Amount) FROM `Transaction` WHERE transaction_type = 'Withdrawal' ";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($iB_withdrawal);
+$stmt->fetch();
+$stmt->close();
 
 
 
 // //return total number of iBank Transfers
-// $result = "SELECT SUM(transaction_amt) FROM iB_Transactions WHERE  tr_type = 'Transfer' ";
-// $stmt = $mysqli->prepare($result);
-// $stmt->execute();
-// $stmt->bind_result($iB_Transfers);
-// $stmt->fetch();
-// $stmt->close();
+$result = "SELECT SUM(Amount) FROM `Transaction` WHERE  transaction_type = 'Transfer' ";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($iB_Transfers);
+$stmt->fetch();
+$stmt->close();
 
 // //return total number of  iBank initial cash->balances
-// $result = "SELECT SUM(transaction_amt) FROM iB_Transactions ";
-// $stmt = $mysqli->prepare($result);
-// $stmt->execute();
-// $stmt->bind_result($acc_amt);
-// $stmt->fetch();
-// $stmt->close();
-// //Get the remaining money in the accounts
-// $TotalBalInAccount = ($iB_deposits)  - (($iB_withdrawal) + ($iB_Transfers));
+$result = "SELECT SUM(Amount) FROM `Transaction` ";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($acc_amt);
+$stmt->fetch();
+$stmt->close();
+//Get the remaining money in the accounts
+$TotalBalInAccount = ($iB_deposits)  - (($iB_withdrawal) + ($iB_Transfers));
 
 
 // //ibank money in the wallet
-// $result = "SELECT SUM(transaction_amt) FROM iB_Transactions ";
-// $stmt = $mysqli->prepare($result);
-// $stmt->execute();
-// $stmt->bind_result($new_amt);
-// $stmt->fetch();
-// $stmt->close();
-// //Withdrawal Computations
+$result = "SELECT SUM(Amount) FROM `Transaction` ";
+$stmt = $mysqli->prepare($result);
+$stmt->execute();
+$stmt->bind_result($new_amt);
+$stmt->fetch();
+$stmt->close();
+//Withdrawal Computations
 
 ?>
 <!-- Log on to codeastro.com for more projects! -->
@@ -185,7 +185,7 @@ $stmt->close();
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-briefcase"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">Account Types</span>
-                  <!-- <span class="info-box-number"><?php echo $iB_AccsType; ?></span> -->
+                  <span class="info-box-number"><?php echo $iB_AccsType; ?></span>
                 </div>
               </div>
             </div>
@@ -197,7 +197,7 @@ $stmt->close();
                 <span class="info-box-icon bg-purple elevation-1"><i class="fas fa-users"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">Accounts</span>
-                  <!-- <span class="info-box-number"><?php echo $iB_Accs; ?></span> -->
+                  <span class="info-box-number"><?php echo $iB_Accs; ?></span>
                 </div>
               </div>
             </div>
@@ -212,7 +212,7 @@ $stmt->close();
                 <div class="info-box-content">
                   <span class="info-box-text">Deposits</span>
                   <span class="info-box-number">
-                    <!-- $ <?php echo $iB_deposits; ?> -->
+                    $ <?php echo $iB_deposits; ?>
                   </span>
                 </div>
               </div>
@@ -226,7 +226,7 @@ $stmt->close();
 
                 <div class="info-box-content">
                   <span class="info-box-text">Withdrawals</span>
-                  <!-- <span class="info-box-number">$ <?php echo $iB_withdrawal; ?> </span> -->
+                  <span class="info-box-number">$ <?php echo $iB_withdrawal; ?> </span>
                 </div>
               </div>
             </div>
@@ -241,7 +241,7 @@ $stmt->close();
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-random"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">Transfers</span>
-                  <!-- <span class="info-box-number">$ <?php echo $iB_Transfers; ?></span> -->
+                  <span class="info-box-number">$ <?php echo $iB_Transfers; ?></span>
                 </div>
               </div>
             </div>
@@ -253,7 +253,7 @@ $stmt->close();
                 <span class="info-box-icon bg-purple elevation-1"><i class="fas fa-money-bill-alt"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">Wallet Balance</span>
-                  <!-- <span class="info-box-number">$ <?php echo $TotalBalInAccount; ?></span> -->
+                  <span class="info-box-number">$ <?php echo $TotalBalInAccount; ?></span>
                 </div>
               </div>
             </div>
@@ -490,7 +490,7 @@ $stmt->close();
         exportEnabled: false,
         animationEnabled: true,
         title: {
-          text: "Transactions"
+          text: "`Transaction`"
         },
         legend: {
           cursor: "pointer",
@@ -503,8 +503,8 @@ $stmt->close();
           indexLabel: "{name} - {y}%",
           dataPoints: [{
               y: <?php
-                  //return total number of transactions under  Withdrawals
-                  $result = "SELECT count(*) FROM iB_Transactions WHERE  tr_type ='Withdrawal' ";
+                  //return total number of `transaction` under  Withdrawals
+                  $result = "SELECT count(*) FROM `Transaction` WHERE  transaction_type ='Withdrawal' ";
                   $stmt = $mysqli->prepare($result);
                   $stmt->execute();
                   $stmt->bind_result($Withdrawals);
@@ -518,8 +518,8 @@ $stmt->close();
 
             {
               y: <?php
-                  //return total number of transactions under  Deposits
-                  $result = "SELECT count(*) FROM iB_Transactions WHERE  tr_type ='Deposit' ";
+                  //return total number of `transaction` under  Deposits
+                  $result = "SELECT count(*) FROM `Transaction` WHERE  transaction_type ='Deposit' ";
                   $stmt = $mysqli->prepare($result);
                   $stmt->execute();
                   $stmt->bind_result($Deposits);
@@ -533,8 +533,8 @@ $stmt->close();
 
             {
               y: <?php
-                  //return total number of transactions under  Deposits
-                  $result = "SELECT count(*) FROM iB_Transactions WHERE  tr_type ='Transfer' ";
+                  //return total number of `transaction` under  Deposits
+                  $result = "SELECT count(*) FROM `Transaction` WHERE  transaction_type ='Transfer' ";
                   $stmt = $mysqli->prepare($result);
                   $stmt->execute();
                   $stmt->bind_result($Transfers);

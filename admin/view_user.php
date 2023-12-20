@@ -74,7 +74,7 @@ if (isset($_POST['change_client_password'])) {
             $ret = "SELECT profile_pic, cus_name, national, phone, email, address FROM  Customers  WHERE Customer_id = ? ";
             $stmt = $mysqli->prepare($ret);
             $stmt->bind_param('i', $Customer_ID);
-            $stmt->execute(); //ok
+            $stmt->execute(); 
             $res = $stmt->get_result();
             while ($row = $res->fetch_object()) {
                 //set automatically logged in user default image if they have not updated their pics
