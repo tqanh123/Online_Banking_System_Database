@@ -47,7 +47,7 @@ CREATE TABLE Notifications (
 )
 
 
-CREATE TABLE `Transaction` (
+CREATE TABLE `Transactions` (
     Transaction_ID INT AUTO_INCREMENT PRIMARY KEY,
     Customer_ID INT NOT NULL,
     Amount DECIMAL(10, 2) NOT NULL,
