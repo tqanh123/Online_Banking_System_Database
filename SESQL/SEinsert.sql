@@ -113,7 +113,7 @@ INSERT INTO Admins (Name, Email, Password, Phone, Profile_Pic) VALUES
 ('Admin6', 'admin6@gmail.com', '$2y$10$A4ZMlh3d8nO6CzHa/EiWLuHFIN3wK9H5hOLU.A0wR/4s932oEwtBu', 1233456778, 'admin6_pic.jpg'),
 ('Admin7', 'admin7@gmail.com', '$2y$10$ypal0nOQ2nSjz7y1brAAPSopYb2Cvg1TEBCPjqJxIBxUSkczvt7pC', 7788777777, 'admin7_pic.jpg'),
 ('Admin8', 'admin8@gmail.com', '$2y$10$VuNc90My13xcH9trMJC4YuTO.jTGZknxB4rRBc32PGA2VWlfw10Fe', 4444433333, 'admin8_pic.jpg'),
-('Admin9', 'admin9@gmail.com', '$2y$10$ypal0nOQ2nSjz7y1brAAPSopYb2Cvg1TEBCPjqJxIBxUSkczvt7pC'3333344444, 'admin9_pic.jpg'),
+('Admin9', 'admin9@gmail.com', '$2y$10$ypal0nOQ2nSjz7y1brAAPSopYb2Cvg1TEBCPjqJxIBxUSkczvt7pC', 3333344444, 'admin9_pic.jpg'),
 ('Admin10', 'admin10@gmail.com', '$2y$10$A4ZMlh3d8nO6CzHa/E9NKHWLuHFIN3wK9H5hOLU.A0wR/4s932oEwtBu', 4445588990, 'admin10_pic.jpg'),
 ('Admin11', 'admin11@gmail.com', '$2y$10$VuNc90My13xcH9trMJC4YuTO.jTGZknxB4rRBc32PGA2VWlfw10Fe', 0901998908, 'admin11_pic.jpg'),
 ('Admin12', 'admin12@gmail.com', '$2y$10$VuNc90My13xcH9trMJC4YuTO.jTGZknxB4rRBc32PGA2VWlfw10Fe', 0899883775, 'admin12_pic.jpg'),
