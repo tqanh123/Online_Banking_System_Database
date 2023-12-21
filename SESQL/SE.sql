@@ -72,7 +72,7 @@ CREATE TABLE `Transactions` (
     Customer_ID INT NOT NULL,
     Amount DECIMAL(10, 2) NOT NULL,
     Transaction_Type VARCHAR(50) NOT NULL,
-    Created_At
+    Created_At timestamp, 
     FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
 );
 
