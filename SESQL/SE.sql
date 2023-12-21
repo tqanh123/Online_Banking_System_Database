@@ -39,6 +39,16 @@ CREATE TABLE Acc_types (
   Rate DECIMAL(10, 2) NOT NULL
 );
 
+CREATE TABLE Loans (
+  Loan_ID INT AUTO_INCREMENT PRIMARY KEY,
+  Customer_ID INT NOT NULL,
+  Loan_Amount DECIMAL(10, 2) NOT NULL,
+  Interest_Rate DECIMAL(4, 2) NOT NULL,
+  Loan_Term INT NOT NULL,
+  Start_Date DATE NOT NULL,
+  Status VARCHAR(20) NOT NULL
+);
+
 CREATE TABLE Notifications (
   Notification_ID INT AUTO_INCREMENT PRIMARY KEY,
   Notification_Details TEXT NOT NULL,
@@ -50,7 +60,16 @@ CREATE TABLE `Transactions` (
     Customer_ID INT NOT NULL,
     Amount DECIMAL(10, 2) NOT NULL,
     Transaction_Type VARCHAR(50) NOT NULL,
+    Created_At
     FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
+);
+
+CREATE TABLE CustomerLoans (
+  CustomerLoan_ID INT AUTO_INCREMENT PRIMARY KEY,
+  Customer_ID INT,
+  Loan_ID INT,
+  FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID),
+  FOREIGN KEY (Loan_ID) REFERENCES Loans(Loan_ID)
 );
 
 CREATE TABLE CustomersNotifications (
