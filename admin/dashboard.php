@@ -59,7 +59,7 @@ $stmt->fetch();
 $stmt->close();
 
 // //return total number of iBank Deposits
-$result = "SELECT SUM(Amount) FROM `Transaction` WHERE transaction_type = 'Deposit' ";
+$result = "SELECT SUM(Amount) FROM `Transactions` WHERE transaction_type = 'Deposit' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($iB_deposits);
@@ -67,7 +67,7 @@ $stmt->fetch();
 $stmt->close();
 
 // //return total number of iBank Withdrawals
-$result = "SELECT SUM(Amount) FROM `Transaction` WHERE transaction_type = 'Withdrawal' ";
+$result = "SELECT SUM(Amount) FROM `Transactions` WHERE transaction_type = 'Withdrawal' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($iB_withdrawal);
@@ -77,7 +77,7 @@ $stmt->close();
 
 
 // //return total number of iBank Transfers
-$result = "SELECT SUM(Amount) FROM `Transaction` WHERE  transaction_type = 'Transfer' ";
+$result = "SELECT SUM(Amount) FROM `Transactions` WHERE  transaction_type = 'Transfer' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($iB_Transfers);
@@ -85,7 +85,7 @@ $stmt->fetch();
 $stmt->close();
 
 // //return total number of  iBank initial cash->balances
-$result = "SELECT SUM(Amount) FROM `Transaction` ";
+$result = "SELECT SUM(Amount) FROM `Transactions` ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($acc_amt);
@@ -96,7 +96,7 @@ $TotalBalInAccount = ($iB_deposits)  - (($iB_withdrawal) + ($iB_Transfers));
 
 
 // //ibank money in the wallet
-$result = "SELECT SUM(Amount) FROM `Transaction` ";
+$result = "SELECT SUM(Amount) FROM `Transactions` ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
 $stmt->bind_result($new_amt);
@@ -490,7 +490,7 @@ $stmt->close();
         exportEnabled: false,
         animationEnabled: true,
         title: {
-          text: "`Transaction`"
+          text: "`Transactions`"
         },
         legend: {
           cursor: "pointer",
@@ -503,8 +503,8 @@ $stmt->close();
           indexLabel: "{name} - {y}%",
           dataPoints: [{
               y: <?php
-                  //return total number of `transaction` under  Withdrawals
-                  $result = "SELECT count(*) FROM `Transaction` WHERE  transaction_type ='Withdrawal' ";
+                  //return total number of `transactions` under  Withdrawals
+                  $result = "SELECT count(*) FROM `Transactions` WHERE  transaction_type ='Withdrawal' ";
                   $stmt = $mysqli->prepare($result);
                   $stmt->execute();
                   $stmt->bind_result($Withdrawals);
@@ -518,8 +518,8 @@ $stmt->close();
 
             {
               y: <?php
-                  //return total number of `transaction` under  Deposits
-                  $result = "SELECT count(*) FROM `Transaction` WHERE  transaction_type ='Deposit' ";
+                  //return total number of `transactions` under  Deposits
+                  $result = "SELECT count(*) FROM `Transactions` WHERE  transaction_type ='Deposit' ";
                   $stmt = $mysqli->prepare($result);
                   $stmt->execute();
                   $stmt->bind_result($Deposits);
@@ -533,8 +533,8 @@ $stmt->close();
 
             {
               y: <?php
-                  //return total number of `transaction` under  Deposits
-                  $result = "SELECT count(*) FROM `Transaction` WHERE  transaction_type ='Transfer' ";
+                  //return total number of `transactions` under  Deposits
+                  $result = "SELECT count(*) FROM `Transactions` WHERE  transaction_type ='Transfer' ";
                   $stmt = $mysqli->prepare($result);
                   $stmt->execute();
                   $stmt->bind_result($Transfers);

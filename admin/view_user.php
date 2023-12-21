@@ -19,7 +19,7 @@ if (isset($_POST['update_client_account'])) {
     move_uploaded_file($_FILES["profile_pic"]["tmp_name"], "dist/img/" . $_FILES["profile_pic"]["name"]);
 
     //Insert Captured information to a database table
-    $query = "UPDATE `Customers` SET Cus_Name=?, national=?, phone=?, email=?, address=?, profile_pic=? WHERE customer_id = ?";
+    $query = "UPDATE `Customers` SET Cus_Name=?, National=?, Phone=?, Email=?, Address=?, Profile_pic=? WHERE customer_id = ?";
     $stmt = $mysqli->prepare($query);
     //bind paramaters
     $rc = $stmt->bind_param('ssssssi', $name, $national_id, $phone, $email,  $address, $profile_pic, $Customer_ID);
@@ -71,17 +71,17 @@ if (isset($_POST['change_client_password'])) {
             <!-- Content Header with logged in user details (Page header) -->
             <?php
             $Customer_ID = $_GET['client_number'];
-            $ret = "SELECT profile_pic, cus_name, national, phone, email, address FROM  Customers  WHERE Customer_id = ? ";
+            $ret = "SELECT * FROM  Customers  WHERE Customer_id = ? ";
             $stmt = $mysqli->prepare($ret);
             $stmt->bind_param('i', $Customer_ID);
             $stmt->execute(); 
             $res = $stmt->get_result();
             while ($row = $res->fetch_object()) {
                 //set automatically logged in user default image if they have not updated their pics
-                if ($row->profile_pic == '') {
+                if ($row->Profile_pic == '') {
                     $profile_picture = " <img class='img-fluid' src='dist/img/user_icon.png' alt='User profile picture'> ";
                 } else {
-                    $profile_picture = " <img class=' img-fluid' src='dist/img/$row->profile_pic' alt='User profile picture'>";
+                    $profile_picture = " <img class='img-fluid' src='dist/img/$row->Profile_pic' alt='User profile picture'>";
                 }
 
 
@@ -90,14 +90,14 @@ if (isset($_POST['change_client_password'])) {
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1><?php echo $row->cus_name; ?> Profile</h1>
+                                <h1><?php echo $row->Cus_Name; ?> Profile</h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
                                     <li class="breadcrumb-item"><a href="manage_users.php">iBanking User</a></li>
                                     <li class="breadcrumb-item"><a href="manage_users.php">Manage</a></li>
-                                    <li class="breadcrumb-item active"><?php echo $row->cus_name; ?></li>
+                                    <li class="breadcrumb-item active"><?php echo $row->Cus_Name; ?></li>
                                 </ol>
                             </div>
                         </div>
@@ -117,22 +117,22 @@ if (isset($_POST['change_client_password'])) {
                                             <?php echo $profile_picture; ?>
                                         </div>
 
-                                        <h3 class="profile-username text-center"><?php echo $row->cus_name; ?></h3>
+                                        <h3 class="profile-username text-center"><?php echo $row->Cus_Name; ?></h3>
 
-                                        <p class="text-muted text-center">Client @iBanking </p>
+                                        <p class="text-muted text-center">User iBanking </p>
 
                                         <ul class="list-group list-group-unbordered mb-3">
                                             <li class="list-group-item">
-                                                <b>ID No.: </b> <a class="float-right"><?php echo $row->national; ?></a>
+                                                <b>ID No.: </b> <a class="float-right"><?php echo $row->National; ?></a>
                                             </li>
                                             <li class="list-group-item">
-                                                <b>Email: </b> <a class="float-right"><?php echo $row->email; ?></a>
+                                                <b>Email: </b> <a class="float-right"><?php echo $row->Email; ?></a>
                                             </li>
                                             <li class="list-group-item">
-                                                <b>Phone: </b> <a class="float-right"><?php echo $row->phone; ?></a>
+                                                <b>Phone: </b> <a class="float-right"><?php echo $row->Phone; ?></a>
                                             </li>
                                             <li class="list-group-item">
-                                                <b>Address: </b> <a class="float-right"><?php echo $row->address; ?></a>
+                                                <b>Address: </b> <a class="float-right"><?php echo $row->Address; ?></a>
                                             </li>
 
                                         </ul>
@@ -199,31 +199,31 @@ if (isset($_POST['change_client_password'])) {
                                                     <div class="form-group row">
                                                         <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" name="name" required class="form-control" value="<?php echo $row->cus_name; ?>" id="inputName">
+                                                            <input type="text" name="name" required class="form-control" value="<?php echo $row->Cus_Name; ?>" id="inputName">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
                                                         <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
                                                         <div class="col-sm-10">
-                                                            <input type="email" name="email" required value="<?php echo $row->email; ?>" class="form-control" id="inputEmail">
+                                                            <input type="email" name="email" required value="<?php echo $row->Email; ?>" class="form-control" id="inputEmail">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
                                                         <label for="inputName2" class="col-sm-2 col-form-label">Contact</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" required name="phone" value="<?php echo $row->phone; ?>" id="inputName2">
+                                                            <input type="text" class="form-control" required name="phone" value="<?php echo $row->Phone; ?>" id="inputName2">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
                                                         <label for="inputName2" class="col-sm-2 col-form-label">National</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" required readonly name="national_id" value="<?php echo $row->national; ?>" id="inputName2">
+                                                            <input type="text" class="form-control" required readonly name="national_id" value="<?php echo $row->National; ?>" id="inputName2">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">
                                                         <label for="inputName2" class="col-sm-2 col-form-label">Address</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" required name="address" value="<?php echo $row->address; ?>" id="inputName2">
+                                                            <input type="text" class="form-control" required name="address" value="<?php echo $row->Address; ?>" id="inputName2">
                                                         </div>
                                                     </div>
                                                     <div class="form-group row">

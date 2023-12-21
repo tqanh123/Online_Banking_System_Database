@@ -42,21 +42,19 @@ CREATE TABLE Acc_types (
 CREATE TABLE Notifications (
   Notification_ID INT AUTO_INCREMENT PRIMARY KEY,
   Notification_Details TEXT NOT NULL,
-  Created_At timestamp
+  Customer_ID INT NOT NULL,
+  Created_At timestamp,
+  FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
 );
 
 CREATE TABLE `Transactions` (
     Transaction_ID INT AUTO_INCREMENT PRIMARY KEY,
     Customer_ID INT NOT NULL,
+    Account_Id INT NOT NULL,
     Amount DECIMAL(10, 2) NOT NULL,
     Transaction_Type VARCHAR(50) NOT NULL,
+    Created_At timestamp,
+    FOREIGN KEY (Account_ID) REFERENCES BankAccounts(Account_Number),
     FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
 );
 
-CREATE TABLE CustomersNotifications (
-    Customer_ID INT NOT NULL,
-    Notification_ID INT NOT NULL,
-    PRIMARY KEY (Customer_ID, Notification_ID),
-    FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID),
-    FOREIGN KEY (Notification_ID) REFERENCES Notifications(Notification_ID)
-);
