@@ -73,9 +73,9 @@ CREATE TABLE CustomerLoans (
 );
 
 CREATE TABLE CustomersNotifications (
+    CustomersNotifications INT AUTO_INCREMENT PRIMARY KEY,
     Customer_ID INT NOT NULL,
     Notification_ID INT NOT NULL,
-    PRIMARY KEY (Customer_ID, Notification_ID),
     FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID),
     FOREIGN KEY (Notification_ID) REFERENCES Notifications(Notification_ID)
 );
