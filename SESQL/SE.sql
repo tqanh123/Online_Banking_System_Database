@@ -55,7 +55,7 @@ CREATE TABLE Loans (
   Loan_Term INT NOT NULL,
   Start_Date DATE NOT NULL,
   Status VARCHAR(20) NOT NULL,
-  Installment BOOLEAN,
+  Installment INT,
   FOREIGN KEY Customer_ID REFERENCES Customers(Customer_ID),
   FOREIGN KEY LoanType_ID REFERENCES LoanTypes(LoanType_ID)
 );
