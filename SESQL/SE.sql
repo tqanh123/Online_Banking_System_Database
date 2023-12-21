@@ -41,6 +41,7 @@ CREATE TABLE Acc_types (
 
 CREATE TABLE Loans (
   Loan_ID INT AUTO_INCREMENT PRIMARY KEY,
+  LoanType_ID INT PRIMARY KEY,
   Customer_ID INT NOT NULL,
   Loan_Amount DECIMAL(10, 2) NOT NULL,
   Loan_Term INT NOT NULL,
@@ -48,16 +49,15 @@ CREATE TABLE Loans (
   Status VARCHAR(20) NOT NULL,
   Installment INT,
   FOREIGN KEY Customer_ID REFERENCES Customers(Customer_ID),
+  FOREIGN KEY LoanType_ID REFERENCES LoanTypes(LoanType_ID),
 );
 
 CREATE TABLE LoanTypes (
   LoanType_ID INT AUTO_INCREMENT PRIMARY KEY,
-  Loan_ID INT NOT NULL,
   Name VARCHAR(50) NOT NULL,
   Description VARCHAR(255),
   Rate DECIMAL(4, 2) NOT NULL,
   Installment_Period VARCHAR(10) DEFAULT 'Month',
-  FOREIGN KEY Loan_ID REFERENCES Loans(Loan_ID)
 );
 
 CREATE TABLE Notifications (
