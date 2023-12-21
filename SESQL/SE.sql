@@ -75,14 +75,6 @@ CREATE TABLE `Transactions` (
     FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
 );
 
-CREATE TABLE CustomerLoans (
-  CustomerLoan_ID INT AUTO_INCREMENT PRIMARY KEY,
-  Customer_ID INT,
-  Loan_ID INT,
-  FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID),
-  FOREIGN KEY (Loan_ID) REFERENCES Loans(Loan_ID)
-);
-
 CREATE TABLE CustomersNotifications (
     CustomersNotifications INT AUTO_INCREMENT PRIMARY KEY,
     Customer_ID INT NOT NULL,
