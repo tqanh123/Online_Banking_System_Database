@@ -55,7 +55,7 @@ if (isset($_POST['change_Customer_password'])) {
 <html>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <?php include("dist/_partials/head.php"); ?>
-<!-- Log on to codeastro.com for more projects! -->
+
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed ">
     <div class="wrapper">
         <!-- Navbar -->
@@ -67,7 +67,7 @@ if (isset($_POST['change_Customer_password'])) {
 
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
-        <!-- Log on to codeastro.com for more projects! -->
+        
             <!-- Content Header with logged in Customer details (Page header) -->
             <?php
             $Customer_id = $_SESSION['Customer_id'];
@@ -120,7 +120,7 @@ if (isset($_POST['change_Customer_password'])) {
                 <section class="content">
                     <div class="container-fluid">
                         <div class="row">
-                        <!-- Log on to codeastro.com for more projects! -->
+                        
                             <div class="col-md-3">
 
                                 <!-- Profile Image -->
@@ -193,7 +193,7 @@ if (isset($_POST['change_Customer_password'])) {
                         <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
                     </div>
                     </div>
-                    <!-- /.card --><!-- Log on to codeastro.com for more projects! -->
+                    <!-- /.card -->
                             </div>
 
                             <!-- /.col -->
@@ -255,7 +255,7 @@ if (isset($_POST['change_Customer_password'])) {
                                                         </div>
                                                     </div>
                                                 </form>
-                                            </div><!-- Log on to codeastro.com for more projects! -->
+                                            </div>
 
                                             <!-- /Change Password -->
                                             <div class="tab-pane" id="Change_Password">
@@ -297,7 +297,7 @@ if (isset($_POST['change_Customer_password'])) {
                         </div>
                         <!-- /.row -->
                     </div><!-- /.container-fluid -->
-                </section><!-- Log on to codeastro.com for more projects! -->
+                </section>
                 <!-- /.content -->
 
             <?php } ?>

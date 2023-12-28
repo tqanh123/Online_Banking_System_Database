@@ -76,7 +76,7 @@ if (isset($_POST['deposit'])) {
 
 
 ?>
-<!-- Log on to codeastro.com for more projects! -->
+
 <!DOCTYPE html>
 <html>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
@@ -184,7 +184,7 @@ if (isset($_POST['deposit'])) {
                                                     <input type="text" name="transaction_amt" required class="form-control" id="exampleInputEmail1">
                                                 </div>
                                             </div>
-                                            <!-- Log on to codeastro.com for more projects! -->
+                                            
                                             <div class="row">
                                                 <div class=" col-md-4 form-group">
                                                     <label for="exampleInputPassword1">Receiving Account Number</label>
@@ -237,7 +237,7 @@ if (isset($_POST['deposit'])) {
                             </div><!-- /.container-fluid -->
                 </section>
                 <!-- /.content -->
-            </div><!-- Log on to codeastro.com for more projects! -->
+            </div>
         <?php } ?>
         <!-- /.content-wrapper -->
         <?php include("dist/_partials/footer.php"); ?>

@@ -156,7 +156,7 @@ if (isset($_POST['open_account'])) {
                                                     <input type="text" name="acc_amount" value="0" readonly required class="form-control">
                                                 </div>
 
-                                            </div><!-- Log on to codeastro.com for more projects! -->
+                                            </div>
                                             <div class="row">
                                                 <div class=" col-md-6 form-group">
                                                     <label for="exampleInputEmail1">Account Name</label>

@@ -29,7 +29,7 @@ if (isset($_POST['login'])) {
     <div class="login-box">
       <div class="login-logo">
        <p>Online Banking System</p>
-      </div><!-- Log on to codeastro.com for more projects! -->
+      </div>
       <!-- /.login-logo -->
       <div class="card">
         <div class="card-body login-card-body">
@@ -79,7 +79,7 @@ if (isset($_POST['login'])) {
 
           <p class="mb-0">
             <a href="pages_client_signup.php" class="text-center">Register a new account</a>
-          </p><!-- Log on to codeastro.com for more projects! -->
+          </p>
 
         </div>
         <!-- /.login-card-body -->

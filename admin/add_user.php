@@ -35,7 +35,7 @@ if (isset($_POST['create_staff_account'])) {
 
 ?>
 <!DOCTYPE html>
-<html><!-- Log on to codeastro.com for more projects! -->
+<html>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 <?php include("dist/_partials/head.php"); ?>
 
@@ -53,7 +53,7 @@ if (isset($_POST['create_staff_account'])) {
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <div class="container-fluid">
-                    <div class="row mb-2"><!-- Log on to codeastro.com for more projects! -->
+                    <div class="row mb-2">
                         <div class="col-sm-6">
                             <h1>Create User Account</h1>
                         </div>

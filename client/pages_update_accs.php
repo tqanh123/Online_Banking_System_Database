@@ -28,7 +28,7 @@ if (isset($_POST['update_acc_type'])) {
 }
 
 ?>
-<!-- Log on to codeastro.com for more projects! -->
+
 <!DOCTYPE html>
 <html>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
@@ -122,7 +122,7 @@ if (isset($_POST['update_acc_type'])) {
                             </div><!-- /.container-fluid -->
                 </section>
                 <!-- /.content -->
-            </div><!-- Log on to codeastro.com for more projects! -->
+            </div>
         <?php } ?>
         <!-- /.content-wrapper -->
         <?php include("dist/_partials/footer.php"); ?>

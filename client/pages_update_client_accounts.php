@@ -37,7 +37,7 @@ if (isset($_POST['update_account'])) {
 }
 
 ?>
-<!-- Log on to codeastro.com for more projects! -->
+
 <!DOCTYPE html>
 <html>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
@@ -191,7 +191,7 @@ if (isset($_POST['update_account'])) {
                                 </div>
                                 <!-- /.card -->
                             </div><!-- /.container-fluid -->
-                </section><!-- Log on to codeastro.com for more projects! -->
+                </section>
                 <!-- /.content -->
             </div>
         <?php } ?>

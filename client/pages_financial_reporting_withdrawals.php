@@ -6,7 +6,7 @@ check_login();
 $Customer_id = $_SESSION['Customer_id'];
 
 ?>
-<!-- Log on to codeastro.com for more projects! -->
+
 <!DOCTYPE html>
 <html>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
@@ -103,7 +103,7 @@ $Customer_id = $_SESSION['Customer_id'];
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-          </div><!-- Log on to codeastro.com for more projects! -->
+          </div>
           <!-- /.col -->
         </div>
         <!-- /.row -->

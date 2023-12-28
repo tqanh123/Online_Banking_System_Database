@@ -21,7 +21,7 @@ if (isset($_GET['RollBack_Transaction'])) {
 }
 
 ?>
-<!-- Log on to codeastro.com for more projects! -->
+
 <!DOCTYPE html>
 <html>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
@@ -77,7 +77,7 @@ if (isset($_GET['RollBack_Transaction'])) {
                       <th>Timestamp</th>
                     </tr>
                   </thead>
-                  <tbody><!-- Log on to codeastro.com for more projects! -->
+                  <tbody>
                     <?php
                     //Get latest transactions 
                     $Customer_id = $_SESSION['Customer_id'];
@@ -122,7 +122,7 @@ if (isset($_GET['RollBack_Transaction'])) {
             <!-- /.card -->
           </div>
           <!-- /.col -->
-        </div><!-- Log on to codeastro.com for more projects! -->
+        </div>
         <!-- /.row -->
       </section>
       <!-- /.content -->

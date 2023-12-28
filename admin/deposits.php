@@ -6,7 +6,7 @@ check_login();
 $admin_id = $_SESSION['admin_id'];
 
 ?>
-<!-- Log on to codeastro.com for more projects! -->
+
 <!DOCTYPE html>
 <html>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
@@ -61,7 +61,7 @@ $admin_id = $_SESSION['admin_id'];
                       <th>Acc Owner</th>
                       <th>Action</th>
                     </tr>
-                  </thead><!-- Log on to codeastro.com for more projects! -->
+                  </thead>
                   <tbody>
                     <?php
                     //fetch all iB_Accs

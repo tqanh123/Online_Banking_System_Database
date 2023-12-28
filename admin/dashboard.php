@@ -105,7 +105,7 @@ $stmt->close();
 //Withdrawal Computations
 
 ?>
-<!-- Log on to codeastro.com for more projects! -->
+
 <!DOCTYPE html>
 <html lang="en">
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
@@ -258,7 +258,7 @@ $stmt->close();
               </div>
             </div>
             <!-- ./Balances-->
-          </div><!-- Log on to codeastro.com for more projects! -->
+          </div>
 
           <div class="row">
             <div class="col-md-12">
@@ -305,7 +305,7 @@ $stmt->close();
                         <span class="description-text">TOTAL DEPOSITS</span>
                       </div>
                       <!-- /.description-block -->
-                    </div><!-- Log on to codeastro.com for more projects! -->
+                    </div>
                     <!-- /.col -->
                     <div class="col-sm-3 col-6">
                       <div class="description-block border-right">
