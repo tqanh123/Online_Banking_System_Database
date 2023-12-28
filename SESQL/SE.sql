@@ -74,7 +74,7 @@ CREATE TABLE `Transactions` (
     Amount DECIMAL(10, 2) NOT NULL,
     Transaction_Type VARCHAR(50) NOT NULL,
     Created_At timestamp,
-    FOREIGN KEY (Account_ID) REFERENCES BankAccounts(Account_Number),
+    FOREIGN KEY (Account_Number) REFERENCES BankAccounts(Account_Number),
     FOREIGN KEY (Receiving_ID) REFERENCES BankAccounts(Account_Number),
     FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
 );
