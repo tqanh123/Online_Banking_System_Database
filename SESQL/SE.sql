@@ -70,11 +70,11 @@ CREATE TABLE `Transactions` (
     Transaction_ID INT AUTO_INCREMENT PRIMARY KEY,
     Customer_ID INT NOT NULL,
     Account_Id INT NOT NULL,
-    Receiving_ID INT,
+    Account_Number INT NOT NULL,
     Amount DECIMAL(10, 2) NOT NULL,
     Transaction_Type VARCHAR(50) NOT NULL,
     Created_At timestamp,
-    FOREIGN KEY (Account_ID) REFERENCES BankAccounts(Account_Number),
+    FOREIGN KEY ( Account_Number) REFERENCES BankAccounts(Account_Number),
     FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
 );
 
