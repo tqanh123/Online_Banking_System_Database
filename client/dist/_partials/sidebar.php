@@ -141,7 +141,7 @@
                 <i class="nav-icon fas fa-briefcase"></i>
                 <p>
                   Loan Accounts
-                  <i class="fas fa-angle-left right"></i>
+                  <i class="fas fa-money-bill-alt nav-icon"></i>
                 </p>
               </a>
               <ul class="nav nav-treeview">
@@ -152,9 +152,9 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a href="pages_manage_acc_openings.php" class="nav-link">
+                  <a href="pages_loan_management.php" class="nav-link">
                     <i class="fas fa-cog nav-icon"></i>
-                    <p>My Bank Accounts</p>
+                    <p>My Loan Accounts</p>
                   </a>
                 </li>
               </ul>
