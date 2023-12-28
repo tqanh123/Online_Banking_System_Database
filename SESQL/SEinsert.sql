@@ -156,15 +156,15 @@ VALUES
 (Acc_name49, 49, 49, 'Inactive', '2550.00', 'password49', '2027-04-05 09:45:00'),
 (Acc_name50, 50, 50, 'Active', '4100.00', 'password50', '2027-05-10 12:10:00');
 
-INSERT INTO Acc_types (Account_Number, Name, Description, Rate) 
+INSERT INTO Acc_types (Name, Description, Rate) 
 VALUES
-(1, 'Savings Account', 'Savings account for personal use', 0.02),
-(2, 'Current Account', 'Current account for everyday transactions', 0.01),
-(3, 'Fixed Deposit Account', 'Fixed-term deposit with competitive interest rates', 0.05),
-(4, 'Business Checking Account', 'Checking account for business transactions', 0.015),
-(5, 'Foreign Currency Account', 'Account for holding foreign currencies', 0.03),
-(6, 'Loan', 'Loan account for borrowing funds', 0.08),
-(7, 'Credit', 'Credit account for making purchases on credit', 0.12),
+('Savings Account', 'Savings account for personal use', 0.02),
+('Current Account', 'Current account for everyday transactions', 0.01),
+('Fixed Deposit Account', 'Fixed-term deposit with competitive interest rates', 0.05),
+('Business Checking Account', 'Checking account for business transactions', 0.015),
+('Foreign Currency Account', 'Account for holding foreign currencies', 0.03),
+('Loan', 'Loan account for borrowing funds', 0.08),
+('Credit', 'Credit account for making purchases on credit', 0.12),
 
 INSERT INTO LoanTypes (Name, Description, Rate, Installment_Period)
 VALUES 
