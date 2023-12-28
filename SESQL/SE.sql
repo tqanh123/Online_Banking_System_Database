@@ -72,6 +72,7 @@ CREATE TABLE `Transactions` (
     Transaction_ID INT AUTO_INCREMENT PRIMARY KEY,
     Customer_ID INT NOT NULL,
     Account_Id INT NOT NULL,
+    Receive_ID INT NOT NULL,
     Amount DECIMAL(10, 2) NOT NULL,
     Transaction_Type VARCHAR(50) NOT NULL,
     Created_At timestamp,
