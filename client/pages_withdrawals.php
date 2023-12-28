@@ -64,7 +64,6 @@ $Customer_id = $_SESSION['Customer_id'];
                   </thead>
                   <tbody>
                     <?php
-                    //fetch all iB_Accs
                     $Customer_id = $_SESSION['Customer_id'];
                     $ret = "SELECT * FROM  BankAccounts WHERE Customer_id =? ";
                     $stmt = $mysqli->prepare($ret);

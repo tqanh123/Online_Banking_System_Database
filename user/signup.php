@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    include("./includes/connect.php");
+    include("../includes/connect.php");
 
     if(isset($_POST['user_register']))
     {
