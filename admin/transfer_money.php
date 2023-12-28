@@ -9,7 +9,6 @@ $admin_id = $_SESSION['admin_id'];
 if (isset($_POST['deposit'])) {
     $account_id = $_GET['account_id'];
     $acc_name = $_POST['acc_name'];
-    $acc_type = $_POST['acc_type'];
     //$acc_amount  = $_POST['acc_amount'];
     $tr_type  = $_POST['tr_type'];
     $User_id  = $_GET['cus_id'];
@@ -20,10 +19,11 @@ if (isset($_POST['deposit'])) {
     $receiving_id = $_POST['receiving_acc_no'];
     $receiving_acc_name = $_POST['receiving_acc_name'];
     $receiving_acc_holder = $_POST['receiving_acc_holder'];
+    $receiving_cus_id = $_POST['receiving_holder_id'];
 
     //Notication
-    $notification_details = "$User_name Has Transfered $ $transaction_amt From Bank Account $Account_id To Bank Account $receiving_acc_no";
-    $notification_details1 = "$receiving_acc_holder Has Transfered $ $transaction_amt From Bank Account $acc_name To Bank Account $receiving_acc_no";
+    $notification_details = "$User_name Has Transfered $ $transaction_amt From Bank Account $account_id To Bank Account $receiving_id";
+    $notification_details1 = "$receiving_acc_holder Has Transfered $ $transaction_amt From Bank Account $acc_name To Bank Account $receiving_id";
 
     /*
             *You cant transfer money from an bank account that has no money in it so
@@ -45,12 +45,24 @@ if (isset($_POST['deposit'])) {
 
         //Insert Captured information to a database table
         $query = "INSERT INTO Transactions (Account_ID, Transaction_Type, Customer_ID, Amount, Receiving_ID, Created_At)
-                  VALUES ('$account_id', '$tr_type', '$User_id', '$transaction_amt', '$receiving_acc_no', 'NOW()')";
+                  VALUES ('$account_id', '$tr_type', '$User_id', '$transaction_amt', '$receiving_id', 'NOW()')";
         $notification = "INSERT INTO  notifications (notification_details, Created_At) VALUES ('$notification_details', 'NOW()')";
-        $cus_no = "INSERT INTO ";
 
         $stmt = $mysqli->query($query);
         $notification_stmt = $mysqli->query($notification);
+
+        // connect Customers and NOtifications
+        $cn_query = "SELECT MAX(Notification_ID) AS no_id FROM notifications";
+        $res_cn = $mysqli->query($cn_query);
+        $no_id = $res_cn->fetch_object();
+
+        $cus_no_query = "INSERT INTO CustomersNotifications(Customer_ID, Notification_ID) 
+                         VALUES('$User_id', '". $no_id -> no_id."')";
+        $recive_no_query = "INSERT INTO CustomersNotifications(Customer_ID, Notification_ID) 
+                         VALUES('$receiving_cus_id', '". $no_id -> no_id."')";
+        
+        $res_cusno = $mysqli -> query($cus_no_query);
+        $res_receiveno = $mysqli -> query($recive_no_query);
 
         //declare a varible which will be passed to alert function
         if ($stmt && $notification_stmt) {
@@ -100,6 +112,14 @@ if (isset($_POST['deposit'])) {
             $stmt->bind_result($amt);
             $stmt->fetch();
             $stmt->close();
+            // $result = "SELECT SUM(Amount) FROM  Transactions
+            //            WHERE Account_Id=? AND ";
+            // $stmt = $mysqli->prepare($result);
+            // $stmt->bind_param('i', $account_id);
+            // $stmt->execute();
+            // $stmt->bind_result($amt);
+            // $stmt->fetch();
+            // $stmt->close();
 
         ?>
             <div class="content-wrapper">
@@ -209,6 +229,10 @@ if (isset($_POST['deposit'])) {
                                                     <label for="exampleInputPassword1">Receiving Account Holder</label>
                                                     <input type="text" name="receiving_acc_holder" required class="form-control" id="AccountHolder">
                                                 </div>
+                                                <div class=" col-md-4 form-group" style="display:none">
+                                                    <label for="exampleInputPassword1">Receiving Holder id</label>
+                                                    <input type="text" name="receiving_holder_id" required class="form-control" id="Holder_id">
+                                                </div>
 
                                                 <div class=" col-md-4 form-group" style="display:none">
                                                     <label for="exampleInputPassword1">Transaction Type</label>
@@ -291,6 +315,8 @@ if (isset($_POST['deposit'])) {
           var data = JSON.parse(this.responseText);
           document.getElementById('ReceivingAcc').value = data.text_1;
           document.getElementById('AccountHolder').value = data.text_2;
+          document.getElementById('Holder_id').value = data.text_3;
+
         }
       }
 

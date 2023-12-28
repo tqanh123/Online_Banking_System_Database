@@ -24,7 +24,7 @@ if (isset($_POST['withdrawal'])) {
     *   
     */
 
-    $result = "SELECT SUM(Amount) FROM Transactions WHERE Account_Id=? AND Transaction_Type != 'Withdrawal'";
+    $result = "SELECT SUM(Amount) FROM Transactions WHERE Account_Id=?";
     $stmt = $mysqli->prepare($result);
     $stmt->bind_param('i', $account_id);
     $stmt->execute();
@@ -40,9 +40,19 @@ if (isset($_POST['withdrawal'])) {
 
         //Insert Captured information to a database table
         $query = "INSERT INTO Transactions ( Account_Id, Customer_ID, Amount, Transaction_Type, Created_At) VALUES ('$account_id', '$cus_id', '$transaction_amt', '$tr_type', 'NOW()')";
-        $notification = "INSERT INTO  notifications (notification_details) VALUES ('$notification_details')";
+        $notification = "INSERT INTO  notifications (notification_details, Created_At) VALUES ('$notification_details', 'NOW()')";
         $stmt = $mysqli->query($query);
         $notification_stmt = $mysqli->query($notification);
+
+        // connect Customers and Notifications
+        $cn_query = "SELECT MAX(Notification_ID) AS no_id FROM notifications";
+        $res_cn = $mysqli->query($cn_query);
+        $no_id = $res_cn->fetch_object();
+
+        $cus_no_query = "INSERT INTO CustomersNotifications(Customer_ID, Notification_ID) 
+                         VALUES('$cus_id', '". $no_id -> no_id."')";
+        
+        $res_cusno = $mysqli -> query($cus_no_query);
 
         //declare a varible which will be passed to alert function
         if ($stmt && $notification_stmt) {

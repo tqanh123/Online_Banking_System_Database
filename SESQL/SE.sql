@@ -20,6 +20,13 @@ Create Table Admins (
   Profile_Pic VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE Acc_types (
+  Acctype_ID INT AUTO_INCREMENT PRIMARY KEY,
+  Name VARCHAR(255) NOT NULL,
+  Description text NOT NULL,
+  Rate DECIMAL(10, 2) NOT NULL
+);
+
 CREATE TABLE BankAccounts (
   Account_Number INT AUTO_INCREMENT PRIMARY KEY,
   Acc_Name VARCHAR(255) NOT NULL,
@@ -32,11 +39,12 @@ CREATE TABLE BankAccounts (
   FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
 );
 
-CREATE TABLE Acc_types (
-  Acctype_ID INT AUTO_INCREMENT PRIMARY KEY,
-  Name VARCHAR(255) NOT NULL,
-  Description text NOT NULL,
-  Rate DECIMAL(10, 2) NOT NULL
+CREATE TABLE LoanTypes (
+  LoanType_ID INT AUTO_INCREMENT PRIMARY KEY,
+  Name VARCHAR(50) NOT NULL,
+  Description VARCHAR(255),
+  Rate DECIMAL(4, 2) NOT NULL,
+  Installment_Period VARCHAR(10) DEFAULT 'Month'
 );
 
 CREATE TABLE Loans (
@@ -49,15 +57,7 @@ CREATE TABLE Loans (
   Status VARCHAR(20) NOT NULL,
   Installment INT,
   FOREIGN KEY Customer_ID REFERENCES Customers(Customer_ID),
-  FOREIGN KEY LoanType_ID REFERENCES LoanTypes(LoanType_ID),
-);
-
-CREATE TABLE LoanTypes (
-  LoanType_ID INT AUTO_INCREMENT PRIMARY KEY,
-  Name VARCHAR(50) NOT NULL,
-  Description VARCHAR(255),
-  Rate DECIMAL(4, 2) NOT NULL,
-  Installment_Period VARCHAR(10) DEFAULT 'Month',
+  FOREIGN KEY LoanType_ID REFERENCES LoanTypes(LoanType_ID)
 );
 
 CREATE TABLE Notifications (
@@ -75,6 +75,7 @@ CREATE TABLE `Transactions` (
     Transaction_Type VARCHAR(50) NOT NULL,
     Created_At timestamp,
     FOREIGN KEY (Account_ID) REFERENCES BankAccounts(Account_Number),
+    FOREIGN KEY (Receiving_ID) REFERENCES BankAccounts(Account_Number),
     FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
 );
 

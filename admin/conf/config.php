@@ -15,8 +15,9 @@
         
         $text1 = $row->Acc_Name;
         $text2 = $row->Cus_Name;
+        $text3 = $row->Customer_ID;
         // echo $text2;
-        echo json_encode(["text_1" => $text1, "text_2" => $text2]);
+        echo json_encode(["text_1" => $text1, "text_2" => $text2, ,"text_3" => $text3]);
         
     }
 

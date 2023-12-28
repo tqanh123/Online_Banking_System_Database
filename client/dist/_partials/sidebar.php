@@ -135,6 +135,32 @@
             </li>
             <!-- ./Finances -->
 
+            <!-- ./loan -->
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-briefcase"></i>
+                <p>
+                  Loan Accounts
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="pages_open_loan.php" class="nav-link">
+                    <i class="fas fa-lock-open nav-icon"></i>
+                    <p>Open Loan Acc</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="pages_manage_acc_openings.php" class="nav-link">
+                    <i class="fas fa-cog nav-icon"></i>
+                    <p>My Bank Accounts</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <!-- ./loan -->
+
             <li class="nav-header">Advanced Modules</li>
             <li class="nav-item">
               <a href="pages_transactions_engine.php" class="nav-link">

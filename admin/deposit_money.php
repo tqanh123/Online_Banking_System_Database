@@ -31,14 +31,14 @@ if (isset($_POST['deposit'])) {
                      VALUES ('$notification_details', 'NOW()')";
     
 
-    $stmt = mysqli_query($mysqli,$query);
-    $notification_stmt = mysqli_query( $mysqli,$notification);
-    $q = mysqli_query($mysqli, "SELECT * FROM Notifications");
-    $row = mysqli_fetch_assoc($q);
+    $cn_query = "SELECT MAX(Notification_ID) AS no_id FROM notifications";
+        $res_cn = $mysqli->query($cn_query);
+        $no_id = $res_cn->fetch_object();
 
-    $cusno = "INSERT INTO CustomersNotifications (Customer_ID, Notification_ID)
-              VALUES ('$cus_id', '" . $row['Notification_ID'] . "')";
-    $stmtCusno = mysqli_query($mysqli, $cusno);
+        $cus_no_query = "INSERT INTO CustomersNotifications(Customer_ID, Notification_ID) 
+                         VALUES('$cus_id', '". $no_id -> no_id."')";
+        
+        $res_cusno = $mysqli -> query($cus_no_query);
 
     //declare a varible which will be passed to alert function
     if ($stmt && $notification_stmt) {

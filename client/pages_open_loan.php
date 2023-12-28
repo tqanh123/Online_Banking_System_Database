@@ -1,8 +1,8 @@
 <?php
 session_start();
 include('conf/config.php');
-// include('conf/checklogin.php');
-// check_login();
+include('conf/checklogin.php');
+check_login();
 $customer_id = $_SESSION['customer_id'];
 
 if (isset($_POST['open_loan'])) {
