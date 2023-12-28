@@ -46,7 +46,7 @@ if (isset($_POST['deposit'])) {
         //Insert Captured information to a database table
         $query = "INSERT INTO Transactions (Account_ID, Transaction_Type, Customer_ID, Amount, Receiving_ID, Created_At)
                   VALUES ('$account_id', '$tr_type', '$User_id', '$transaction_amt', '$receiving_acc_no', 'NOW()')";
-        $notification = "INSERT INTO  notifications (notification_details) VALUES ('$notification_details')";
+        $notification = "INSERT INTO  notifications (notification_details, Created_At) VALUES ('$notification_details', 'NOW()')";
         $cus_no = "INSERT INTO ";
 
         $stmt = $mysqli->query($query);

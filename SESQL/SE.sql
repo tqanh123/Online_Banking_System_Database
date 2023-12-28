@@ -63,9 +63,7 @@ CREATE TABLE LoanTypes (
 CREATE TABLE Notifications (
   Notification_ID INT AUTO_INCREMENT PRIMARY KEY,
   Notification_Details TEXT NOT NULL,
-  Customer_ID INT NOT NULL,
-  Created_At timestamp,
-  FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
+  Created_At timestamp
 );
 
 CREATE TABLE `Transactions` (
@@ -86,3 +84,4 @@ CREATE TABLE CustomersNotifications(
   Notification_ID INT NOT NULL,
   FOREIGN KEY (Notification_ID) REFERENCES Notifications(Notification_ID),
   FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
+);
