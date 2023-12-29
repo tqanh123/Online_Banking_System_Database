@@ -79,9 +79,9 @@ if (isset($_POST['change_client_password'])) {
             while ($row = $res->fetch_object()) {
                 //set automatically logged in user default image if they have not updated their pics
                 if ($row->Profile_pic == '') {
-                    $profile_picture = " <img class='img-fluid' src='dist/img/user_icon.png' alt='User profile picture'> ";
+                    $profile_picture = " <img class='img-fluid' src='../client/dist/img/user_icon.png' alt='User profile picture'> ";
                 } else {
-                    $profile_picture = " <img class='img-fluid' src='dist/img/$row->Profile_pic' alt='User profile picture'>";
+                    $profile_picture = " <img class='img-fluid' src='../client/dist/img/$row->Profile_pic' alt='User profile picture'>";
                 }
 
 

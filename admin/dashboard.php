@@ -6,25 +6,26 @@ check_login();
 $admin_id = $_SESSION['admin_id'];
 
 //clear notifications and alert user that they are cleared
-// if (isset($_GET['Clear_Notifications'])) {
-//   $id = intval($_GET['Clear_Notifications']);
-//   $adn = "DELETE FROM  iB_notifications  WHERE notification_id = ?";
-//   $stmt = $mysqli->prepare($adn);
-//   $stmt->bind_param('i', $id);
-//   $stmt->execute();
-//   $stmt->close();
+if (isset($_GET['Clear_Notifications'])) {
+  $id = intval($_GET['Clear_Notifications']);
+  $adn = "DELETE FROM  notifications  WHERE Notification_id = ?";
+  $cn = "DELETE FROM CustomersNotifications WHERE Notification_id = ?";
 
-//   if ($stmt) {
-//     $info = "Notifications Cleared";
-//   } else {
-//     $err = "Try Again Later";
-//   }
-// }
-// /*
-//     get all dashboard analytics 
-//     and numeric values from distinct 
-//     tables
-//     */
+  $stmt = $mysqli->prepare($adn);
+  $stmt_cn = $mysqli->prepare($cn);
+  $stmt->bind_param('i', $id);
+  $stmt_cn->bind_param('i', $id);
+  $stmt->execute();
+  $stmt_cn->execute();
+  $stmt->close();
+  $stmt_cn->close();
+
+  if ($stmt) {
+    $info = "Notifications Cleared";
+  } else {
+    $err = "Try Again Later";
+  }
+}
 
 // //return total number of ibank users
 $result = "SELECT count(*) FROM customers";
@@ -46,7 +47,7 @@ $stmt->close();
 $result = "SELECT count(*) FROM Acc_types";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
-$stmt->bind_result($iB_AccsType);
+$stmt->bind_result($AccsType);
 $stmt->fetch();
 $stmt->close();
 
@@ -54,33 +55,31 @@ $stmt->close();
 $result = "SELECT count(*) FROM bankAccounts";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
-$stmt->bind_result($iB_Accs);
+$stmt->bind_result($Accs);
 $stmt->fetch();
 $stmt->close();
 
 // //return total number of iBank Deposits
-$result = "SELECT SUM(Amount) FROM `Transactions` WHERE transaction_type = 'Deposit' ";
+$result = "SELECT SUM(Amount) FROM `Transactions` WHERE Transaction_Type = 'Deposit' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
-$stmt->bind_result($iB_deposits);
+$stmt->bind_result($deposits);
 $stmt->fetch();
 $stmt->close();
 
 // //return total number of iBank Withdrawals
-$result = "SELECT SUM(Amount) FROM `Transactions` WHERE transaction_type = 'Withdrawal' ";
+$result = "SELECT -SUM(Amount) FROM `Transactions` WHERE Transaction_Type = 'Withdrawal' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
-$stmt->bind_result($iB_withdrawal);
+$stmt->bind_result($withdrawal);
 $stmt->fetch();
 $stmt->close();
 
-
-
 // //return total number of iBank Transfers
-$result = "SELECT SUM(Amount) FROM `Transactions` WHERE  transaction_type = 'Transfer' ";
+$result = "SELECT -SUM(Amount) FROM `Transactions` WHERE  Transaction_Type = 'Transfer' ";
 $stmt = $mysqli->prepare($result);
 $stmt->execute();
-$stmt->bind_result($iB_Transfers);
+$stmt->bind_result($Transfers);
 $stmt->fetch();
 $stmt->close();
 
@@ -92,7 +91,7 @@ $stmt->bind_result($acc_amt);
 $stmt->fetch();
 $stmt->close();
 //Get the remaining money in the accounts
-$TotalBalInAccount = ($iB_deposits)  - (($iB_withdrawal) + ($iB_Transfers));
+$TotalBalInAccount = ($deposits)  - ($withdrawal);
 
 
 // //ibank money in the wallet
@@ -185,7 +184,7 @@ $stmt->close();
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-briefcase"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">Account Types</span>
-                  <span class="info-box-number"><?php echo $iB_AccsType; ?></span>
+                  <span class="info-box-number"><?php echo $AccsType; ?></span>
                 </div>
               </div>
             </div>
@@ -197,7 +196,7 @@ $stmt->close();
                 <span class="info-box-icon bg-purple elevation-1"><i class="fas fa-users"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">Accounts</span>
-                  <span class="info-box-number"><?php echo $iB_Accs; ?></span>
+                  <span class="info-box-number"><?php echo $Accs; ?></span>
                 </div>
               </div>
             </div>
@@ -212,7 +211,7 @@ $stmt->close();
                 <div class="info-box-content">
                   <span class="info-box-text">Deposits</span>
                   <span class="info-box-number">
-                    $ <?php echo $iB_deposits; ?>
+                    $ <?php echo $deposits; ?>
                   </span>
                 </div>
               </div>
@@ -226,7 +225,7 @@ $stmt->close();
 
                 <div class="info-box-content">
                   <span class="info-box-text">Withdrawals</span>
-                  <span class="info-box-number">$ <?php echo $iB_withdrawal; ?> </span>
+                  <span class="info-box-number">$ <?php echo $withdrawal; ?> </span>
                 </div>
               </div>
             </div>
@@ -241,7 +240,7 @@ $stmt->close();
                 <span class="info-box-icon bg-success elevation-1"><i class="fas fa-random"></i></span>
                 <div class="info-box-content">
                   <span class="info-box-text">Transfers</span>
-                  <span class="info-box-number">$ <?php echo $iB_Transfers; ?></span>
+                  <span class="info-box-number">$ <?php echo $Transfers; ?></span>
                 </div>
               </div>
             </div>
@@ -260,11 +259,15 @@ $stmt->close();
             <!-- ./Balances-->
           </div>
 
-          <div class="row">
+          <!-- Main row -->
+          <div class="row"><!-- Log on to codeastro.com for more projects! -->
+            <!-- Left col -->
             <div class="col-md-12">
+              <!-- TABLE: Transactions -->
               <div class="card">
-                <div class="card-header">
-                  <h5 class="card-title">Advanced Analytics</h5>
+                <div class="card-header border-transparent">
+                  <h3 class="card-title">Latest Transactions</h3>
+
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
@@ -275,63 +278,63 @@ $stmt->close();
                   </div>
                 </div>
                 <!-- /.card-header -->
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="chart">
-                        <!-- Transaction Donought chart Canvas -->
-                        <div id="PieChart" class="col-md-6" style="height: 400px; max-width: 500px; margin: 0px auto;"></div>
-                      </div>
-                      <!-- /.chart-responsive -->
-                    </div>
-                    <hr>
-                    <div class="col-md-6">
-                      <div class="chart">
-                        <div id="AccountsPerAccountCategories" class="col-md-6" style="height: 400px; max-width: 500px; margin: 0px auto;"></div>
-                      </div>
-                      <!-- /.chart-responsive -->
-                    </div>
+          <div class="card-body p-0">
+                  <div class="table-responsive">
+                    <table class="table table-hover table-bordered table-striped m-0">
+                      <thead>
+                        <tr>
+                          <th>Transaction Code</th>
+                          <th>Account No.</th>
+                          <th>Type</th>
+                          <th>Amount</th>
+                          <th>Acc. Owner</th>
+                          <th>Timestamp</th>
+                        </tr>
+                      </thead>
+                      <tbody><!-- Log on to codeastro.com for more projects! -->
+                        <?php
+                        //Get latest transactions 
+                        $ret = "SELECT * FROM `Transactions` t
+                                JOIN Customers c
+                                ON t.Customer_ID = c.Customer_ID
+                                ORDER BY Created_At DESC ";
+                        $stmt = $mysqli->prepare($ret);
+                        $stmt->execute(); //ok
+                        $res = $stmt->get_result();
+                        $cnt = 1;
+                        while ($row = $res->fetch_object()) {
+                          /* Trim Transaction Timestamp to 
+                            *  User Uderstandable Formart  DD-MM-YYYY :
+                            */
+                          $transTstamp = $row->Created_At;
+                          //Perfom some lil magic here
+                          if ($row->Transaction_Type == 'Deposit') {
+                            $alertClass = "<span class='badge badge-success'>$row->Transaction_Type</span>";
+                          } elseif ($row->Transaction_Type == 'Withdrawal') {
+                            $alertClass = "<span class='badge badge-danger'>$row->Transaction_Type</span>";
+                          } else {
+                            $alertClass = "<span class='badge badge-warning'>$row->Transaction_Type</span>";
+                          }
+                        ?>
+                          <tr>
+                            <td><?php echo $row->Transaction_ID; ?></a></td>
+                            <td><?php echo $row->Account_Id; ?></td>
+                            <td><?php echo $alertClass; ?></td>
+                            <td>$ <?php echo $row->Amount; ?></td>
+                            <td><?php echo $row->Cus_Name; ?></td>
+                            <td><?php echo date("d-M-Y h:m:s ", strtotime($transTstamp)); ?></td>
+                          </tr>
 
-                    <!-- /.col -->
+                        <?php } ?>
+
+                      </tbody>
+                    </table>
                   </div>
-                  <!-- /.row -->
+                  <!-- /.table-responsive -->
                 </div>
-                <!-- ./card-body -->
-                <div class="card-footer">
-                  <div class="row">
-                    <div class="col-sm-3 col-6">
-                      <div class="description-block border-right">
-                        <!-- <h5 class="description-header">$ <?php echo $iB_deposits; ?></h5> -->
-                        <span class="description-text">TOTAL DEPOSITS</span>
-                      </div>
-                      <!-- /.description-block -->
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-sm-3 col-6">
-                      <div class="description-block border-right">
-                        <!-- <h5 class="description-header">$ <?php echo $iB_withdrawal; ?></h5> -->
-                        <span class="description-text">TOTAL WITHDRAWALS</span>
-                      </div>
-                      <!-- /.description-block -->
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-sm-3 col-6">
-                      <div class="description-block border-right">
-                        <!-- <h5 class="description-header">$ <?php echo $iB_Transfers; ?> </h5> -->
-                        <span class="description-text">TOTAL TRANSFERS</span>
-                      </div>
-                      <!-- /.description-block -->
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-sm-3 col-6">
-                      <div class="description-block">
-                        <!-- <h5 class="description-header">$ <?php echo $TotalBalInAccount; ?> </h5> -->
-                        <span class="description-text">TOTAL MONEY IN Account</span>
-                      </div>
-                      <!-- /.description-block -->
-                    </div>
-                  </div>
-                  <!-- /.row -->
+                <!-- /.card-body -->
+                <div class="card-footer clearfix">
+                  <a href="transactions_engine.php" class="btn btn-sm btn-info float-left">View All</a>
                 </div>
                 <!-- /.card-footer -->
               </div>
@@ -339,9 +342,6 @@ $stmt->close();
             </div>
             <!-- /.col -->
           </div>
-          <!-- /.row -->
-
-          <!-- Main row -->
           <!-- /.row -->
         </div>
         <!--/. container-fluid -->
@@ -390,7 +390,7 @@ $stmt->close();
   <!--Load Canvas JS -->
   <script src="plugins/canvasjs.min.js"></script>
   <!--Load Few Charts-->
-  <!-- <script>
+  <script>
     window.onload = function() {
 
       var Piechart = new CanvasJS.Chart("PieChart", {
@@ -411,7 +411,8 @@ $stmt->close();
           dataPoints: [{
               y: <?php
                   //return total number of accounts opened under savings acc type
-                  $result = "SELECT count(*) FROM iB_bankAccounts WHERE  acc_type ='Savings' ";
+                  $result = "SELECT count(*) FROM BankAccounts b, Acc_types a
+                  WHERE b.Acctype_ID = a.Acctype_ID AND a.acc_type ='Savings' ";
                   $stmt = $mysqli->prepare($result);
                   $stmt->execute();
                   $stmt->bind_result($savings);
@@ -426,7 +427,8 @@ $stmt->close();
             {
               y: <?php
                   //return total number of accounts opened under  Retirement  acc type
-                  $result = "SELECT count(*) FROM iB_bankAccounts WHERE  acc_type =' Retirement' ";
+                  $result = "SELECT count(*) FROM BankAccounts b, Acc_types a
+                  WHERE b.Acctype_ID = a.Acctype_ID AND a.acc_type ='Retirement' ";
                   $stmt = $mysqli->prepare($result);
                   $stmt->execute();
                   $stmt->bind_result($Retirement);
@@ -441,7 +443,8 @@ $stmt->close();
             {
               y: <?php
                   //return total number of accounts opened under  Recurring deposit  acc type
-                  $result = "SELECT count(*) FROM iB_bankAccounts WHERE  acc_type ='Recurring deposit' ";
+                  $result = "SELECT count(*) FROM BankAccounts b, Acc_types a
+                  WHERE b.Acctype_ID = a.Acctype_ID AND a.acc_type ='Recurring deposit' ";
                   $stmt = $mysqli->prepare($result);
                   $stmt->execute();
                   $stmt->bind_result($Recurring);
@@ -456,7 +459,8 @@ $stmt->close();
             {
               y: <?php
                   //return total number of accounts opened under  Fixed Deposit Account deposit  acc type
-                  $result = "SELECT count(*) FROM iB_bankAccounts WHERE  acc_type ='Fixed Deposit Account' ";
+                  $result = "SELECT count(*) FROM BankAccounts b, Acc_types a
+                  WHERE b.Acctype_ID = a.Acctype_ID AND a.acc_type ='Fixed Deposit Account' ";
                   $stmt = $mysqli->prepare($result);
                   $stmt->execute();
                   $stmt->bind_result($Fixed);
@@ -471,7 +475,8 @@ $stmt->close();
             {
               y: <?php
                   //return total number of accounts opened under  Current account deposit  acc type
-                  $result = "SELECT count(*) FROM iB_bankAccounts WHERE  acc_type ='Current account' ";
+                  $result = "SELECT count(*) FROM BankAccounts b, Acc_types a
+                  WHERE b.Acctype_ID = a.Acctype_ID AND a.acc_type ='Current account' ";
                   $stmt = $mysqli->prepare($result);
                   $stmt->execute();
                   $stmt->bind_result($Current);
@@ -504,7 +509,7 @@ $stmt->close();
           dataPoints: [{
               y: <?php
                   //return total number of `transactions` under  Withdrawals
-                  $result = "SELECT count(*) FROM `Transactions` WHERE  transaction_type ='Withdrawal' ";
+                  $result = "SELECT count(*) FROM `Transactions` WHERE  Transaction_Type ='Withdrawal' ";
                   $stmt = $mysqli->prepare($result);
                   $stmt->execute();
                   $stmt->bind_result($Withdrawals);
@@ -519,7 +524,7 @@ $stmt->close();
             {
               y: <?php
                   //return total number of `transactions` under  Deposits
-                  $result = "SELECT count(*) FROM `Transactions` WHERE  transaction_type ='Deposit' ";
+                  $result = "SELECT count(*) FROM `Transactions` WHERE  Transaction_Type ='Deposit' ";
                   $stmt = $mysqli->prepare($result);
                   $stmt->execute();
                   $stmt->bind_result($Deposits);
@@ -534,7 +539,7 @@ $stmt->close();
             {
               y: <?php
                   //return total number of `transactions` under  Deposits
-                  $result = "SELECT count(*) FROM `Transactions` WHERE  transaction_type ='Transfer' ";
+                  $result = "SELECT count(*) FROM `Transactions` WHERE  Transaction_Type ='Transfer' ";
                   $stmt = $mysqli->prepare($result);
                   $stmt->execute();
                   $stmt->bind_result($Transfers);
@@ -562,7 +567,7 @@ $stmt->close();
       e.chart.render();
 
     }
-  </script> -->
+  </script>
 
 </body>
 

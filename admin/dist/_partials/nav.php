@@ -47,7 +47,7 @@
           $cnt = 1;
           while ($row = $res->fetch_object()) {
             //Tim timestamp to DD-MM-YYY : HH:MM🧂 
-            $notification_time = $row->created_at;
+            $notification_time = $row->Created_At;
 
           ?>
             <div class="media">
@@ -55,11 +55,11 @@
                 <h3 class="dropdown-item-title">
                   <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
                 </h3>
-                <p class="text-sm"><?php echo $row->notification_details; ?></p>
+                <p class="text-sm"><?php echo $row->Notification_Details; ?></p>
                 <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i><?php echo date("d-M-Y :: h:m", strtotime($notification_time)); ?></p>
               </div>
             </div>
-            <a href="pages_dashboard.php?Clear_Notifications=<?php echo $row->notification_id; ?>" class="float-right text-sm text-danger">
+            <a href="dashboard.php?Clear_Notifications=<?php echo $row->Notification_ID; ?>" class="float-right text-sm text-danger">
               <i class="fas fa-trash"></i>
               Clear
             </a>

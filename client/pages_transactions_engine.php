@@ -73,7 +73,6 @@ if (isset($_GET['RollBack_Transaction'])) {
                       <th>Account No.</th>
                       <th>Type</th>
                       <th>Amount</th>
-                      <th>Acc. Owner</th>
                       <th>Timestamp</th>
                     </tr>
                   </thead>
@@ -81,7 +80,7 @@ if (isset($_GET['RollBack_Transaction'])) {
                     <?php
                     //Get latest transactions 
                     $Customer_id = $_SESSION['Customer_id'];
-                    $ret = "SELECT * FROM `Transactions` WHERE Customer_id =? ORDER BY `Transactions`.`Created_At` DESC ";
+                    $ret = "SELECT * FROM `Transactions` WHERE Customer_id =? ORDER BY Created_At DESC ";
                     $stmt = $mysqli->prepare($ret);
                     $stmt->bind_param('i', $Customer_id);
                     $stmt->execute(); //ok
@@ -91,24 +90,23 @@ if (isset($_GET['RollBack_Transaction'])) {
                       /* Trim Transaction Timestamp to 
                             *  User Uderstandable Formart  DD-MM-YYYY :
                             */
-                      $transTstamp = $row->created_at;
+                      $transTstamp = $row->Created_At;
                       //Perfom some lil magic here
-                      if ($row->tr_type == 'Deposit') {
-                        $alertClass = "<span class='badge badge-success'>$row->tr_type</span>";
-                      } elseif ($row->tr_type == 'Withdrawal') {
-                        $alertClass = "<span class='badge badge-danger'>$row->tr_type</span>";
+                      if ($row->Transaction_Type == 'Deposit') {
+                        $alertClass = "<span class='badge badge-success'>$row->Transaction_Type</span>";
+                      } elseif ($row->Transaction_Type == 'Withdrawal') {
+                        $alertClass = "<span class='badge badge-danger'>$row->Transaction_Type</span>";
                       } else {
-                        $alertClass = "<span class='badge badge-warning'>$row->tr_type</span>";
+                        $alertClass = "<span class='badge badge-warning'>$row->Transaction_Type</span>";
                       }
                     ?>
 
                       <tr>
                         <td><?php echo $cnt; ?></td>
-                        <td><?php echo $row->tr_code; ?></a></td>
-                        <td><?php echo $row->account_number; ?></td>
+                        <td><?php echo $row->Transaction_ID; ?></a></td>
+                        <td><?php echo $row->Account_Id; ?></td>
                         <td><?php echo $alertClass; ?></td>
-                        <td>$ <?php echo $row->transaction_amt; ?></td>
-                        <td><?php echo $row->client_name; ?></td>
+                        <td>$ <?php echo $row->Amount; ?></td>
                         <td><?php echo date("d-M-Y h:m:s ", strtotime($transTstamp)); ?></td>
 
                       </tr>

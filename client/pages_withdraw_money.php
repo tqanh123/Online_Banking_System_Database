@@ -6,22 +6,14 @@ check_login();
 $Customer_id = $_SESSION['Customer_id'];
 
 if (isset($_POST['withdrawal'])) {
-    $tr_code = $_POST['tr_code'];
     $account_id = $_GET['account_id'];
-    $Acc_Name = $_POST['Acc_Name'];
-    $Account_Number = $_GET['Account_Number'];
-    $Acctype_ID = $_POST['Acctype_ID'];
-    //$acc_amount  = $_POST['acc_amount'];
+    $acc_name = $_POST['acc_name'];
     $tr_type  = $_POST['tr_type'];
-    $tr_status = $_POST['tr_status'];
-    $Customer_id  = $_GET['Customer_id'];
-    $client_name  = $_POST['client_name'];
-    $client_national_id  = $_POST['client_national_id'];
-    $transaction_amt = $_POST['transaction_amt'];
-    $client_phone = $_POST['client_phone'];
-    //$acc_new_amt = $_POST['acc_new_amt'];
-    //$notification_details = $_POST['notification_details'];
-    $notification_details = "$client_name Has Withdrawn $ $transaction_amt From Bank Account $Account_Number";
+    $cus_id  = $_GET['cus_id'];
+    $User_name  = $_POST['User_name'];
+    $transaction_amt = -$_POST['transaction_amt'];
+
+    $notification_details = "$User_name Has Withdrawn $ $transaction_amt From Bank Account $account_id";
 
     /*
     * The below code will handle the withdrwawal process that is first it 
@@ -30,30 +22,36 @@ if (isset($_POST['withdrawal'])) {
     *   
     */
 
-    $result = "SELECT SUM(Amount) FROM  Transactions  WHERE account_id=?";
+    $result = "SELECT SUM(Amount) FROM Transactions WHERE Account_Id=?";
     $stmt = $mysqli->prepare($result);
     $stmt->bind_param('i', $account_id);
     $stmt->execute();
     $stmt->bind_result($amt);
     $stmt->fetch();
     $stmt->close();
-
+    if ($amt == "") $amt = 0;
 
     if ($transaction_amt > $amt) {
-        $err = "You Do Not Have Sufficient Funds In Your Account.Your Existing Amount is $ $amt";
+        $err = "You Do Not Have Sufficient Funds In $acc_name Account.Your Existing Amount is $ $amt";
     } else {
 
 
         //Insert Captured information to a database table
-        $query = "INSERT INTO Transactions (tr_code, account_id, Acc_Name, Account_Number, Acctype_ID,  tr_type, tr_status, Customer_id, client_name, client_national_id, transaction_amt, client_phone) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
-        $notification = "INSERT INTO  Notifications (notification_details) VALUES (?)";
-        $stmt = $mysqli->prepare($query);
-        $notification_stmt = $mysqli->prepare($notification);
-        //bind paramaters
-        $rc = $stmt->bind_param('ssssssssssss', $tr_code, $account_id, $Acc_Name, $Account_Number, $Acctype_ID, $tr_type, $tr_status, $Customer_id, $client_name, $client_national_id, $transaction_amt, $client_phone);
-        $rc = $notification_stmt->bind_param('s', $notification_details);
-        $stmt->execute();
-        $notification_stmt->execute();
+        $query = "INSERT INTO Transactions ( Account_Id, Customer_ID, Amount, Transaction_Type, Created_At) VALUES ('$account_id', '$Customer_id', '$transaction_amt', '$tr_type', 'NOW()')";
+        $notification = "INSERT INTO  notifications (notification_details, Created_At) VALUES ('$notification_details', 'NOW()')";
+        $stmt = $mysqli->query($query);
+        $notification_stmt = $mysqli->query($notification);
+
+        // connect Customers and Notifications
+        $cn_query = "SELECT MAX(Notification_ID) AS no_id FROM notifications";
+        $res_cn = $mysqli->query($cn_query);
+        $no_id = $res_cn->fetch_object();
+
+        $cus_no_query = "INSERT INTO CustomersNotifications(Customer_ID, Notification_ID) 
+                         VALUES('$Customer_id', '". $no_id -> no_id."')";
+        
+        $res_cusno = $mysqli -> query($cus_no_query);
+
         //declare a varible which will be passed to alert function
         if ($stmt && $notification_stmt) {
             $success = "Funds Withdrawled";
@@ -61,30 +59,6 @@ if (isset($_POST['withdrawal'])) {
             $err = "Please Try Again Or Try Later";
         }
 
-        /*
-    if(isset($_POST['deposit']))
-    {
-       $account_id = $_GET['account_id'];
-       $acc_amount = $_POST['acc_amount'];
-        
-        //Insert Captured information to a database table
-        $query="UPDATE  iB_bankAccounts SET acc_amount=? WHERE account_id=?";
-        $stmt = $mysqli->prepare($query);
-        //bind paramaters
-        $rc=$stmt->bind_param('si', $acc_amount, $account_id);
-        $stmt->execute();
-
-        //declare a varible which will be passed to alert function
-        if($stmt )
-        {
-            $success = "Money Deposited";
-        }
-        else
-        {
-            $err = "Please Try Again Or Try Later";
-        }   
-    }   
-    */
     }
 }
 ?>
@@ -105,15 +79,16 @@ if (isset($_POST['withdrawal'])) {
         <!-- Content Wrapper. Contains page content -->
         <?php
         $account_id = $_GET['account_id'];
-        $ret = "SELECT * FROM  BankAccounts WHERE account_id = ? ";
+        $ret = "SELECT * FROM  BankAccounts
+                NATURAL JOIN Acc_types
+                NATURAL JOIN Customers
+                WHERE Account_Number = ? ";
         $stmt = $mysqli->prepare($ret);
         $stmt->bind_param('i', $account_id);
         $stmt->execute(); //ok
         $res = $stmt->get_result();
         $cnt = 1;
         while ($row = $res->fetch_object()) {
-
-
 
         ?>
             <div class="content-wrapper">
@@ -127,8 +102,8 @@ if (isset($_POST['withdrawal'])) {
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="pages_dashboard.php">Dashboard</a></li>
-                                    <li class="breadcrumb-item"><a href="pages_deposits">iBank Finances</a></li>
-                                    <li class="breadcrumb-item"><a href="pages_deposits">Withdrawal</a></li>
+                                    <li class="breadcrumb-item"><a href="pages_deposits.php">iBank Finances</a></li>
+                                    <li class="breadcrumb-item"><a href="pages_deposits.php">Withdrawal</a></li>
                                     <li class="breadcrumb-item active"><?php echo $row->Acc_Name; ?></li>
                                 </ol>
                             </div>
@@ -153,44 +128,35 @@ if (isset($_POST['withdrawal'])) {
 
                                             <div class="row">
                                                 <div class=" col-md-4 form-group">
-                                                    <label for="exampleInputEmail1">Client Name</label>
-                                                    <input type="text" readonly name="client_name" value="<?php echo $row->client_name; ?>" required class="form-control" id="exampleInputEmail1">
+                                                    <label for="exampleInputEmail1">User Name</label>
+                                                    <input type="text" readonly name="User_name" value="<?php echo $row->Cus_Name; ?>" required class="form-control" id="exampleInputEmail1">
                                                 </div>
                                                 <div class=" col-md-4 form-group">
-                                                    <label for="exampleInputPassword1">Client National ID No.</label>
-                                                    <input type="text" readonly value="<?php echo $row->client_national_id; ?>" name="client_national_id" required class="form-control" id="exampleInputEmail1">
+                                                    <label for="exampleInputPassword1">User National</label>
+                                                    <input type="text" readonly value="<?php echo $row->National; ?>" name="User_national_id" required class="form-control" id="exampleInputEmail1">
                                                 </div>
                                                 <div class=" col-md-4 form-group">
-                                                    <label for="exampleInputEmail1">Client Phone Number</label>
-                                                    <input type="text" readonly name="client_phone" value="<?php echo $row->client_phone; ?>" required class="form-control" id="exampleInputEmail1">
+                                                    <label for="exampleInputEmail1">User Phone Number</label>
+                                                    <input type="text" readonly name="User_phone" value="<?php echo $row->Phone; ?>" required class="form-control" id="exampleInputEmail1">
                                                 </div>
                                             </div>
 
                                             <div class="row">
                                                 <div class=" col-md-4 form-group">
                                                     <label for="exampleInputEmail1">Account Name</label>
-                                                    <input type="text" readonly name="Acc_Name" value="<?php echo $row->Acc_Name; ?>" required class="form-control" id="exampleInputEmail1">
+                                                    <input type="text" readonly name="acc_name" value="<?php echo $row->Acc_Name; ?>" required class="form-control" id="exampleInputEmail1">
                                                 </div>
                                                 <div class=" col-md-4 form-group">
                                                     <label for="exampleInputPassword1">Account Number</label>
-                                                    <input type="text" readonly value="<?php echo $row->Account_Number; ?>" name="Account_Number" required class="form-control" id="exampleInputEmail1">
+                                                    <input type="text" readonly value="<?php echo $row->Account_Number; ?>" required class="form-control" id="exampleInputEmail1">
                                                 </div>
                                                 <div class=" col-md-4 form-group">
                                                     <label for="exampleInputEmail1">Account Type | Category</label>
-                                                    <input type="text" readonly name="Acctype_ID" value="<?php echo $row->Acctype_ID; ?>" required class="form-control" id="exampleInputEmail1">
+                                                    <input type="text" readonly name="acc_type" value="<?php echo $row->Name; ?>" required class="form-control" id="exampleInputEmail1">
                                                 </div>
                                             </div>
 
                                             <div class="row">
-                                                <div class=" col-md-6 form-group">
-                                                    <label for="exampleInputEmail1">Transaction Code</label>
-                                                    <?php
-                                                    //PHP function to generate random account number
-                                                    $length = 20;
-                                                    $_transcode =  substr(str_shuffle('0123456789QWERgfdsazxcvbnTYUIOqwertyuioplkjhmPASDFGHJKLMNBVCXZ'), 1, $length);
-                                                    ?>
-                                                    <input type="text" name="tr_code" readonly value="<?php echo $_transcode; ?>" required class="form-control" id="exampleInputEmail1">
-                                                </div>
 
                                                 <div class=" col-md-6 form-group">
                                                     <label for="exampleInputPassword1">Amount Withdraw </label>

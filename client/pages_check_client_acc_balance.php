@@ -34,7 +34,7 @@ $client_id = $_SESSION['client_id'];
 
         //get the total amount deposited
         $account_id = $_GET['account_id'];
-        $result = "SELECT SUM(transaction_amt) FROM iB_Transactions WHERE  account_id = ? AND  tr_type = 'Deposit' ";
+        $result = "SELECT SUM(Amount) FROM Transactions WHERE  Account_Id = ? AND  Transaction_Type = 'Deposit' ";
         $stmt = $mysqli->prepare($result);
         $stmt->bind_param('i', $account_id);
         $stmt->execute();
@@ -44,7 +44,7 @@ $client_id = $_SESSION['client_id'];
 
         //get total amount withdrawn
         $account_id = $_GET['account_id'];
-        $result = "SELECT SUM(transaction_amt) FROM iB_Transactions WHERE  account_id = ? AND  tr_type = 'Withdrawal' ";
+        $result = "SELECT -SUM(Amount) FROM Transactions WHERE  Account_Id = ? AND  Transaction_Type = 'Withdrawal' ";
         $stmt = $mysqli->prepare($result);
         $stmt->bind_param('i', $account_id);
         $stmt->execute();
@@ -54,7 +54,7 @@ $client_id = $_SESSION['client_id'];
 
         //get total amount transfered
         $account_id = $_GET['account_id'];
-        $result = "SELECT SUM(transaction_amt) FROM iB_Transactions WHERE  account_id = ? AND  tr_type = 'Transfer' ";
+        $result = "SELECT -SUM(Amount) FROM Transactions WHERE  Account_Id = ? AND  Transaction_Type = 'Transfer' ";
         $stmt = $mysqli->prepare($result);
         $stmt->bind_param('i', $account_id);
         $stmt->execute();
@@ -62,10 +62,23 @@ $client_id = $_SESSION['client_id'];
         $stmt->fetch();
         $stmt->close();
 
+        //get total amount transfered
+        $account_id = $_GET['account_id'];
+        $result = "SELECT -SUM(Amount) FROM Transactions WHERE  Receiving_ID = ? AND  Transaction_Type = 'Transfer' ";
+        $stmt = $mysqli->prepare($result);
+        $stmt->bind_param('i', $account_id);
+        $stmt->execute();
+        $stmt->bind_result($Transfer_received);
+        $stmt->fetch();
+        $stmt->close();
+
 
 
         $account_id = $_GET['account_id'];
-        $ret = "SELECT * FROM  iB_bankAccounts WHERE account_id =? ";
+        $ret = "SELECT * FROM  BankAccounts
+                NATURAL JOIN Acc_types
+                NATURAL JOIN Customers
+                WHERE Account_Number =? ";
         $stmt = $mysqli->prepare($ret);
         $stmt->bind_param('i', $account_id);
         $stmt->execute(); //ok
@@ -73,11 +86,11 @@ $client_id = $_SESSION['client_id'];
         $cnt = 1;
         while ($row = $res->fetch_object()) {
             //compute rate
-            $banking_rate = ($row->acc_rates) / 100;
+            $banking_rate = ($row->Rate) / 100;
             //compute Money out
             $money_out = $withdrawal + $Transfer;
             //compute the balance
-            $money_in = $deposit - $money_out;
+            $money_in = $deposit - $money_out + $Transfer_received;
             //get the rate
             $rate_amt = $banking_rate * $money_in;
             //compute the intrest + balance 
@@ -90,14 +103,14 @@ $client_id = $_SESSION['client_id'];
                     <div class="container-fluid">
                         <div class="row mb-2">
                             <div class="col-sm-6">
-                                <h1><?php echo $row->client_name; ?> Account Balance</h1>
+                                <h1><?php echo $row->Cus_Name; ?> Account Balance</h1>
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="pages_dashboard.php">Dashboard</a></li>
                                     <li class="breadcrumb-item"><a href="pages_balance_enquiries.php">Finances</a></li>
                                     <li class="breadcrumb-item"><a href="pages_balance_enquiries.php">Balances</a></li>
-                                    <li class="breadcrumb-item active"><?php echo $row->client_name; ?> Accs</li>
+                                    <li class="breadcrumb-item active"><?php echo $row->Cus_Name; ?> Accs</li>
                                 </ol>
                             </div>
                         </div>
@@ -126,21 +139,21 @@ $client_id = $_SESSION['client_id'];
                                         <div class="col-sm-6 invoice-col">
                                             Account Holder
                                             <address>
-                                                <strong><?php echo $row->client_name; ?></strong><br>
-                                                <?php echo $row->client_number; ?><br>
-                                                <?php echo $row->client_email; ?><br>
-                                                Phone: <?php echo $row->client_phone; ?><br>
-                                                ID No: <?php echo $row->client_national_id; ?>
+                                                <strong><?php echo $row->Cus_Name; ?></strong><br>
+                                                <?php echo $row->Customer_ID; ?><br>
+                                                <?php echo $row->Email; ?><br>
+                                                Phone: <?php echo $row->Phone; ?><br>
+                                                ID No: <?php echo $row->National; ?>
                                             </address>
                                         </div>
                                         <!-- /.col -->
                                         <div class="col-sm-6 invoice-col">
                                             Account Details
                                             <address>
-                                                <strong><?php echo $row->acc_name; ?></strong><br>
-                                                Acc No: <?php echo $row->account_number; ?><br>
-                                                Acc Type: <?php echo $row->acc_type; ?><br>
-                                                Acc Rates: <?php echo $row->acc_rates; ?> %
+                                                <strong><?php echo $row->Acc_Name; ?></strong><br>
+                                                Acc No: <?php echo $row->Account_Number; ?><br>
+                                                Acc Type: <?php echo $row->Name; ?><br>
+                                                Acc Rates: <?php echo $row->Rate; ?> %
                                             </address>
                                         </div>
 

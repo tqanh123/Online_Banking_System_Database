@@ -58,14 +58,14 @@ $Customer_id = $_SESSION['Customer_id'];
                       <th>Acc Number</th>
                       <th>Rate</th>
                       <th>Acc Type</th>
-                      <th>Acc Owner</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
-                    $Customer_id = $_SESSION['Customer_id'];
-                    $ret = "SELECT * FROM  BankAccounts WHERE Customer_id =? ";
+                    $ret = "SELECT * FROM  BankAccounts
+                            NATURAL JOIN Acc_types
+                            WHERE Customer_id =? ";
                     $stmt = $mysqli->prepare($ret);
                     $stmt->bind_param('i', $Customer_id);
                     $stmt->execute(); //ok
@@ -73,19 +73,18 @@ $Customer_id = $_SESSION['Customer_id'];
                     $cnt = 1;
                     while ($row = $res->fetch_object()) {
                       //Trim Timestamp to DD-MM-YYYY : H-M-S
-                      $dateOpened = $row->created_at;
+                      $dateOpened = $row->Created_At;
 
                     ?>
 
                       <tr>
                         <td><?php echo $cnt; ?></td>
-                        <td><?php echo $row->Acc_name; ?></td>
-                        <td><?php echo $row->account_number; ?></td>
-                        <td><?php echo $row->acc_rates; ?>%</td>
-                        <td><?php echo $row->acc_type; ?></td>
-                        <td><?php echo $row->client_name; ?></td>
+                        <td><?php echo $row->Acc_Name; ?></td>
+                        <td><?php echo $row->Account_Number; ?></td>
+                        <td><?php echo $row->Rate; ?>%</td>
+                        <td><?php echo $row->Name; ?></td>
                         <td>
-                          <a class="btn btn-success btn-sm" href="pages_withdraw_money.php?account_id=<?php echo $row->account_id; ?>&account_number=<?php echo $row->account_number; ?>&Customer_id=<?php echo $row->Customer_id; ?>">
+                          <a class="btn btn-success btn-sm" href="pages_withdraw_money.php?account_id=<?php echo $row->Account_Number; ?>">
                             <i class="fas fa-money-bill-alt"></i>
                             <i class="fas fa-download"></i>
                             Withdraw Money

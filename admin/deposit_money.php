@@ -10,19 +10,15 @@ if (isset($_POST['deposit'])) {
     $account_id = $_GET['account_id'];
     $acc_type = $_POST['acc_type'];
     $cus_name = $_POST['cus_name'];
-    //$acc_amount  = $_POST['acc_amount'];
     $tr_type  = $_POST['tr_type'];
-    // $tr_status = $_POST['tr_status'];
     $cus_id  = $_GET['cus_id'];
     $transaction_amt = $_POST['transaction_amt'];
     $sql = "SELECT NOW()";
     $t = mysqli_query($mysqli, $sql);
     $time = mysqli_fetch_assoc($t);
-    //$acc_new_amt = $_POST['acc_new_amt'];
 
     //Notication
     $notification_details = "$cus_name Has Deposited $ $transaction_amt To Bank Account $account_id";
-
 
     //Insert Captured information to a database table
     $query = "INSERT INTO Transactions (Account_Id, Transaction_Type, Customer_ID, Amount, Created_At) 
@@ -30,15 +26,18 @@ if (isset($_POST['deposit'])) {
     $notification = "INSERT INTO Notifications (Notification_Details, Created_At) 
                      VALUES ('$notification_details', 'NOW()')";
     
+    $stmt = $mysqli -> query($query);
+    $notification_stmt = $mysqli -> query($notification);
 
     $cn_query = "SELECT MAX(Notification_ID) AS no_id FROM notifications";
-        $res_cn = $mysqli->query($cn_query);
-        $no_id = $res_cn->fetch_object();
+    $res_cn = $mysqli->query($cn_query);
+    $no_id = $res_cn->fetch_object();
+    // $id = ;
 
-        $cus_no_query = "INSERT INTO CustomersNotifications(Customer_ID, Notification_ID) 
-                         VALUES('$cus_id', '". $no_id -> no_id."')";
-        
-        $res_cusno = $mysqli -> query($cus_no_query);
+    $cus_no_query = "INSERT INTO CustomersNotifications(Customer_ID, Notification_ID) 
+                     VALUES('$cus_id', '". $no_id -> no_id ."')";
+    
+    $res_cusno = $mysqli->query($cus_no_query);
 
     //declare a varible which will be passed to alert function
     if ($stmt && $notification_stmt) {
@@ -88,8 +87,7 @@ if (isset($_POST['deposit'])) {
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-                                    <li class="breadcrumb-item"><a href="deposits">iBank Finances</a></li>
-                                    <li class="breadcrumb-item"><a href="deposits">Deposits</a></li>
+                                    <li class="breadcrumb-item"><a href="deposit.php">Deposits list</a></li>
                                     <li class="breadcrumb-item active"><?php echo $row->Acc_Name; ?></li>
                                 </ol>
                             </div>

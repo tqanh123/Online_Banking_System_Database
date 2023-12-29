@@ -9,7 +9,6 @@ $admin_id = $_SESSION['admin_id'];
 if (isset($_POST['withdrawal'])) {
     $account_id = $_GET['account_id'];
     $acc_name = $_POST['acc_name'];
-    //$acc_amount  = $_POST['acc_amount'];
     $tr_type  = $_POST['tr_type'];
     $cus_id  = $_GET['cus_id'];
     $User_name  = $_POST['User_name'];
@@ -36,7 +35,6 @@ if (isset($_POST['withdrawal'])) {
     if ($transaction_amt > $amt) {
         $err = "You Do Not Have Sufficient Funds In $acc_name Account.Your Existing Amount is $ $amt";
     } else {
-
 
         //Insert Captured information to a database table
         $query = "INSERT INTO Transactions ( Account_Id, Customer_ID, Amount, Transaction_Type, Created_At) VALUES ('$account_id', '$cus_id', '$transaction_amt', '$tr_type', 'NOW()')";
@@ -105,9 +103,9 @@ if (isset($_POST['withdrawal'])) {
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="pages_dashboard.php">Dashboard</a></li>
-                                    <li class="breadcrumb-item"><a href="pages_deposits">iBank Finances</a></li>
-                                    <li class="breadcrumb-item"><a href="pages_deposits">Withdrawal</a></li>
+                                    <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="deposit.php">iBank Deposit</a></li>
+                                    <li class="breadcrumb-item"><a href="withdrawals.php">Withdrawal</a></li>
                                     <li class="breadcrumb-item active"><?php echo $row->Acc_Name; ?></li>
                                 </ol>
                             </div>

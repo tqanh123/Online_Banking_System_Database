@@ -26,7 +26,7 @@
   ?>
 
       <a href="pages_dashboard.php" class="brand-link">
-        <img src="../client/dist/img/AdminLTELogo.png" alt="Banking Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <img src="../client/dist/img/ibankinglg.png" alt="Banking Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">Online Banking</span>
       </a>
 

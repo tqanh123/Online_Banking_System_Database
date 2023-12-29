@@ -23,7 +23,7 @@ if (isset($_POST['deposit'])) {
 
     //Notication
     $notification_details = "$User_name Has Transfered $ $transaction_amt From Bank Account $account_id To Bank Account $receiving_id";
-    $notification_details1 = "$receiving_acc_holder Has Transfered $ $transaction_amt From Bank Account $acc_name To Bank Account $receiving_id";
+    $notification_details1 = "$receiving_acc_holder Has Received $ $transaction_amt From Bank Account $acc_name To Bank Account $receiving_id";
 
     /*
             *You cant transfer money from an bank account that has no money in it so
@@ -112,14 +112,14 @@ if (isset($_POST['deposit'])) {
             $stmt->bind_result($amt);
             $stmt->fetch();
             $stmt->close();
-            // $result = "SELECT SUM(Amount) FROM  Transactions
-            //            WHERE Account_Id=? AND ";
-            // $stmt = $mysqli->prepare($result);
-            // $stmt->bind_param('i', $account_id);
-            // $stmt->execute();
-            // $stmt->bind_result($amt);
-            // $stmt->fetch();
-            // $stmt->close();
+            $result = "SELECT -SUM(Amount) FROM  Transactions
+                       WHERE Receiving_ID=? ";
+            $stmt = $mysqli->prepare($result);
+            $stmt->bind_param('i', $account_id);
+            $stmt->execute();
+            $stmt->bind_result($amt_r);
+            $stmt->fetch();
+            $stmt->close();
 
         ?>
             <div class="content-wrapper">
@@ -190,7 +190,7 @@ if (isset($_POST['deposit'])) {
                                             <div class="row">
                                                 <div class=" col-md-4 form-group">
                                                     <label for="exampleInputPassword1">Current Account Balance</label>
-                                                    <input type="text" readonly value="<?php echo $amt; ?>" required class="form-control" id="exampleInputEmail1">
+                                                    <input type="text" readonly value="<?php echo $amt + $amt_r; ?>" required class="form-control" id="exampleInputEmail1">
                                                 </div>
                                                 <div class=" col-md-4 form-group">
                                                     <label for="exampleInputPassword1">Amount Transfered($)</label>

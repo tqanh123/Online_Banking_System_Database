@@ -5,16 +5,15 @@
     -->
   <?php
   $admin_id = $_SESSION['admin_id'];
-  $ret = "SELECT Name, Profile_pic FROM  `admins`  WHERE Admin_ID = $admin_id ";
+  $ret = "SELECT * FROM  `admins`  WHERE Admin_ID = $admin_id ";
   $res = mysqli_query($mysqli, $ret);
   $row = mysqli_fetch_assoc($res);
-    $img = $row["Profile_pic"];
     //set automatically logged in user default image if they have not updated their pics
-    if ($img == "") {
+    if ($row["Profile_Pic"] == "") {
       $profile_picture = "<img src='dist/img/user_icon.png' class='img-circle elevation-2' alt='User Image'>
       ";
     } else {
-      $profile_picture = "<img src='dist/img/$img' class='img-circle elevation-2' alt='User Image'>
+      $profile_picture = "<img src='dist/img/". $row["Profile_Pic"] ."' class='img-circle elevation-2' alt='User Image'>
       ";
     }
 
@@ -32,7 +31,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <!-- <?php echo $profile_picture; ?> -->
+            <?php echo $profile_picture; ?>
           </div>
           <div class="info">
             <a href="#" class="d-block"><?php echo $row['Name']; ?></a>

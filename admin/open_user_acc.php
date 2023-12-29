@@ -65,7 +65,6 @@ if (isset($_POST['open_account'])) {
                                 <ol class="breadcrumb float-sm-right">
                                     <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
                                     <li class="breadcrumb-item"><a href="open_acc.php">iBanking Accounts</a></li>
-                                    <li class="breadcrumb-item"><a href="open_user_acc.php">Open </a></li>
                                     <li class="breadcrumb-item active"><?php echo $row->Cus_Name; ?></li>
                                 </ol>
                             </div>

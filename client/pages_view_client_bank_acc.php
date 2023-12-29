@@ -70,7 +70,6 @@ $Customer_id = $_SESSION['Customer_id'];
                                                 <th>Acc Number</th>
                                                 <th>Rate</th>
                                                 <th>Acc Type</th>
-                                                <th>Acc Owner</th>
                                                 <th>Date Opened</th>
                                                 <th>Action</th>
                                             </tr>
@@ -79,7 +78,9 @@ $Customer_id = $_SESSION['Customer_id'];
                                             <?php
                                             //fetch all iB_Accs Which belongs to selected client
                                             $Customer_id = $_SESSION['Customer_id'];
-                                            $ret = "SELECT * FROM  BankAccounts WHERE Customer_id = ?";
+                                            $ret = "SELECT * FROM  BankAccounts
+                                                    NATURAL JOIN Acc_types
+                                                    WHERE Customer_ID = ?";
                                             $stmt = $mysqli->prepare($ret);
                                             $stmt->bind_param('i', $Customer_id);
                                             $stmt->execute(); //ok
@@ -87,7 +88,7 @@ $Customer_id = $_SESSION['Customer_id'];
                                             $cnt = 1;
                                             while ($row = $res->fetch_object()) {
                                                 //Trim Timestamp to DD-MM-YYYY : H-M-S
-                                                $dateOpened = $row->created_at;
+                                                $dateOpened = $row->Created_At;
 
                                             ?>
 
@@ -95,11 +96,10 @@ $Customer_id = $_SESSION['Customer_id'];
                                                     <td><?php echo $cnt; ?></td>
                                                     <td><?php echo $row->Acc_Name; ?></td>
                                                     <td><?php echo $row->Account_Number ?></td>
-                                                    <td><?php echo $row->Acctype_ID; ?></td>
-                                                    <td><?php echo $row->client_name; ?></td>
+                                                    <td><?php echo $row->Name; ?></td>
                                                     <td><?php echo date("d-M-Y", strtotime($dateOpened)); ?></td>
                                                     <td>
-                                                        <a class="btn btn-success btn-sm" href="pages_check_client_acc_balance.php?account_id=<?php echo $row->account_id; ?>&acccount_number=<?php echo $row->account_number; ?>">
+                                                        <a class="btn btn-success btn-sm" href="pages_check_client_acc_balance.php?account_id=<?php echo $row->Account_Number; ?>">
                                                             <i class="fas fa-eye"></i>
                                                             <i class="fas fa-money-bill-alt"></i>
                                                             Check Balance

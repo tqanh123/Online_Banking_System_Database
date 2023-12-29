@@ -56,9 +56,9 @@ CREATE TABLE Loans (
   Start_Date DATE NOT NULL,
   Status VARCHAR(20) NOT NULL,
   Installment INT,
-  FOREIGN KEY Customer_ID REFERENCES Customers(Customer_ID),
-  FOREIGN KEY LoanType_ID REFERENCES LoanTypes(LoanType_ID)
-);
+  FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID),
+  FOREIGN KEY (LoanType_ID) REFERENCES LoanTypes(LoanType_ID)
+);  
 
 CREATE TABLE Notifications (
   Notification_ID INT AUTO_INCREMENT PRIMARY KEY,

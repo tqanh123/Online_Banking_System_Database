@@ -57,15 +57,17 @@ $Customer_id = $_SESSION['Customer_id'];
                       <th>Account No.</th>
                       <th>Rate</th>
                       <th>Acc. Type</th>
-                      <th>Acc. Owner</th>
+                      <!-- <th>Acc. Owner</th> -->
                       <th>Date Opened</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
                     //fetch all iB_Accs
-                    $Customer_id = $_SESSION['Customer_id'];
-                    $ret = "SELECT * FROM  BankAccounts WHERE Customer_id =? ";
+
+                    $ret = "SELECT * FROM  BankAccounts
+                            NATURAL JOIN Acc_types
+                            WHERE Customer_id =? ";
                     $stmt = $mysqli->prepare($ret);
                     $stmt->bind_param('i', $Customer_id);
                     $stmt->execute(); //ok
@@ -73,7 +75,7 @@ $Customer_id = $_SESSION['Customer_id'];
                     $cnt = 0;
                     while ($row = $res->fetch_object()) {
                       //Trim Timestamp to DD-MM-YYYY : H-M-S
-                     $dateOpened = $row->created_at;
+                     $dateOpened = $row->Created_At;
 
                     ?>
 
@@ -81,9 +83,9 @@ $Customer_id = $_SESSION['Customer_id'];
                         <td><?php echo $cnt; ?></td>
                         <td><?php echo $row->Acc_Name; ?></td>
                         <td><?php echo $row->Account_Number; ?></td>
-                        <td><?php echo $row->Acc_Rates; ?>%</td>
-                        <td><?php echo $row->Acc_Types; ?></td>
-                        <td><?php echo $row->Client_Name; ?></td>
+                        <td><?php echo $row->Rate; ?>%</td>
+                        <td><?php echo $row->Name; ?></td>
+                        <!-- <td><?php echo $row->Cus_Name; ?></td> -->
                         <td><?php echo date("d-M-Y", strtotime($dateOpened)); ?></td>
                       </tr>
                     <?php $cnt = $cnt + 1;}
