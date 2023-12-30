@@ -52,6 +52,15 @@ $admin_id = $_SESSION['admin_id'];
           <div class="col-12">
             <div class="card">
               <div class="card-header">
+              <form method="get" action="loan_management.php">
+                  <label for="status">Select Loan Status:</label>
+                  <select name="status" id="status">
+                      <option value="all">All</option>
+                      <option value="inactive">Inactive</option>
+                      <option value="active">Active</option>
+                  </select>
+                  <input type="submit" value="Filter">
+              </form>
                 <h3 class="card-title">Select on any account to view for loan</h3>
               </div>
               <div class="card-body">
@@ -68,11 +77,18 @@ $admin_id = $_SESSION['admin_id'];
                   </thead>
                   <tbody>
                     <?php
+                    $status = $_GET['status'] ?? 'all';
+                    $whereClause = '';
+                    
+                    if ($status !== 'all') {
+                        $whereClause = " WHERE l.Status = '$status'";
+                    }
+                    
                     $sql = "SELECT c.Cus_Name AS Customer_Name, l.Status, l.Loan_Amount, lt.Name AS Loan_Type, l.Customer_ID
-                                FROM Loans l
-                                INNER JOIN LoanTypes lt ON l.LoanType_ID = lt.LoanType_ID
-                                INNER JOIN Customers c ON l.Customer_ID = c.Customer_ID
-                                WHERE l.Status = 'inactive';
+                            FROM Loans l
+                            INNER JOIN LoanTypes lt ON l.LoanType_ID = lt.LoanType_ID
+                            INNER JOIN Customers c ON l.Customer_ID = c.Customer_ID
+                            $whereClause;
                     ";
 
                     $result = $mysqli->query($sql);
