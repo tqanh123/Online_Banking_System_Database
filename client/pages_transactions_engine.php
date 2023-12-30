@@ -83,7 +83,7 @@ if (isset($_GET['RollBack_Transaction'])) {
                     $ret = "SELECT * FROM `Transactions` WHERE Customer_id =? ORDER BY Created_At DESC ";
                     $stmt = $mysqli->prepare($ret);
                     $stmt->bind_param('i', $Customer_id);
-                    $stmt->execute(); //ok
+                    $stmt->execute(); //ok    
                     $res = $stmt->get_result();
                     $cnt = 1;
                     while ($row = $res->fetch_object()) {

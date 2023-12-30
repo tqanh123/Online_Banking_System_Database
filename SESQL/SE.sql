@@ -33,7 +33,7 @@ CREATE TABLE BankAccounts (
   Customer_ID INT NOT NULL,
   Acc_Status VARCHAR(255) NOT NULL,
   Acc_Amount VARCHAR(255) NOT NULL,
-  Created_At timestamp,
+  Created_At timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
   Acctype_ID INT,
   FOREIGN KEY (Acctype_ID) REFERENCES Acc_types(Acctype_ID),
   FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
@@ -49,7 +49,7 @@ CREATE TABLE LoanTypes (
 
 CREATE TABLE Loans (
   Loan_ID INT AUTO_INCREMENT PRIMARY KEY,
-  LoanType_ID INT PRIMARY KEY,
+  LoanType_ID INT,
   Customer_ID INT NOT NULL,
   Loan_Amount DECIMAL(10, 2) NOT NULL,
   Loan_Term INT NOT NULL,
@@ -63,7 +63,7 @@ CREATE TABLE Loans (
 CREATE TABLE Notifications (
   Notification_ID INT AUTO_INCREMENT PRIMARY KEY,
   Notification_Details TEXT NOT NULL,
-  Created_At timestamp
+  Created_At timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6)
 );
 
 CREATE TABLE `Transactions` (
@@ -73,8 +73,8 @@ CREATE TABLE `Transactions` (
     Receiving_ID INT,
     Amount DECIMAL(10, 2) NOT NULL,
     Transaction_Type VARCHAR(50) NOT NULL,
-    Created_At timestamp,
-    FOREIGN KEY (Account_Number) REFERENCES BankAccounts(Account_Number),
+    Created_At timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
+    FOREIGN KEY (Account_Id) REFERENCES BankAccounts(Account_Number),
     FOREIGN KEY (Receiving_ID) REFERENCES BankAccounts(Account_Number),
     FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
 );
