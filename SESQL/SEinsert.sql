@@ -163,8 +163,8 @@ VALUES
 ('Fixed Deposit Account', 'Fixed-term deposit with competitive interest rates', 0.05),
 ('Business Checking Account', 'Checking account for business transactions', 0.015),
 ('Foreign Currency Account', 'Account for holding foreign currencies', 0.03),
-('Loan', 'Loan account for borrowing funds', 0.08),
-('Credit', 'Credit account for making purchases on credit', 0.12),
+('Payroll Account', 'Used to receive salary and monthly income-related payments', 0.08),
+('Certificate of Deposit', 'To invest money for a term with a fixed interest rate.', 0.12),
 
 INSERT INTO LoanTypes (Name, Description, Rate, Installment_Period)
 VALUES 
