@@ -180,7 +180,7 @@ VALUES
 ('Renovation Loan', 'Loan for home renovation', 10.5, 'Month'),
 
 
-INSERT INTO Loans (LoanType_ID, Customer_ID, Loan_Amount, Interest_Rate, Loan_Term, Start_Date, Status, Installment)
+INSERT INTO Loans (LoanType_ID, Customer_ID, Loan_Amount, Loan_Term, Start_Date, Status, Installment)
 VALUES 
 (1, 1, 5000.00, 12, '2022-01-01', 'Approved', 458.33),
 (2, 2, 10000.00, 24, '2022-02-15', 'Pending', 1916.68),
