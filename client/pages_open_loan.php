@@ -18,7 +18,7 @@ if (isset($_POST['open_loan'])) {
     $sqlInsertLoan = "INSERT INTO loans (Customer_ID, LoanType_ID, Loan_Amount, Loan_Term, Installment, Status, Start_Date)
                       VALUES (?, ?, ?, ?, ?, 'inactive', NOW())";
     $stmt = $mysqli->prepare($sqlInsertLoan);
-    $stmt->bind_param('iidid', $customer_id, $loan_type_id, $loan_amount, $term, $installment);
+    $stmt->bind_param('iisid', $customer_id, $loan_type_id, $loan_amount, $term, $installment);
     $stmt->execute();
 
     if ($stmt) {
