@@ -84,7 +84,7 @@ $admin_id = $_SESSION['admin_id'];
                         $whereClause = " WHERE l.Status = '$status'";
                     }
                     
-                    $sql = "SELECT c.Cus_Name AS Customer_Name, l.Status, l.Loan_Amount, lt.Name AS Loan_Type, l.Customer_ID
+                    $sql = "SELECT c.Cus_Name AS Customer_Name, l.Status, l.Loan_Amount, lt.Name AS Loan_Type, l.Customer_ID, l.Loan_ID
                             FROM Loans l
                             INNER JOIN LoanTypes lt ON l.LoanType_ID = lt.LoanType_ID
                             INNER JOIN Customers c ON l.Customer_ID = c.Customer_ID
@@ -106,7 +106,7 @@ $admin_id = $_SESSION['admin_id'];
                         <!-- <td><?php echo $row->client_name; ?></td> -->
                         <td>
                           <?php if ($row->Status !== 'Active') { ?>
-                            <a class="btn btn-success btn-sm" href='loan_management.php?customer_id=<?php echo $row->Customer_ID; ?>'>Manage</a>
+                            <a class="btn btn-success btn-sm" href='loan_management.php?customer_id=<?php echo $row->Customer_ID; ?>&loan_id=<?php echo $row->Loan_ID; ?>'>Manage</a>
                           <?php } ?>
                         </td>
 

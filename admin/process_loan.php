@@ -6,12 +6,13 @@ check_login();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $customer_id = $_POST['customer_id'] ?? '';
+    $loan_id = $_POST['loan_id'] ?? '';
     $action = $_POST['loan_action'] ?? '';
 
-    if (!empty($customer_id) && !empty($action)) {
+    if (!empty($customer_id) && !empty($action) && !empty($loan_id)) {
         if ($action === 'accept') {
 
-            $sqlUpdateStatus = "UPDATE loans SET Status = 'Active' WHERE Customer_ID = $customer_id";
+            $sqlUpdateStatus = "UPDATE loans SET Status = 'Active' WHERE Customer_ID = $customer_id AND Loan_ID = $loan_id";
             if ($mysqli->query($sqlUpdateStatus) === TRUE) {
 
                 $notificationDetails = "Your loan has been accepted. Your loan account is now active.";
@@ -36,8 +37,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           
             if ($mysqli->query($sqlCreateNotification) === TRUE) {
                 echo "Loan rejected successfully. Notification created.";
-                $sqlDeleteLoan = "DELETE FROM Loans WHERE Customer_ID = $customer_id";
-                $sqlDeleteCustomerLoan = "DELETE FROM CustomerLoans WHERE Customer_ID = $customer_id";
+                $sqlDeleteLoan = "DELETE FROM Loans WHERE Customer_ID = $customer_id AND Loan_ID = $loan_id";
+                $sqlDeleteCustomerLoan = "DELETE FROM CustomerLoans WHERE Customer_ID = $customer_id AND Loan_ID = $loan_id";
 
                 $notification_id = $mysqli->insert_id;
                 $sqlCreateCustomerNotification = "INSERT INTO customersnotifications (Customer_ID, Notification_ID) VALUES ($customer_id, $notification_id)";

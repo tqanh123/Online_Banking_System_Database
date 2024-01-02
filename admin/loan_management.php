@@ -6,6 +6,7 @@ check_login();
 $admin_id = $_SESSION['admin_id'];
 
 $customer_id = $_GET['customer_id'] ?? '';
+$loan_id = $_GET['loan_id'] ?? '';
 
 // if (!empty($customer_id)) {
 //     $sql = "SELECT c.Customer_ID, c.Cus_Name AS Customer_Name, c.National, c.Phone, c.Date_of_Birth, c.Gender, c.Address,
@@ -87,7 +88,7 @@ $customer_id = $_GET['customer_id'] ?? '';
                                 FROM Customers c
                                 LEFT JOIN Loans l ON c.Customer_ID = l.Customer_ID
                                 LEFT JOIN LoanTypes lt ON l.LoanType_ID = lt.LoanType_ID
-                                WHERE c.Customer_ID = $customer_id;";
+                                WHERE c.Customer_ID = $customer_id AND l.Loan_ID = $loan_id";
 
                     $result = $mysqli->query($sql);
                     while ($row = $result->fetch_object()) {
@@ -101,6 +102,7 @@ $customer_id = $_GET['customer_id'] ?? '';
 
                             <form method='post' action='process_loan.php'>
                                 <input type='hidden' name='customer_id' value='<?php echo $row->Customer_ID; ?>'>  
+                                <input type='hidden' name='loan_id' value='<?php echo $row->Loan_ID; ?>'>  
                                 <button type='submit' name='loan_action' value='accept' class='btn btn-primary'>Accept Loan</button>
                                 <button type='submit' name='loan_action' value='reject' class='btn btn-danger'>Reject Loan</button>
                             </form>
