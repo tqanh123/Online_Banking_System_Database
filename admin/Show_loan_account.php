@@ -52,7 +52,7 @@ $admin_id = $_SESSION['admin_id'];
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-              <form method="get" action="loan_management.php">
+              <form method="get" action="Show_loan_account.php">
                   <label for="status">Select Loan Status:</label>
                   <select name="status" id="status">
                       <option value="all">All</option>
@@ -105,8 +105,9 @@ $admin_id = $_SESSION['admin_id'];
                         <td><?php echo $row->Loan_Type; ?></td>
                         <!-- <td><?php echo $row->client_name; ?></td> -->
                         <td>
-                        <a class="btn btn-success btn-sm" href='loan_management.php?customer_id=<?php echo $row->Customer_ID; ?>'>Manage</a>
-                          </a>
+                          <?php if ($row->Status !== 'Active') { ?>
+                            <a class="btn btn-success btn-sm" href='loan_management.php?customer_id=<?php echo $row->Customer_ID; ?>'>Manage</a>
+                          <?php } ?>
                         </td>
 
                       </tr>

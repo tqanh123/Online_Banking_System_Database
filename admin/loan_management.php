@@ -53,6 +53,13 @@ $customer_id = $_GET['customer_id'] ?? '';
 //         }
 //     $mysqli->close();
 // }
+// if ($stmt) {
+//   $success = "Loan Accept";
+// } else {
+//   $err = "Please Try Again Or Try Later";
+// }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -74,7 +81,6 @@ $customer_id = $_GET['customer_id'] ?? '';
             <div class="card">
               <div class="card-header">
                 <?php
-                    // $client_id = $_SESSION['client_id'];
                     $sql = "SELECT c.Customer_ID, c.Cus_Name AS Customer_Name, c.National, c.Phone, c.Date_of_Birth, c.Gender, c.Address,
                                 l.Loan_ID, l.LoanType_ID, lt.Name AS Loan_Type, lt.Description AS Loan_Type_Description,
                                 l.Loan_Amount AS Loan_Amount, l.Loan_Term, l.Start_Date, l.Status, l.Installment

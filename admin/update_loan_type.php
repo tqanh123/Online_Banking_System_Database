@@ -104,7 +104,10 @@ if (isset($_POST['update_loan_type'])) {
                                                     <input type="text" readonly name="id" value="<?php echo $loanType_ID; ?>" readonly class="form-control" id="exampleInputPassword1">
                                                 </div>
                                             </div>
-
+                                            <div class=" col-md-4 form-group">
+                                                    <label for="exampleInputEmail1">Loan Installment Period</label>
+                                                    <input type="text" name="installment_period" value="<?php echo $row->Installment_Period; ?>" required class="form-control" id="exampleInputEmail1">
+                                                </div>
                                             <div class="row">
                                                 <div class=" col-md-12 form-group">
                                                     <label for="exampleInputEmail1">Loan Decription</label>

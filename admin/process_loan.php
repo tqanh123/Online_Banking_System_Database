@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $notificationDetails = "Your loan has been accepted. Your loan account is now active.";
                 $sqlCreateNotification = "INSERT INTO Notifications (Notification_Details, Created_At) VALUES ('$notificationDetails', NOW())";
                 if ($mysqli->query($sqlCreateNotification) === TRUE) {
-                    echo "Loan accepted successfully.";
+                    $success = "Loan Accept";
                     $notification_id = $mysqli->insert_id;
                     $sqlCreateCustomerNotification = "INSERT INTO customersnotifications (Customer_ID, Notification_ID) VALUES ($customer_id, $notification_id)";
                     if ($mysqli->query($sqlCreateCustomerNotification) === TRUE) {
