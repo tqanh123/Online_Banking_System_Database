@@ -66,9 +66,9 @@ if (isset($_POST['update_loan_type'])) {
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="pages_dashboard.php">Dashboard</a></li>
-                                    <li class="breadcrumb-item"><a href="pages_update_accs.php">iBanking Accounts</a></li>
-                                    <li class="breadcrumb-item"><a href="pages_update_accs.php">Manage</a></li>
+                                    <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="manage_loan_type.php">iBanking Accounts</a></li>
+                                    <li class="breadcrumb-item"><a href="">Manage</a></li>
                                     <li class="breadcrumb-item active"><?php echo $row->name; ?></li>
                                 </ol>
                             </div>

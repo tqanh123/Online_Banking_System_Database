@@ -25,7 +25,6 @@ if (isset($_POST['open_account'])) {
         $err = "Please Try Again Or Try Later";
     }
 }
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -62,8 +61,8 @@ if (isset($_POST['open_account'])) {
                             </div>
                             <div class="col-sm-6">
                                 <ol class="breadcrumb float-sm-right">
-                                    <li class="breadcrumb-item"><a href="dashboard.php">Dashboard</a></li>
-                                    <li class="breadcrumb-item"><a href="open_acc.php">iBanking Accounts</a></li>
+                                    <li class="breadcrumb-item"><a href="pages_dashboard.php">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="pages_open_acc.php">iBanking Accounts</a></li>
                                     <li class="breadcrumb-item active"><?php echo $row->Cus_Name; ?></li>
                                 </ol>
                             </div>

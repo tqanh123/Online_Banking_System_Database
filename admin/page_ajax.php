@@ -7,7 +7,7 @@ if (!empty($_POST["iBankAccountType"])) {
     $stmt->execute(array(':id' => $id));
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        echo htmlentities($row['rate']);
+        echo htmlentities($row['Rate']);
     }
 }
 

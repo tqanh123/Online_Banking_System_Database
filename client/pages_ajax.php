@@ -32,6 +32,18 @@ if (!empty($_POST["iBankAccHolder"])) {
     }
 }
 
+if (isset($_GET['accloan_id'])){
+    $acc_id = $_GET['accloan_id'];
+    $stmt = $DB_con->prepare("SELECT * FROM LoanTypes WHERE LoanType_ID = :id");
+    $stmt->execute(array(':id' => $acc_id));
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { 
+         $text1 = $row['Rate'];
+         $text2 = $row['Installment_Period'];
+         echo json_encode(["text_1" => $text1, "text_2" => $text2]);
+    }
+}
+
 ?>
 
 

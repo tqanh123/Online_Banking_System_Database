@@ -44,10 +44,18 @@ if (isset($_POST['deposit'])) {
 
 
         //Insert Captured information to a database table
-        $query = "INSERT INTO Transactions (Account_ID, Transaction_Type, Customer_ID, Amount, Receiving_ID, Created_At)
-                  VALUES ('$account_id', '$tr_type', '$User_id', '$transaction_amt', '$receiving_id', 'NOW()')";
-        $notification = "INSERT INTO  notifications (notification_details, Created_At) VALUES ('$notification_details', 'NOW()')";
+        $query = "INSERT INTO Transactions (Account_ID, Transaction_Type, Customer_ID, Amount, Receiving_ID)
+                  VALUES ('$account_id', '$tr_type', '$User_id', '$transaction_amt', '$receiving_id')";
+        $notification = "INSERT INTO  notifications (notification_details) VALUES ('$notification_details')";
+        $update = " UPDATE BankAccounts 
+                    SET Acc_Amount = Acc_Amount + '$transaction_amt'
+                    WHERE Account_Number = '$account_id'";
+        $update_r = "UPDATE BankAccounts 
+                     SET Acc_Amount = Acc_Amount - '$transaction_amt'
+                     WHERE Account_Number = '$receiving_id'";
 
+        $u_stmt = $mysqli -> query($update);
+        $ur_stmt = $mysqli -> query($update_r);
         $stmt = $mysqli->query($query);
         $notification_stmt = $mysqli->query($notification);
 
@@ -289,22 +297,6 @@ if (isset($_POST['deposit'])) {
 </html>
 
 <script>
-//     $(document).ready(function(){
-// $('#receiving_acc_no').on('change',function(){
-//     if($(this).val()=='')
-//         return;
-    
-//     $.get('article_' + $(this).val() + '.html', function(data) {
-//         $('#article_language').html(data);
-//     });
-    
-//     $.get('newstext_' + $(this).val() + '.html', function(data) {
-//         $('#newstext_language').html(data);
-//     });
-    
-// });
-
-// });
     const account = document.getElementById("receiving_acc_no");
     account.addEventListener("change", (event) => {
       var acc_id = event.target.value;
@@ -323,5 +315,4 @@ if (isset($_POST['deposit'])) {
       xml.open("GET", "conf/config.php?acc_id="+acc_id, true);
       xml.send();
     })
-//   }
 </script>

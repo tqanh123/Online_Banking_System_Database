@@ -89,7 +89,7 @@ if (isset($_GET['deleteLoanType'])) {
                         <td><?php echo $cnt; ?></td>
                         <td><?php echo $row->name; ?></td>
                         <td><?php echo $row->rate; ?>%</td>
-                        <td><?php echo $row->Installment_Period; ?>%</td>
+                        <td><?php echo $row->Installment_Period; ?></td>
 
                         <td>
                           <a class="btn btn-success btn-sm" href="update_loan_type.php?id=<?php echo $row->LoanType_ID; ?>">

@@ -37,8 +37,14 @@ if (isset($_POST['withdrawal'])) {
     } else {
 
         //Insert Captured information to a database table
-        $query = "INSERT INTO Transactions ( Account_Id, Customer_ID, Amount, Transaction_Type, Created_At) VALUES ('$account_id', '$cus_id', '$transaction_amt', '$tr_type', 'NOW()')";
-        $notification = "INSERT INTO  notifications (notification_details, Created_At) VALUES ('$notification_details', 'NOW()')";
+        $query = "INSERT INTO Transactions ( Account_Id, Customer_ID, Amount, Transaction_Type) 
+                  VALUES ('$account_id', '$cus_id', '$transaction_amt', '$tr_type')";
+        $notification = "INSERT INTO  notifications (notification_details) VALUES ('$notification_details')";
+        $update = " UPDATE BankAccounts 
+                    SET Acc_Amount = Acc_Amount + '$transaction_amt'
+                    WHERE Account_Number = '$account_id'";
+
+        $u_stmt = $mysqli -> query($update);
         $stmt = $mysqli->query($query);
         $notification_stmt = $mysqli->query($notification);
 

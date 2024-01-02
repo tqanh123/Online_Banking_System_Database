@@ -48,7 +48,7 @@ $stmt->close();
 
 //return total number of iBank Withdrawals
 $Customer_id = $_SESSION['Customer_id'];
-$result = "SELECT SUM(Amount) FROM Transactions WHERE  Customer_id = ? AND Transaction_Type = 'Withdrawal' ";
+$result = "SELECT -SUM(Amount) FROM Transactions WHERE  Customer_id = ? AND Transaction_Type = 'Withdrawal' ";
 $stmt = $mysqli->prepare($result);
 $stmt->bind_param('i', $Customer_id);
 $stmt->execute();
@@ -60,7 +60,7 @@ $stmt->close();
 
 //return total number of iBank Transfers
 $Customer_id = $_SESSION['Customer_id'];
-$result = "SELECT SUM(Amount) FROM Transactions WHERE  Customer_id = ? AND Transaction_Type = 'Transfer' ";
+$result = "SELECT -SUM(Amount) FROM Transactions WHERE  Customer_id = ? AND Transaction_Type = 'Transfer' ";
 $stmt = $mysqli->prepare($result);
 $stmt->bind_param('i', $Customer_id);
 $stmt->execute();

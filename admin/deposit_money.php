@@ -21,26 +21,29 @@ if (isset($_POST['deposit'])) {
     $notification_details = "$cus_name Has Deposited $ $transaction_amt To Bank Account $account_id";
 
     //Insert Captured information to a database table
-    $query = "INSERT INTO Transactions (Account_Id, Transaction_Type, Customer_ID, Amount, Created_At) 
-              VALUES ('$account_id', '$tr_type', '$cus_id', '$transaction_amt', 'NOW()')";
-    $notification = "INSERT INTO Notifications (Notification_Details, Created_At) 
-                     VALUES ('$notification_details', 'NOW()')";
+    $query = "INSERT INTO Transactions (Account_Id, Transaction_Type, Customer_ID, Amount) 
+              VALUES ('$account_id', '$tr_type', '$cus_id', '$transaction_amt')";
+    $update = "UPDATE BankAccounts 
+               SET Acc_Amount = Acc_Amount + '$transaction_amt'
+               WHERE Account_Number = '$account_id'";
+    $notification = "INSERT INTO Notifications (Notification_Details) 
+                     VALUES ('$notification_details')";
     
     $stmt = $mysqli -> query($query);
+    $u_stmt = $mysqli -> query($update);
     $notification_stmt = $mysqli -> query($notification);
 
     $cn_query = "SELECT MAX(Notification_ID) AS no_id FROM notifications";
     $res_cn = $mysqli->query($cn_query);
     $no_id = $res_cn->fetch_object();
-    // $id = ;
 
     $cus_no_query = "INSERT INTO CustomersNotifications(Customer_ID, Notification_ID) 
                      VALUES('$cus_id', '". $no_id -> no_id ."')";
-    
+
     $res_cusno = $mysqli->query($cus_no_query);
 
     //declare a varible which will be passed to alert function
-    if ($stmt && $notification_stmt) {
+    if ($stmt && $u_stmt && $notification_stmt) {
         $success = "Money Deposited";
     } else {
         $err = "Please Try Again Or Try Later";

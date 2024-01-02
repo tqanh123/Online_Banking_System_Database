@@ -183,15 +183,6 @@
                     <p>Transfers</p>
                   </a>
                 </li>
-                <!--
-              <li class="nav-item">
-                <a href="loans.php" class="nav-link">
-                  <i class="fas fa-cart-arrow-down nav-icon"></i>
-                  <p>Loans</p>
-                </a>
-              </li>
-
-              -->
                 <li class="nav-item">
                   <a href="balance_enquiries.php" class="nav-link">
                     <i class="fas fa-money-bill-alt nav-icon"></i>
@@ -201,34 +192,44 @@
               </ul>
             </li>
             <!-- ./Finances -->
+
+            <!-- Loan -->
             <li class="nav-item has-treeview">
-              <a href="Show_loan_account.php" class="nav-link">
+              <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-money-bill-alt nav-icon"></i>
                 <p>
-                  Loan
+                   Loan Accounts
+                  <i class="fas fa-angle-left right"></i>
                 </p>
               </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="add_loan_type.php" class="nav-link">
+                    <i class="far fas fa-plus nav-icon"></i>
+                    <p>Add Loan Type</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="manage_loan_type.php" class="nav-link">
+                    <i class="fas fa-cogs nav-icon"></i>
+                    <p>Manage Loan Acc Types</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="open_acc.php" class="nav-link">
+                    <i class="fas fa-lock-open nav-icon"></i>
+                    <p>Accpet Loan</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="Show_loan_account.php" class="nav-link">
+                    <i class="fas fa-cog nav-icon"></i>
+                    <p>Manange Loan Openings</p>
+                  </a>
+                </li>
+              </ul>
             </li>
-            <!--Statements-- Will be implemented later versions.
-          
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-receipt"></i>
-              <p>
-                   iBanking Statements
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="bank" class="nav-link">
-                  <i class="fas fa-upload nav-icon"></i>
-                  <p>Bank Accounts</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          ./Statements -->
+            <!-- Loan -->
 
 
             <li class="nav-header">Advanced Modules</li>

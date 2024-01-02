@@ -138,10 +138,10 @@
             <!-- ./loan -->
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-briefcase"></i>
+                <i class="nav-icon fas fa-money-bill-alt"></i>
                 <p>
                   Loan Accounts
-                  <i class="fas fa-money-bill-alt nav-icon"></i>
+                  <i class="fas fa-angle-left right"></i>
                 </p>
               </a>
               <ul class="nav nav-treeview">
