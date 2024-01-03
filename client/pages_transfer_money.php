@@ -45,9 +45,17 @@ $Customer_id = $_SESSION['Customer_id'];
     
             //Insert Captured information to a database table
             $query = "INSERT INTO Transactions (Account_ID, Transaction_Type, Customer_ID, Amount, Receiving_ID, Created_At)
-                      VALUES ('$account_id', '$tr_type', '$User_id', '$transaction_amt', '$receiving_id', 'NOW()')";
-            $notification = "INSERT INTO  notifications (notification_details, Created_At) VALUES ('$notification_details', 'NOW()')";
-    
+                      VALUES ('$account_id', '$tr_type', '$User_id', '$transaction_amt', '$receiving_id', NOW())";
+            $notification = "INSERT INTO  notifications (notification_details, Created_At) VALUES ('$notification_details', NOW())";
+            $update = " UPDATE BankAccounts 
+                    SET Acc_Amount = Acc_Amount + '$transaction_amt'
+                    WHERE Account_Number = '$account_id'";
+            $update_r = "UPDATE BankAccounts 
+                     SET Acc_Amount = Acc_Amount - '$transaction_amt'
+                     WHERE Account_Number = '$receiving_id'";
+
+            $u_stmt = $mysqli -> query($update);
+            $ur_stmt = $mysqli -> query($update_r);
             $stmt = $mysqli->query($query);
             $notification_stmt = $mysqli->query($notification);
     
@@ -95,7 +103,7 @@ $Customer_id = $_SESSION['Customer_id'];
         <!-- Content Wrapper. Contains page content -->
         <?php
         $account_id = $_GET['account_id'];
-        $ret = "SELECT * FROM  bankAccounts 
+        $ret = "SELECT * FROM  BankAccounts 
                 NATURAL JOIN Customers
                 NATURAL JOIN Acc_types
                 WHERE Account_Number = ? ";
@@ -206,7 +214,7 @@ $Customer_id = $_SESSION['Customer_id'];
                                                         <option>Select Receiving Account</option>
                                                         <?php
                                                         //fetch all iB_Accs
-                                                        $ret = "SELECT * FROM bankAccounts WHERE Account_Number !='".$row->Account_Number."'";
+                                                        $ret = "SELECT * FROM BankAccounts WHERE Account_Number !='".$row->Account_Number."'";
                                                         $stmt = $mysqli->prepare($ret);
                                                         $stmt->execute(); //ok
                                                         $res = $stmt->get_result();
@@ -286,3 +294,23 @@ $Customer_id = $_SESSION['Customer_id'];
 </body>
 
 </html>
+<script>
+    const account = document.getElementById("receiving_acc_no");
+    account.addEventListener("change", (event) => {
+      var acc_id = event.target.value;
+
+      var xml = new XMLHttpRequest();
+      xml.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          var data = JSON.parse(this.responseText);
+          document.getElementById('ReceivingAcc').value = data.text_1;
+          document.getElementById('AccountHolder').value = data.text_2;
+          document.getElementById('Holder_id').value = data.text_3;
+
+        }
+      }
+
+      xml.open("GET", "conf/config.php?acc_id="+acc_id, true);
+      xml.send();
+    })
+</script>
