@@ -188,85 +188,7 @@ $stmt->close();
             <!-- ./Balances-->
           </div>
 
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card">
-                <div class="card-header">
-                  <h5 class="card-title">Advanced Analytics</h5>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove">
-                      <i class="fas fa-times"></i>
-                    </button>
-                  </div>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="chart">
-                        <!-- Transaction Donought chart Canvas -->
-                        <div id="PieChart" class="col-md-6" style="height: 400px; max-width: 500px; margin: 0px auto;"></div>
-                      </div>
-                      <!-- /.chart-responsive -->
-                    </div>
-                    <hr>
-                    <div class="col-md-6">
-                      <div class="chart">
-                        <div id="AccountsPerAccountCategories" class="col-md-6" style="height: 400px; max-width: 500px; margin: 0px auto;"></div>
-                      </div>
-                      <!-- /.chart-responsive -->
-                    </div>
-
-                    <!-- /.col -->
-                  </div>
-                  <!-- /.row -->
-                </div>
-                <!-- ./card-body -->
-                <div class="card-footer">
-                  <div class="row">
-                    <div class="col-sm-3 col-6">
-                      <div class="description-block border-right">
-                        <h5 class="description-header">$ <?php echo $deposits; ?></h5>
-                        <span class="description-text">TOTAL DEPOSITS</span>
-                      </div>
-                      <!-- /.description-block -->
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-sm-3 col-6">
-                      <div class="description-block border-right">
-                        <h5 class="description-header">$ <?php echo $withdrawal; ?></h5>
-                        <span class="description-text">TOTAL WITHDRAWALS</span>
-                      </div>
-                      <!-- /.description-block -->
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-sm-3 col-6">
-                      <div class="description-block border-right">
-                        <h5 class="description-header">$ <?php echo $Transfers; ?> </h5>
-                        <span class="description-text">TOTAL TRANSFERS</span>
-                      </div>
-                      <!-- /.description-block -->
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-sm-3 col-6">
-                      <div class="description-block">
-                        <h5 class="description-header">$ <?php echo $new_amt; ?> </h5>
-                        <span class="description-text">TOTAL MONEY IN  Account</span>
-                      </div>
-                      <!-- /.description-block -->
-                    </div>
-                  </div>
-                  <!-- /.row -->
-                </div>
-                <!-- /.card-footer -->
-              </div>
-              <!-- /.card -->
-            </div>
-            <!-- /.col -->
-          </div>
+          
           <!-- /.row -->
 
           <!-- Main row -->
@@ -297,7 +219,7 @@ $stmt->close();
                           <th>Account No.</th>
                           <th>Type</th>
                           <th>Amount</th>
-                          <th>Acc. Owner</th>
+                          <!-- <th>Acc. Owner</th> -->
                           <th>Timestamp</th>
                         </tr>
                       </thead>
@@ -305,7 +227,7 @@ $stmt->close();
                         <?php
                         //Get latest transactions ;
                         $Customer_id = $_SESSION['Customer_id'];
-                        $ret = "SELECT * FROM Transactions WHERE  Customer_id = ?  ORDER BY Transactions. created_at DESC ";
+                        $ret = "SELECT * FROM `Transactions` WHERE  Customer_id = ?  ORDER BY Transactions. created_at DESC ";
                         $stmt = $mysqli->prepare($ret);
                         $stmt->bind_param('i', $Customer_id);
                         $stmt->execute(); //ok
@@ -315,7 +237,7 @@ $stmt->close();
                           /* Trim Transaction Timestamp to 
                             *  User Uderstandable Formart  DD-MM-YYYY :
                             */
-                          $transTstamp = $row->created_at;
+                          $transTstamp = $row->Created_At;
                           //Perfom some lil magic here
                           if ($row->Transaction_Type == 'Deposit') {
                             $alertClass = "<span class='badge badge-success'>$row->Transaction_Type</span>";
@@ -326,11 +248,11 @@ $stmt->close();
                           }
                         ?>
                           <tr>
-                            <td><?php echo $row->tr_code; ?></a></td>
-                            <td><?php echo $row->account_number; ?></td>
+                            <td><?php echo $row->Transaction_ID; ?></a></td>
+                            <td><?php echo $row->Customer_ID; ?></td>
                             <td><?php echo $alertClass; ?></td>
-                            <td>$ <?php echo $row->Amount; ?></td>
-                            <td><?php echo $row->client_name; ?></td>
+                            <td> <?php echo $row->Amount; ?></td>
+                            <!-- <td><?php echo $row->Receiving_I; ?></td> -->
                             <td><?php echo date("d-M-Y h:m:s ", strtotime($transTstamp)); ?></td>
                           </tr>
 

@@ -57,7 +57,6 @@ $Customer_id = $_SESSION['Customer_id'];
                       <th>Transaction Code</th>
                       <th>Account No.</th>
                       <th>Amount</th>
-                      <th>Acc. Owner</th>
                       <th>Receiver's Acc.</th>
                       <th>Receiver</th>
                       <th>Timestamp</th>
@@ -68,7 +67,7 @@ $Customer_id = $_SESSION['Customer_id'];
                     <?php
                     //Get latest deposits transactions 
                     $Customer_id = $_SESSION['Customer_id'];
-                    $ret = "SELECT * FROM  Transactions  WHERE Amount = 'Transfer'AND Customer_id =? ";
+                    $ret = "SELECT * FROM  `Transactions`  WHERE Transaction_Type = 'Transfer'AND Customer_ID =? ";
                     $stmt = $mysqli->prepare($ret);
                     $stmt->bind_param('i', $Customer_id);
                     $stmt->execute(); //ok
@@ -80,21 +79,21 @@ $Customer_id = $_SESSION['Customer_id'];
                             */
                       $transTstamp = $row->created_at;
                       //Perfom some lil magic here
-                      if ($row->tr_type == 'Deposit') {
-                        $alertClass = "<span class='badge badge-success'>$row->tr_type</span>";
-                      } elseif ($row->tr_type == 'Withdrawal') {
-                        $alertClass = "<span class='badge badge-danger'>$row->tr_type</span>";
+                      if ($row->Transaction_Type == 'Deposit') {
+                        $alertClass = "<span class='badge badge-success'>$row->Transaction_Type</span>";
+                      } elseif ($row->Transaction_Type == 'Withdrawal') {
+                        $alertClass = "<span class='badge badge-danger'>$row->Transaction_Type</span>";
                       } else {
-                        $alertClass = "<span class='badge badge-warning'>$row->tr_type</span>";
+                        $alertClass = "<span class='badge badge-warning'>$row->Transaction_Type</span>";
                       }
                     ?>
 
                       <tr>
                         <td><?php echo $cnt; ?></td>
-                        <td><?php echo $row->tr_code; ?></a></td>
-                        <td><?php echo $row->account_number; ?></td>
-                        <td>$ <?php echo $row->transaction_amt; ?></td>
-                        <td><?php echo $row->client_name; ?></td>
+                        <td><?php echo $row->Transaction_ID; ?></a></td>
+                        <td><?php echo $row->Account_Id; ?></td>
+                        <td>$ <?php echo $row->Amount; ?></td>
+                        <td><?php echo $row->Cus_Name; ?></td>
                         <td><?php echo $row->receiving_acc_no; ?></td>
                         <td><?php echo $row->receiving_acc_holder; ?></td>
                         <td><?php echo date("d-M-Y h:m:s ", strtotime($transTstamp)); ?></td>

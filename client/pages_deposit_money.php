@@ -18,7 +18,7 @@ if (isset($_POST['deposit'])) {
     $notification_details = "$cus_name Has Deposited $ $transaction_amt To Bank Account $account_id";
 
     //Insert Captured information to a database table
-    $query = "INSERT INTO Transactions (Account_Id, Transaction_Type, Customer_ID, Amount, Created_At) 
+    $query = "INSERT INTO `Transactions` (Account_Id, Transaction_Type, Customer_ID, Amount, Created_At) 
               VALUES ('$account_id', '$tr_type', '$cus_id', '$transaction_amt', 'NOW()')";
     $notification = "INSERT INTO Notifications (Notification_Details, Created_At) 
                      VALUES ('$notification_details', 'NOW()')";
