@@ -67,7 +67,9 @@ $Customer_id = $_SESSION['Customer_id'];
                     <?php
                     //Get latest deposits transactions 
                     $Customer_id = $_SESSION['Customer_id'];
-                    $ret = "SELECT * FROM  `Transactions`  WHERE Transaction_Type = 'Transfer'AND Customer_ID =? ";
+                    $ret = "SELECT * FROM  Transactions t 
+                            JOIN Customers c ON t.Receiving_ID = c.Customer_ID 
+                            WHERE Transaction_Type = 'Transfer'AND t.Customer_ID =? ";
                     $stmt = $mysqli->prepare($ret);
                     $stmt->bind_param('i', $Customer_id);
                     $stmt->execute(); //ok
@@ -77,7 +79,7 @@ $Customer_id = $_SESSION['Customer_id'];
                       /* Trim Transaction Timestamp to 
                             *  User Uderstandable Formart  DD-MM-YYYY :
                             */
-                      $transTstamp = $row->created_at;
+                      $transTstamp = $row->Created_At;
                       //Perfom some lil magic here
                       if ($row->Transaction_Type == 'Deposit') {
                         $alertClass = "<span class='badge badge-success'>$row->Transaction_Type</span>";
@@ -93,9 +95,8 @@ $Customer_id = $_SESSION['Customer_id'];
                         <td><?php echo $row->Transaction_ID; ?></a></td>
                         <td><?php echo $row->Account_Id; ?></td>
                         <td>$ <?php echo $row->Amount; ?></td>
+                        <td><?php echo $row->Receiving_ID; ?></td>
                         <td><?php echo $row->Cus_Name; ?></td>
-                        <td><?php echo $row->receiving_acc_no; ?></td>
-                        <td><?php echo $row->receiving_acc_holder; ?></td>
                         <td><?php echo date("d-M-Y h:m:s ", strtotime($transTstamp)); ?></td>
                       </tr>
                     <?php $cnt = $cnt + 1;

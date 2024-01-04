@@ -7,7 +7,35 @@ $admin_id = $_SESSION['admin_id'];
 //roll back transaction
 if (isset($_GET['RollBack_Transaction'])) {
   $id = intval($_GET['RollBack_Transaction']);
-  $adn = "DELETE FROM  Transactions  WHERE Transaction_ID = ?";
+  $adn = "SELECT * FROM  Transactions WHERE Transaction_ID = ?";
+  $stmt = $mysqli->prepare($adn);
+  $stmt->bind_param('i', $id);
+  $stmt->execute();
+  $res = $stmt->get_result();
+  $row = $res->fetch_object();
+
+  if ($row->Transaction_Type == 'Deposit') {
+    $rb = "UPDATE BankAccounts 
+           SET Acc_Amount = Acc_Amount - '".$row->Amount."'
+           WHERE Account_Number = '".$row->Account_Id."' ";
+    $u_stmt = $mysqli -> query($rb);
+  } elseif ($row->Transaction_Type == 'Withdrawal') {
+    $rb = "UPDATE BankAccounts 
+           SET Acc_Amount = Acc_Amount - '".$row->Amount."'
+           WHERE Account_Number = '".$row->Account_Id."' ";
+    $u_stmt = $mysqli -> query($rb);
+  } else {
+    $rb = "UPDATE BankAccounts 
+           SET Acc_Amount = Acc_Amount - '".$row->Amount."'
+           WHERE Account_Number = '".$row->Account_Id."' ";
+    $rbr = "UPDATE BankAccounts 
+           SET Acc_Amount = Acc_Amount + '".$row->Amount."'
+           WHERE Account_Number = '".$row->Receiving_ID."' ";
+    $r_stmt = $mysqli -> query($rbr);
+    $u_stmt = $mysqli -> query($rb);
+  }
+
+  $adn = "DELETE FROM  Transactions WHERE Transaction_ID = ?";
   $stmt = $mysqli->prepare($adn);
   $stmt->bind_param('i', $id);
   $stmt->execute();

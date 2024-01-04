@@ -138,7 +138,7 @@
             <!-- ./loan -->
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-money-bill-alt"></i>
+                <i class="nav-icon fas fa-money-bill-wave"></i>
                 <p>
                   Loan Accounts
                   <i class="fas fa-angle-left right"></i>

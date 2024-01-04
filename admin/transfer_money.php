@@ -6,7 +6,8 @@ check_login();
 $admin_id = $_SESSION['admin_id'];
 //register new account
 
-if (isset($_POST['deposit'])) {
+if (isset($_POST['transfer'])) {
+    $success = "oke";
     $account_id = $_GET['account_id'];
     $acc_name = $_POST['acc_name'];
     //$acc_amount  = $_POST['acc_amount'];
@@ -14,6 +15,7 @@ if (isset($_POST['deposit'])) {
     $User_id  = $_GET['cus_id'];
     $User_name  = $_POST['User_name'];
     $transaction_amt = -$_POST['transaction_amt'];
+    $amt = $_POST['amt'];
 
     //Few fields to hold funds transfers
     $receiving_id = $_POST['receiving_acc_no'];
@@ -29,13 +31,6 @@ if (isset($_POST['deposit'])) {
             *You cant transfer money from an bank account that has no money in it so
             *Lets Handle that here.
             */
-    $result = "SELECT SUM(Amount) FROM  Transactions  WHERE Account_Id=?";
-    $stmt = $mysqli->prepare($result);
-    $stmt->bind_param('i', $account_id);
-    $stmt->execute();
-    $stmt->bind_result($amt);
-    $stmt->fetch();
-    $stmt->close();
 
 
     if ($transaction_amt > $amt) {
@@ -74,14 +69,12 @@ if (isset($_POST['deposit'])) {
 
         //declare a varible which will be passed to alert function
         if ($stmt && $notification_stmt) {
-            $success = "Money Transfered";
+            // $success = "Money Transfered";
         } else {
             $err = "Please Try Again Or Try Later";
         }
     }
 }
-
-
 
 ?><!-- Log on to codeastro.com for more projects! -->
 <!DOCTYPE html>
@@ -111,24 +104,6 @@ if (isset($_POST['deposit'])) {
         $res = $stmt->get_result();
         $cnt = 1;
         while ($row = $res->fetch_object()) {
-            //Indicate Account Balance 
-            $result = "SELECT SUM(Amount) FROM  Transactions
-                       WHERE Account_Id=?";
-            $stmt = $mysqli->prepare($result);
-            $stmt->bind_param('i', $account_id);
-            $stmt->execute();
-            $stmt->bind_result($amt);
-            $stmt->fetch();
-            $stmt->close();
-            $result = "SELECT -SUM(Amount) FROM  Transactions
-                       WHERE Receiving_ID=? ";
-            $stmt = $mysqli->prepare($result);
-            $stmt->bind_param('i', $account_id);
-            $stmt->execute();
-            $stmt->bind_result($amt_r);
-            $stmt->fetch();
-            $stmt->close();
-
         ?>
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -198,7 +173,7 @@ if (isset($_POST['deposit'])) {
                                             <div class="row">
                                                 <div class=" col-md-4 form-group">
                                                     <label for="exampleInputPassword1">Current Account Balance</label>
-                                                    <input type="text" readonly value="<?php echo $amt + $amt_r; ?>" required class="form-control" id="exampleInputEmail1">
+                                                    <input type="text" name="amt" readonly value="<?php echo $row->Acc_Amount; ?>" required class="form-control" id="exampleInputEmail1">
                                                 </div>
                                                 <div class=" col-md-4 form-group">
                                                     <label for="exampleInputPassword1">Amount Transfered($)</label>
@@ -213,7 +188,7 @@ if (isset($_POST['deposit'])) {
                                                         <option>Select Receiving Account</option>
                                                         <?php
                                                         //fetch all Accs
-                                                        $ret = "SELECT * FROM  BankAccounts ";
+                                                        $ret = "SELECT * FROM  BankAccounts WHERE Account_Number !='".$row->Account_Number."'";
                                                         $stmt = $mysqli->prepare($ret);
                                                         $stmt->execute(); //ok
                                                         $res = $stmt->get_result();
@@ -256,7 +231,7 @@ if (isset($_POST['deposit'])) {
                                         </div>
                                         <!-- /.card-body -->
                                         <div class="card-footer">
-                                            <button type="submit" name="deposit" class="btn btn-success">Transfer Funds</button>
+                                            <button type="submit" name="transfer" class="btn btn-success">Transfer Funds</button>
                                         </div>
                                     </form>
                                 </div>

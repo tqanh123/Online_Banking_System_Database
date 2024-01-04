@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $mysqli->query($updateAccountQuery);
 
                     $transaction_description = "Loan payment - Loan ID: " . $loanRow['Loan_ID'];
-                    $insertTransactionQuery = "INSERT INTO Transactions (Customer_ID, Amount, Transaction_Type) VALUES ($customer_id, $loan_amount, '$transaction_description')";
+                    $insertTransactionQuery = "INSERT INTO Transactions (Customer_ID, Account_Id, Amount, Transaction_Type, Created_At) VALUES ($customer_id, $bank_account_id, $loan_amount, '$transaction_description', NOW())";
                     $mysqli->query($insertTransactionQuery);
 
                     $deleteLoanQuery = "DELETE FROM Loans WHERE Loan_ID = $loan_account_id AND Customer_ID = $customer_id";

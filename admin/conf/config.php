@@ -1,7 +1,7 @@
 <?php
-    $host="127.0.0.1:3307";
+    $host="localhost";
     $dbuser="root";
-    $dbpass="1234";
+    $dbpass="";
     $db="online_banking";
     $mysqli=new mysqli($host,$dbuser, $dbpass, $db);
 

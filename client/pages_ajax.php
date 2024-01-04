@@ -32,6 +32,17 @@ if (!empty($_POST["iBankAccHolder"])) {
     }
 }
 
+if (!empty($_POST["iBankAccHolder"])) {
+    //get  back account transferables name
+    $id = $_POST['iBankAccHolder'];
+    $stmt = $DB_con->prepare("SELECT * FROM BankAccounts NATURAL JOIN Customers WHERE  Account_Number= :id");
+    $stmt->execute(array(':id' => $id));
+
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['Customer_ID']);        
+    }
+}
+
 if (isset($_GET['accloan_id'])){
     $acc_id = $_GET['accloan_id'];
     $stmt = $DB_con->prepare("SELECT * FROM LoanTypes WHERE LoanType_ID = :id");

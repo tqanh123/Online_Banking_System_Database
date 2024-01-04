@@ -3,89 +3,88 @@ session_start();
 include('conf/config.php');
 include('conf/checklogin.php');
 check_login();
-$Customer_id = $_SESSION['Customer_id'];
+//register new account
+
+if (isset($_POST['deposit'])) {
+    $account_id = $_GET['account_id'];
+    $acc_name = $_POST['acc_name'];
+    //$acc_amount  = $_POST['acc_amount'];
+    $tr_type  = $_POST['tr_type'];
+    $User_id  = $_SESSION['Customer_id'];
+    $User_name  = $_POST['User_name'];
+    $transaction_amt = -$_POST['transaction_amt'];
+    $amt = $_POST['amt'];
+
+    //Few fields to hold funds transfers
+    $receiving_id = $_POST['receiving_acc_no'];
+    $receiving_acc_name = $_POST['receiving_acc_name'];
+    $receiving_acc_holder = $_POST['receiving_acc_holder'];
+
+    $Customer_id = $_SESSION['Customer_id'];
+    $result = "SELECT Customer_ID FROM BankAccounts WHERE Account_Number = ?";
+    $stmt = $mysqli->prepare($result);
+    $stmt->bind_param('i', $receiving_id);
+    $stmt->execute();
+    $stmt->bind_result($receiving_cus_id);
+    $stmt->fetch();
+    $stmt->close();
+
+    //Notication
+    $notification_details = "$User_name Has Transfered $ $transaction_amt From Bank Account $account_id To Bank Account $receiving_id";
+    $notification_details1 = "$receiving_acc_holder Has Received $ $transaction_amt From Bank Account $acc_name To Bank Account $receiving_id";
+
+    /*
+            *You cant transfer money from an bank account that has no money in it so
+            *Lets Handle that here.
+            */
 
 
-    if (isset($_POST['deposit'])) {
-        $account_id = $_GET['account_id'];
-        $acc_name = $_POST['acc_name'];
-        //$acc_amount  = $_POST['acc_amount'];
-        $tr_type  = $_POST['tr_type'];
-        $User_id  = $_SESSION['Customer_id'];
-        $User_name  = $_POST['User_name'];
-        $transaction_amt = -$_POST['transaction_amt'];
-    
-        //Few fields to hold funds transfers
-        $receiving_id = $_POST['receiving_acc_no'];
-        $receiving_acc_name = $_POST['receiving_acc_name'];
-        $receiving_acc_holder = $_POST['receiving_acc_holder'];
-        $receiving_cus_id = $_POST['receiving_holder_id'];
-    
-        //Notication
-        $notification_details = "$User_name Has Transfered $ $transaction_amt From Bank Account $account_id To Bank Account $receiving_id";
-        $notification_details1 = "$receiving_acc_holder Has Received $ $transaction_amt From Bank Account $acc_name To Bank Account $receiving_id";
-    
-        /*
-                *You cant transfer money from an bank account that has no money in it so
-                *Lets Handle that here.
-                */
-        $result = "SELECT SUM(Amount) FROM  Transactions  WHERE Account_Id=?";
-        $stmt = $mysqli->prepare($result);
-        $stmt->bind_param('i', $account_id);
-        $stmt->execute();
-        $stmt->bind_result($amt);
-        $stmt->fetch();
-        $stmt->close();
-    
-    
-        if ($transaction_amt > $amt) {
-            $transaction_error  =  "You Do Not Have Sufficient Funds In $acc_name Account For Transfer. Your Current Account Balance Is $ $amt";
-        } else {
-    
-    
-            //Insert Captured information to a database table
-            $query = "INSERT INTO Transactions (Account_ID, Transaction_Type, Customer_ID, Amount, Receiving_ID, Created_At)
-                      VALUES ('$account_id', '$tr_type', '$User_id', '$transaction_amt', '$receiving_id', NOW())";
-            $notification = "INSERT INTO  notifications (notification_details, Created_At) VALUES ('$notification_details', NOW())";
-            $update = " UPDATE BankAccounts 
+    if (-$transaction_amt > $amt) {
+        $err = "You Do Not Have Sufficient Funds In $acc_name Account For Transfer. Your Current Account Balance Is $ $amt";
+    } else {
+
+
+        //Insert Captured information to a database table
+        $query = "INSERT INTO Transactions (Account_ID, Transaction_Type, Customer_ID, Amount, Receiving_ID)
+                  VALUES ('$account_id', '$tr_type', '$User_id', '$transaction_amt', '$receiving_id')";
+        $notification = "INSERT INTO  notifications (notification_details) VALUES ('$notification_details')";
+        $update = " UPDATE BankAccounts 
                     SET Acc_Amount = Acc_Amount + '$transaction_amt'
                     WHERE Account_Number = '$account_id'";
-            $update_r = "UPDATE BankAccounts 
+        $update_r = "UPDATE BankAccounts 
                      SET Acc_Amount = Acc_Amount - '$transaction_amt'
                      WHERE Account_Number = '$receiving_id'";
 
-            $u_stmt = $mysqli -> query($update);
-            $ur_stmt = $mysqli -> query($update_r);
-            $stmt = $mysqli->query($query);
-            $notification_stmt = $mysqli->query($notification);
-    
-            // connect Customers and NOtifications
-            $cn_query = "SELECT MAX(Notification_ID) AS no_id FROM notifications";
-            $res_cn = $mysqli->query($cn_query);
-            $no_id = $res_cn->fetch_object();
-    
-            $cus_no_query = "INSERT INTO CustomersNotifications(Customer_ID, Notification_ID) 
-                             VALUES('$User_id', '". $no_id -> no_id."')";
-            $recive_no_query = "INSERT INTO CustomersNotifications(Customer_ID, Notification_ID) 
-                             VALUES('$receiving_cus_id', '". $no_id -> no_id."')";
-            
-            $res_cusno = $mysqli -> query($cus_no_query);
-            $res_receiveno = $mysqli -> query($recive_no_query);
-    
-            //declare a varible which will be passed to alert function
-            if ($stmt && $notification_stmt) {
-                $success = "Money Transfered";
-            } else {
-                $err = "Please Try Again Or Try Later";
-            }
+        $u_stmt = $mysqli -> query($update);
+        $ur_stmt = $mysqli -> query($update_r);
+        $stmt = $mysqli->query($query);
+        $notification_stmt = $mysqli->query($notification);
+
+        // connect Customers and NOtifications
+        $cn_query = "SELECT MAX(Notification_ID) AS no_id FROM notifications";
+        $res_cn = $mysqli->query($cn_query);
+        $no_id = $res_cn->fetch_object();
+
+        $cus_no_query = "INSERT INTO CustomersNotifications(Customer_ID, Notification_ID) 
+                         VALUES('$User_id', '". $no_id -> no_id."')";
+        $recive_no_query = "INSERT INTO CustomersNotifications(Customer_ID, Notification_ID) 
+                         VALUES('$receiving_cus_id', '". $no_id -> no_id."')";
+        
+        $res_cusno = $mysqli -> query($cus_no_query);
+        $res_receiveno = $mysqli -> query($recive_no_query);
+
+        //declare a varible which will be passed to alert function
+        if ($stmt && $notification_stmt) {
+            $success = "Money Transfered";
+        } else {
+            $err = "Please Try Again Or Try Later";
         }
     }
+}
 
 
 
-
-?>
-
+?><!-- Log on to codeastro.com for more projects! -->
 <!DOCTYPE html>
 <html>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
@@ -103,33 +102,16 @@ $Customer_id = $_SESSION['Customer_id'];
         <!-- Content Wrapper. Contains page content -->
         <?php
         $account_id = $_GET['account_id'];
-        $ret = "SELECT * FROM  BankAccounts 
-                NATURAL JOIN Customers
-                NATURAL JOIN Acc_types
-                WHERE Account_Number = ? ";
+        $ret = "SELECT * FROM  BankAccounts
+        NATURAL JOIN Customers
+        NATURAL JOIN Acc_types
+        WHERE Account_Number = ? ";
         $stmt = $mysqli->prepare($ret);
         $stmt->bind_param('i', $account_id);
         $stmt->execute(); //ok
         $res = $stmt->get_result();
         $cnt = 1;
         while ($row = $res->fetch_object()) {
-
-            $result = "SELECT SUM(Amount) FROM  Transactions
-                       WHERE Account_Id=?";
-            $stmt = $mysqli->prepare($result);
-            $stmt->bind_param('i', $account_id);
-            $stmt->execute();
-            $stmt->bind_result($amt);
-            $stmt->fetch();
-            $stmt->close();
-            $result = "SELECT -SUM(Amount) FROM  Transactions
-                       WHERE Receiving_ID=? ";
-            $stmt2 = $mysqli->prepare($result);
-            $stmt2->bind_param('i', $account_id);
-            $stmt2->execute();
-            $stmt2->bind_result($amt_r);
-            $stmt2->fetch();
-            $stmt2->close();
         ?>
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
@@ -166,18 +148,18 @@ $Customer_id = $_SESSION['Customer_id'];
                                     <form method="post" enctype="multipart/form-data" role="form">
                                         <div class="card-body">
 
-                                        <div class="row">
+                                            <div class="row">
                                                 <div class=" col-md-4 form-group">
-                                                    <label for="exampleInputEmail1">User Name</label>
+                                                    <label for="exampleInputEmail1">Client Name</label>
                                                     <input type="text" readonly name="User_name" value="<?php echo $row->Cus_Name; ?>" required class="form-control" id="exampleInputEmail1">
                                                 </div>
                                                 <div class=" col-md-4 form-group">
-                                                    <label for="exampleInputPassword1">User National </label>
-                                                    <input type="text" readonly value="<?php echo $row->National; ?>" name="User_national_id" required class="form-control" id="exampleInputEmail1">
+                                                    <label for="exampleInputPassword1">Client National</label>
+                                                    <input type="text" readonly value="<?php echo $row->National; ?>" name="client_national_id" required class="form-control" id="exampleInputEmail1">
                                                 </div>
                                                 <div class=" col-md-4 form-group">
-                                                    <label for="exampleInputEmail1">User Phone Number</label>
-                                                    <input type="text" readonly value="<?php echo $row->Phone; ?>" required class="form-control" id="exampleInputEmail1">
+                                                    <label for="exampleInputEmail1">Client Phone Number</label>
+                                                    <input type="text" readonly name="client_phone" value="<?php echo $row->Phone; ?>" required class="form-control" id="exampleInputEmail1">
                                                 </div>
                                             </div>
 
@@ -188,25 +170,25 @@ $Customer_id = $_SESSION['Customer_id'];
                                                 </div>
                                                 <div class=" col-md-4 form-group">
                                                     <label for="exampleInputPassword1">Account Number</label>
-                                                    <input type="text" readonly value="<?php echo $row->Account_Number; ?>" required class="form-control" id="exampleInputEmail1">
+                                                    <input type="text" readonly value="<?php echo $row->Account_Number; ?>" name="Account_Number" required class="form-control" id="exampleInputEmail1">
                                                 </div>
-                                                <div class=" col-md-4 form-group" >
+                                                <div class=" col-md-4 form-group">
                                                     <label for="exampleInputEmail1">Account Type | Category</label>
-                                                    <input type="text" readonly value="<?php echo $row->Name; ?>" required class="form-control" id="exampleInputEmail1">
+                                                    <input type="text" readonly name="acc_type" value="<?php echo $row->Name; ?>" required class="form-control" id="exampleInputEmail1">
                                                 </div>
                                             </div>
 
                                             <div class="row">
                                                 <div class=" col-md-4 form-group">
                                                     <label for="exampleInputPassword1">Current Account Balance</label>
-                                                    <input type="text" readonly value="<?php echo $amt; ?>" required class="form-control" id="exampleInputEmail1">
+                                                    <input type="text" name="amt" readonly value="<?php echo $row->Acc_Amount; ?>" required class="form-control" id="exampleInputEmail1">
                                                 </div>
                                                 <div class=" col-md-4 form-group">
                                                     <label for="exampleInputPassword1">Amount Transfered($)</label>
                                                     <input type="text" name="transaction_amt" required class="form-control" id="exampleInputEmail1">
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="row">
                                                 <div class=" col-md-4 form-group">
                                                     <label for="exampleInputPassword1">Receiving Account Number</label>
@@ -214,7 +196,7 @@ $Customer_id = $_SESSION['Customer_id'];
                                                         <option>Select Receiving Account</option>
                                                         <?php
                                                         //fetch all iB_Accs
-                                                        $ret = "SELECT * FROM BankAccounts WHERE Account_Number !='".$row->Account_Number."'";
+                                                        $ret = "SELECT * FROM bankAccounts ";
                                                         $stmt = $mysqli->prepare($ret);
                                                         $stmt->execute(); //ok
                                                         $res = $stmt->get_result();
@@ -237,17 +219,12 @@ $Customer_id = $_SESSION['Customer_id'];
                                                     <input type="text" name="receiving_acc_holder" required class="form-control" id="AccountHolder">
                                                 </div>
                                                 <div class=" col-md-4 form-group" style="display:none">
-                                                    <label for="exampleInputPassword1">Receiving Holder id</label>
-                                                    <input type="text" name="receiving_holder_id" required class="form-control" id="Holder_id">
-                                                </div>
-
-                                                <div class=" col-md-4 form-group" style="display:none">
                                                     <label for="exampleInputPassword1">Transaction Type</label>
                                                     <input type="text" name="tr_type" value="Transfer" required class="form-control" id="exampleInputEmail1">
                                                 </div>
                                                 <div class=" col-md-4 form-group" style="display:none">
                                                     <label for="exampleInputPassword1">Transaction Status</label>
-                                                    <input type="text" name="tr_status" value="Success " required class="form-control" id="exampleInputEmail2">
+                                                    <input type="text" name="tr_status" value="Success " required class="form-control" id="exampleInputEmail1">
                                                 </div>
 
                                             </div>
@@ -294,23 +271,3 @@ $Customer_id = $_SESSION['Customer_id'];
 </body>
 
 </html>
-<script>
-    const account = document.getElementById("receiving_acc_no");
-    account.addEventListener("change", (event) => {
-      var acc_id = event.target.value;
-
-      var xml = new XMLHttpRequest();
-      xml.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          var data = JSON.parse(this.responseText);
-          document.getElementById('ReceivingAcc').value = data.text_1;
-          document.getElementById('AccountHolder').value = data.text_2;
-          document.getElementById('Holder_id').value = data.text_3;
-
-        }
-      }
-
-      xml.open("GET", "conf/config.php?acc_id="+acc_id, true);
-      xml.send();
-    })
-</script>
