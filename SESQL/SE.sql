@@ -1,5 +1,6 @@
 CREATE TABLE Customers (
   Customer_ID INT AUTO_INCREMENT PRIMARY KEY,
+  Receiving_ID INT NOT NULL,
   Cus_Name VARCHAR(255) NOT NULL,
   Password VARCHAR(255) NOT NULL,  
   National VARCHAR(255) NOT NULL,
@@ -74,8 +75,8 @@ CREATE TABLE `Transactions` (
     Amount DECIMAL(12, 2) NOT NULL,
     Transaction_Type VARCHAR(50) NOT NULL,
     Created_At timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
-    FOREIGN KEY (Account_Id) REFERENCES BankAccounts(Account_Number),
-    FOREIGN KEY (Receiving_ID) REFERENCES BankAccounts(Account_Number),
+    FOREIGN KEY (Account_Id) REFERENCES BankAccounts(Account_Id),
+    FOREIGN KEY (Receiving_ID) REFERENCES BankAccounts(Account_Id),
     FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
 );
 
