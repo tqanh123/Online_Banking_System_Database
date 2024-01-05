@@ -76,7 +76,7 @@ CREATE TABLE `Transactions` (
     Transaction_Type VARCHAR(50) NOT NULL,
     Created_At timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6),
     FOREIGN KEY (Account_Id) REFERENCES BankAccounts(Account_Id),
-    FOREIGN KEY (Receiving_ID) REFERENCES BankAccounts(Account_Id),
+    FOREIGN KEY (Receiving_ID) REFERENCES BankAccounts(Receiving_Id),
     FOREIGN KEY (Customer_ID) REFERENCES Customers(Customer_ID)
 );
 
