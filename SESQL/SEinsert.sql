@@ -151,7 +151,8 @@ INSERT INTO Admins (Name, Email, Password, Phone, Profile_Pic) VALUES
 ('Admin47', 'admin47@gmail.com', '$2y$10$ypa19siasQ2nSjz7y1brAPhOpYEb2Cvg1TEBCPjqJxIBxUSkczvt7pC', 8883125576, 'avtadpics47.png'),
 ('Admin48', 'admin48@gmail.com', '$2y$10$VuNc90My13xcH9trMJC4YuTO.jTGZknxB4rRBc32PGA2VWlfw10Fe', 1829484313, 'avtadpics48.png'),
 ('Admin49', 'admin49@gmail.com', '$2y$10$ypal0nOQ2nSjz7y1brAPhOpYEb2CvgAOASjqJxOA908Skczvt7pC', 1110123922, 'avtadpics49.png'),
-('Admin50', 'admin50@gmail.com', '$2y$10$ypa19siasQ2nSjz7y1brAPhOpYEb2Cvg1TEBCPjqJxIBxUSkczvt7pC', 9948142111, 'avtadpics50.png');
+('Admin50', 'admin50@gmail.com', '$2y$10$ypa19siasQ2nSjz7y1brAPhOpYEb2Cvg1TEBCPjqJxIBxUSkczvt7pC', 9948142111, 'avtadpics50.png')
+  
 
 INSERT INTO BankAccounts (Acc_Name, Acctype_ID, Customer_ID, Acc_Status, Acc_Amount, Created_At) 
 VALUES
@@ -204,7 +205,57 @@ VALUES
 (Acc_name47, 5, 47, 'Active', '14400.00', '2027-01-25 21:05:00'),
 (Acc_name48, 6, 48, 'Active', '18000.00', '2027-02-28 23:25:00'),
 (Acc_name49, 7, 49, 'Inactive', '2550.00', '2027-04-05 09:45:00'),
-(Acc_name50, 1, 50, 'Active', '4100.00', '2027-05-10 12:10:00');
+(Acc_name50, 1, 50, 'Active', '4100.00', '2027-05-10 12:10:00'),
+(Acc_name51, 1, 1, 'Active', '1000.00', '2023-01-01 12:00:00'),
+(Acc_name52, 2, 2, 'Active', '5000.00', '2023-02-15 14:30:00'),
+(Acc_name53, 3, 3, 'Inactive', '10000.00', '2023-03-20 10:45:00'),
+(Acc_name54, 4, 4, 'Active', '8000.00', '2023-04-05 08:15:00'),
+(Acc_name55, 5, 5, 'Active', '12000.00', '2023-05-10 16:20:00'),
+(Acc_name56, 6, 6, 'Active', '15000.00', '2023-06-25 18:30:00'),
+(Acc_name57, 7, 7, 'Inactive', '2000.00', '2023-07-30 11:00:00'),
+(Acc_name58, 1, 8, 'Active', '3000.00', '2023-08-14 09:45:00'),
+(Acc_name59, 2, 9, 'Active', '6000.00', '2023-09-19 13:20:00'),
+(Acc_name60, 3, 10, 'Inactive', '11000.00', '2023-10-24 15:55:00'),
+(Acc_name61, 5, 11, 'Active', '7500.00', '2023-11-01 17:10:00'),
+(Acc_name62, 5, 12, 'Active', '13000.00', '2023-12-06 20:05:00'),
+(Acc_name63, 6, 13, 'Active', '16000.00', '2024-01-11 22:30:00'),
+(Acc_name64, 4, 14, 'Inactive', '2200.00', '2024-02-16 08:45:00'),
+(Acc_name65, 1, 15, 'Active', '3500.00', '2024-03-23 10:15:00'),
+(Acc_name66, 2, 16, 'Active', '5500.00', '2024-04-27 12:40:00'),
+(Acc_name67, 3, 17, 'Inactive', '10500.00', '2024-05-02 14:55:00'),
+(Acc_name68, 6, 18, 'Active', '7800.00', '2024-06-07 17:25:00'),
+(Acc_name69, 5, 19, 'Active', '12500.00', '2024-07-12 19:50:00'),
+(Acc_name70, 6, 20, 'Active', '15500.00', '2024-08-17 22:10:00'),
+(Acc_name71, 7, 21, 'Inactive', '1980.00', '2024-09-22 09:30:00'),
+(Acc_name72, 1, 22, 'Active', '3200.00', '2024-10-27 11:45:00'),
+(Acc_name73, 2, 23, 'Active', '5800.00', '2024-11-01 14:05:00'),
+(Acc_name74, 4, 24, 'Inactive', '11200.00', '2024-12-06 16:30:00'),
+(Acc_name75, 5, 25, 'Active', '7600.00', '2025-01-10 18:55:00'),
+(Acc_name76, 5, 26, 'Active', '12800.00', '2025-02-15 21:20:00'),
+(Acc_name77, 6, 27, 'Active', '16500.00', '2025-03-22 23:40:00'),
+(Acc_name78, 7, 28, 'Inactive', '2100.00', '2025-04-27 09:00:00'),
+(Acc_name79, 1, 29, 'Active', '3400.00', '2025-05-02 11:15:00'),
+(Acc_name80, 2, 30, 'Active', '6100.00', '2025-06-06 13:35:00'),
+(Acc_name81, 3, 31, 'Inactive', '10800.00', '2025-07-11 15:55:00'),
+(Acc_name82, 2, 32, 'Active', '8000.00', '2025-08-16 18:20:00'),
+(Acc_name83, 5, 33, 'Active', '13200.00', '2025-09-21 20:40:00'),
+(Acc_name84, 4, 34, 'Active', '17000.00', '2025-10-26 23:05:00'),
+(Acc_name85, 7, 35, 'Inactive', '2250.00', '2025-11-30 09:25:00'),
+(Acc_name86, 1, 36, 'Active', '3700.00', '2026-01-04 11:50:00'),
+(Acc_name87, 2, 37, 'Active', '6300.00', '2026-02-08 14:15:00'),
+(Acc_name88, 3, 38, 'Inactive', '11500.00', '2026-03-15 16:40:00'),
+(Acc_name89, 6, 39, 'Active', '8200.00', '2026-04-20 19:05:00'),
+(Acc_name90, 5, 40, 'Active', '13800.00', '2026-05-25 21:30:00'),
+(Acc_name91, 6, 41, 'Active', '17500.00', '2026-06-29 23:50:00'),
+(Acc_name92, 7, 42, 'Inactive', '2400.00', '2026-08-03 09:10:00'),
+(Acc_name93, 1, 43, 'Active', '3900.00', '2026-09-07 11:30:00'),
+(Acc_name94, 4, 44, 'Active', '6600.00', '2026-10-12 13:55:00'),
+(Acc_name95, 3, 45, 'Inactive', '12000.00', '2026-11-16 16:20:00'),
+(Acc_name96, 2, 46, 'Active', '8500.00', '2026-12-21 18:40:00'),
+(Acc_name97, 5, 47, 'Active', '14400.00', '2027-01-25 21:05:00'),
+(Acc_name98, 6, 48, 'Active', '18000.00', '2027-02-28 23:25:00'),
+(Acc_name99, 7, 49, 'Inactive', '2550.00', '2027-04-05 09:45:00'),
+(Acc_name100, 1, 50, 'Active', '4100.00', '2027-05-10 12:10:00');
 
 INSERT INTO Acc_types (Name, Description, Rate) 
 VALUES
